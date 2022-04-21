@@ -17,7 +17,6 @@ class OneMastShip implements Ship {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-
         for (Map.Entry<Integer, ShipSectionCondition> entry : sections.entrySet()) {
             sb.append("[");
             if (entry.getValue() == ShipSectionCondition.UNTOUCHED) {
