@@ -9,5 +9,4 @@ class BattleshipsApplicationTests {
 	@Test
 	void contextLoads() {
 	}
-
 }
