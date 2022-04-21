@@ -8,7 +8,9 @@ class Fleet {
 
     Fleet() {
         ships = new ArrayList<>();
-        ships.add(new OneMastShip());
-        ships.add(new TwoMastShip());
+        ships.add(new OneMastShip(6));
+        ships.add(new TwoMastShip(1, 2));
     }
+
+    // TODO: checkIfAllShipsAreSunk()
 }

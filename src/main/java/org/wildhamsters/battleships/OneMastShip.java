@@ -8,11 +8,9 @@ class OneMastShip implements Ship {
     private Map<Integer, ShipSectionCondition> sections;
     private ShipCondition condition;
 
-    OneMastShip() {
+    OneMastShip(int field) {
         sections = new HashMap<>();
-        for (int i = 1; i <= length; i++) {
-            sections.put(i, ShipSectionCondition.UNTOUCHED);
-        }
+        sections.put(field, ShipSectionCondition.UNTOUCHED);
         condition = ShipCondition.UNTOUCHED;
     }
 
@@ -34,9 +32,9 @@ class OneMastShip implements Ship {
     }
 
     @Override
-    public Ship markHit(int index) {
-        if (1 <= index && index <= length) {
-            sections.put(index, ShipSectionCondition.DAMAGED);
+    public Ship markHit(int field) {
+        if (sections.containsKey(field)) {
+            sections.put(field, ShipSectionCondition.DAMAGED);
         } else {
             throw new IllegalArgumentException();
         }
