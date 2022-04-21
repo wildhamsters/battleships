@@ -1,8 +1,8 @@
 package org.wildhamsters.battleships;
 
-record Dimensions(int min, int max) {
+record BoardDimension(int min, int max) {
     
-    boolean isWithinDimensions(int value) {
+    boolean isWithinDimension(int value) {
         return value >= min && value <= max;
     }
 }

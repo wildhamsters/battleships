@@ -21,7 +21,7 @@ class DefaultBoard implements Board {
     }
 
     @Override
-    public Dimensions size() {
-        return new Dimensions(0, board.size()-1);
+    public BoardDimension size() {
+        return new BoardDimension(0, board.size()-1);
     }
 }
