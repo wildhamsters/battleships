@@ -30,5 +30,4 @@ class ShootVerificator {
             case ACCURATE_SHOT, MISSED_SHOT -> true;
         };
     }
-
 }
