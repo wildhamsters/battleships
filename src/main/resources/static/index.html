@@ -1,8 +1,91 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SHIPS TRIAL</title>
 </head>
 <body>
-<h1>THE TABLE WILL SHOW UP HERE</h1>
+<table id="playerBoard"></table>
 </body>
 </html>
+
+<script>
+	var table = document.getElementById('playerBoard');
+	for(var i=0; i<5; i++) {
+		var row = document.createElement('tr');
+			for(var j = 0; j<5; j++) {
+				var cell = document.createElement('td');
+				cell.id = 'cell_' + (i*5+j);
+				cell.innerHTML=(i*5+j);
+				cell.className="water";
+				cell.onclick=function(cell) {
+					var xmlHttp = new XMLHttpRequest();
+				    xmlHttp.onreadystatechange = function() {
+				        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+				            var response = JSON.parse(xmlHttp.responseText);
+				            console.log(response);
+
+				            switch(response) {
+				            	case FIELD_STATE.MISSED_SHOT:
+				            		document.getElementById(cell.target.id).className="missed";
+				            		break;
+				            	case FIELD_STATE.WATER:
+				            		document.getElementById(cell.target.id).className="water";
+				            		break;
+				            	case FIELD_STATE.ACCURATE_SHOT:
+				            		document.getElementById(cell.target.id).className="accurate";
+				            		break;
+				            	case FIELD_STATE.INTACT_SHIP:
+				            		document.getElementById(cell.target.id).className="intact";
+				            		break;
+				            }
+				        }
+				    };
+				    xmlHttp.open( "GET", 'http://localhost:8080/shoot/' + this.id.replace("cell_", ""), true );
+				    xmlHttp.send( null );
+				}
+				row.append(cell);
+			}
+			table.append(row);
+	}
+
+	var FIELD_STATE  = {
+    WATER: "WATER",
+    MISSED_SHOT: "MISSED_SHOT",
+    ACCURATE_SHOT: "ACCURATE_SHOT",
+    INTACT_SHIP: "INTACT_SHIP"
+};
+</script>
+
+<style>
+	table, th, td {
+	  border: 1px solid black;
+	  border-collapse: collapse;
+	}
+
+	table {
+		width: 50%;
+		height: 50%;
+	}
+
+	td {
+		text-align: center;
+	}
+
+	.water {
+		background-color: aqua;
+	}
+
+	.missed {
+		background-color: dimgray;
+	}
+
+	.accurate {
+		background-color: green;
+	}
+
+	.intact {
+		background-color: salmon;
+	}
+</style>
