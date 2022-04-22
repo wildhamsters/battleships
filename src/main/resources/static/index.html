@@ -7,6 +7,8 @@
 </head>
 <body>
 <table id="playerBoard"></table>
+<button onclick="demo()">DEMO</button>
+<button onclick="clearDemo()">CLEAR</button>
 </body>
 </html>
 
@@ -58,7 +60,21 @@
     MISSED_SHOT: "MISSED_SHOT",
     ACCURATE_SHOT: "ACCURATE_SHOT",
     INTACT_SHIP: "INTACT_SHIP"
-};
+	};
+
+    function clearDemo() {
+		for (var i=0; i<25; i++) {
+			document.getElementById('cell_'+i).className="water";
+		}
+	}
+
+	function demo() {
+		var arr = Array.from({length: 25}, () => Math.floor(Math.random() * 25));
+
+		for (var i=0; i<25; i++) {
+			document.getElementById('cell_'+arr[i]).click();
+		}
+	}
 </script>
 
 <style>
