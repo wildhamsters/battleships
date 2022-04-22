@@ -1,79 +1,94 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>SHIPS TRIAL</title>
 </head>
-
 <body>
+<div id="player">
 	<table id="playerBoard"></table>
 	<button onclick="demo()">DEMO</button>
 	<button onclick="clearDemo()">CLEAR</button>
-</body>
+</div>
 
+<div id="status"></div>
+</body>
 </html>
 
 <script>
+	var audio = new Audio('opener.wav');
+	audio.play();
+
+	var statusMessageId = 1;
 	var table = document.getElementById('playerBoard');
-	for (var i = 0; i < 5; i++) {
+	for(var i=0; i<5; i++) {
 		var row = document.createElement('tr');
-		for (var j = 0; j < 5; j++) {
-			var cell = document.createElement('td');
-			cell.id = 'cell_' + (i * 5 + j);
-			cell.innerHTML = (i * 5 + j);
-			cell.className = "water";
-			cell.onclick = function (cell) {
-				var xmlHttp = new XMLHttpRequest();
-				xmlHttp.onreadystatechange = function () {
+			for(var j = 0; j<5; j++) {
+				var cell = document.createElement('td');
+				cell.id = 'cell_' + (i*5+j);
+				cell.innerHTML=(i*5+j);
+				cell.className="water";
+				cell.onclick=function(cell) {
+					var xmlHttp = new XMLHttpRequest();
+				    xmlHttp.onreadystatechange = function() {
 
-					if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-						var response = JSON.parse(xmlHttp.responseText);
-						console.log(response);
+				        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+				            var response = JSON.parse(xmlHttp.responseText);
+				            console.log(response);
+				            var audio = new Audio('confirm.wav');
+							audio.play();
 
-						switch (response) {
-							case FIELD_STATE.MISSED_SHOT:
-								document.getElementById(cell.target.id).className = "missed";
-								break;
-							case FIELD_STATE.WATER:
-								document.getElementById(cell.target.id).className = "water";
-								break;
-							case FIELD_STATE.ACCURATE_SHOT:
-								document.getElementById(cell.target.id).className = "accurate";
-								break;
-							case FIELD_STATE.INTACT_SHIP:
-								document.getElementById(cell.target.id).className = "intact";
-								break;
-						}
-					} else if (xmlHttp.readyState == 4 && xmlHttp.status == 400) {
-						alert("Bad request");
-					}
-				};
-				xmlHttp.open("GET", 'http://localhost:8080/shoot/' + this.id.replace("cell_", ""), true);
-				xmlHttp.send(null);
+				            switch(response) {
+				            	case FIELD_STATE.MISSED_SHOT:
+				            		document.getElementById(cell.target.id).className="missed";
+				            		break;
+				            	case FIELD_STATE.WATER:
+				            		document.getElementById(cell.target.id).className="water";
+				            		break;
+				            	case FIELD_STATE.ACCURATE_SHOT:
+				            		document.getElementById(cell.target.id).className="accurate";
+				            		break;
+				            	case FIELD_STATE.INTACT_SHIP:
+				            		document.getElementById(cell.target.id).className="intact";
+				            		break;
+				            }
+				        } else if (xmlHttp.readyState == 4 && xmlHttp.status == 400) {
+				        	document.getElementById("status").insertAdjacentHTML("afterbegin", "<p style='color: red;'>" + statusMessageId++ + ". Bad request! </p>");
+				        	var audio = new Audio('alert.wav');
+							audio.play();
+				        }
+				    };
+				    xmlHttp.open( "GET", 'http://localhost:8080/shoot/' + this.id.replace("cell_", ""), true);
+				    xmlHttp.send( null );
+				    document.getElementById("status").insertAdjacentHTML("afterbegin", "<p>" + statusMessageId++ + ". Shooted at " + this.id.replace("cell_", "") + " </p>");
+				}
+				row.append(cell);
 			}
-			row.append(cell);
-		}
-		table.append(row);
+			table.append(row);
 	}
 
-	var FIELD_STATE = {
-		WATER: "WATER",
-		MISSED_SHOT: "MISSED_SHOT",
-		ACCURATE_SHOT: "ACCURATE_SHOT",
-		INTACT_SHIP: "INTACT_SHIP"
+	var FIELD_STATE  = {
+    WATER: "WATER",
+    MISSED_SHOT: "MISSED_SHOT",
+    ACCURATE_SHOT: "ACCURATE_SHOT",
+    INTACT_SHIP: "INTACT_SHIP"
 	};
 
-	function clearDemo() {
+    function clearDemo() {
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open("GET", 'http://localhost:8080/clear/', true);
+		xmlHttp.send(null);
+
 		for (var i = 0; i < 25; i++) {
 			document.getElementById('cell_' + i).className = "water";
 		}
+
+		document.getElementById("status").innerHTML = "";
 	}
 
 	function demo() {
 		var arr = random(0, 25, 5);
-		console.log(arr);
 		for (var i = 0; i < 5; i++) {
 			document.getElementById('cell_' + arr[i]).click();
 		}
@@ -83,7 +98,6 @@
 		var arr = shuffle(Array.from(Array(max).keys()));
 		return arr.slice(0, numOfElements);
 	}
-
 
 	function shuffle(array) {
 		var i = array.length,
@@ -101,20 +115,27 @@
 </script>
 
 <style>
-	table,
-	th,
-	td {
-		border: 1px solid black;
-		border-collapse: collapse;
+	table, td {
+	  border: 2px solid black;
+	  border-collapse: collapse;
+	  overflow:hidden
 	}
 
-	table {
+	table {/*
 		width: 50%;
-		height: 50%;
+		height: 50%;*/
+		table-layout: fixed;
+		font-family: futura-pt, sans-serif;
+		font-size: 200%;
+		border-collapse: collapse;
+    	border-radius: 15px;
+    	overflow:hidden
 	}
 
 	td {
 		text-align: center;
+		width: 100px;
+		height: 100px;
 	}
 
 	.water:hover {
@@ -122,7 +143,7 @@
 	}
 
 	.water {
-		background-color: aqua;
+		background-color: lightblue;
 	}
 
 	.missed {
@@ -135,5 +156,13 @@
 
 	.intact {
 		background-color: salmon;
+	}
+
+	#status {
+		float: right;
+	}
+
+	#player {
+		float: left;
 	}
 </style>
