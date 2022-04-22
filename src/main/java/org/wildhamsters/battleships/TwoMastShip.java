@@ -66,4 +66,11 @@ class TwoMastShip implements Ship {
         }
         return condition;
     }
+
+    @Override
+    public Ship resetToUntouched() {
+        sections.replaceAll((k, v) -> v = ShipSectionCondition.UNTOUCHED);
+        condition = ShipCondition.UNTOUCHED;
+        return this;
+    }
 }

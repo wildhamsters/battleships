@@ -54,6 +54,13 @@ class OneMastShip implements Ship {
         return verifyCondition();
     }
 
+    @Override
+    public Ship resetToUntouched() {
+        sections.replaceAll((k, v) -> v = ShipSectionCondition.UNTOUCHED);
+        condition = ShipCondition.UNTOUCHED;
+        return this;
+    }
+
     private ShipCondition verifyCondition() {
         if (sections.values().stream().allMatch(x -> (x == ShipSectionCondition.DAMAGED))) {
             condition = ShipCondition.SUNK;
