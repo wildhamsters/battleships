@@ -62,6 +62,10 @@ public class ShootVerifierTest {
         }
 
         @Override
+        public void clearBoard() {
+        }
+
+        @Override
         public BoardDimension size() {
             return new BoardDimension(0, board.size());
         }
