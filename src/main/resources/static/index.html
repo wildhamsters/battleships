@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>SHIPS TRIAL</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>SHIPS TRIAL</title>
 </head>
 <body>
 <div id="player">
-    <table id="playerBoard"></table>
-    <button onclick="demo()">DEMO</button>
-    <button onclick="clearDemo()">CLEAR</button>
+	<table id="playerBoard"></table>
+	<button onclick="demo()">DEMO</button>
+	<button onclick="clearDemo()">CLEAR</button>
 </div>
 
 <div id="status"></div>
@@ -22,7 +22,7 @@
 
 	var statusMessageId = 1;
 	var table = document.getElementById('playerBoard');
-	for (var i = 0; i < 5; i++) {
+	for(var i=0; i<5; i++) {
 		var row = document.createElement('tr');
 			for(var j = 0; j<5; j++) {
 				var cell = document.createElement('td');
@@ -69,10 +69,10 @@
 	}
 
 	var FIELD_STATE  = {
-        WATER: "WATER",
-        MISSED_SHOT: "MISSED_SHOT",
-        ACCURATE_SHOT: "ACCURATE_SHOT",
-        INTACT_SHIP: "INTACT_SHIP"
+    WATER: "WATER",
+    MISSED_SHOT: "MISSED_SHOT",
+    ACCURATE_SHOT: "ACCURATE_SHOT",
+    INTACT_SHIP: "INTACT_SHIP"
 	};
 
     function clearDemo() {
@@ -83,6 +83,8 @@
 		for (var i = 0; i < 25; i++) {
 			document.getElementById('cell_' + i).className = "water";
 		}
+
+		document.getElementById("status").innerHTML = "";
 	}
 
 	function demo() {
@@ -96,7 +98,6 @@
 		var arr = shuffle(Array.from(Array(max).keys()));
 		return arr.slice(0, numOfElements);
 	}
-
 
 	function shuffle(array) {
 		var i = array.length,
@@ -120,7 +121,9 @@
 	  overflow:hidden
 	}
 
-	table {
+	table {/*
+		width: 50%;
+		height: 50%;*/
 		table-layout: fixed;
 		font-family: futura-pt, sans-serif;
 		font-size: 200%;
