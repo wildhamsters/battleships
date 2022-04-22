@@ -14,7 +14,12 @@ public class DefaultBoardTest {
 
     @Test(dataProvider = "boardProvider")
     void shouldReturnProperFieldState(ArrayList<FieldState> board, int position, FieldState expected) {
-        assertEquals(board.get(position), expected);
+        //given
+        var testBoard = new DefaultBoard(board);
+        //when
+        var actual = testBoard.getFiled(position);
+        //then
+        assertEquals(actual, expected);
     }
 
     @DataProvider
