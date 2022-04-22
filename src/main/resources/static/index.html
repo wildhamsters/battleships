@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html>
-
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>SHIPS TRIAL</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SHIPS TRIAL</title>
 </head>
-
 <body>
 <div id="player">
     <table id="playerBoard"></table>
@@ -16,7 +14,6 @@
 
 <div id="status"></div>
 </body>
-
 </html>
 
 <script>
@@ -68,19 +65,21 @@
 				}
 				row.append(cell);
 			}
-			row.append(cell);
-		}
-		table.append(row);
+			table.append(row);
 	}
 
-	var FIELD_STATE = {
-		WATER: "WATER",
-		MISSED_SHOT: "MISSED_SHOT",
-		ACCURATE_SHOT: "ACCURATE_SHOT",
-		INTACT_SHIP: "INTACT_SHIP"
+	var FIELD_STATE  = {
+        WATER: "WATER",
+        MISSED_SHOT: "MISSED_SHOT",
+        ACCURATE_SHOT: "ACCURATE_SHOT",
+        INTACT_SHIP: "INTACT_SHIP"
 	};
 
-	function clearDemo() {
+    function clearDemo() {
+		var xmlHttp = new XMLHttpRequest();
+		xmlHttp.open("GET", 'http://localhost:8080/clear/', true);
+		xmlHttp.send(null);
+
 		for (var i = 0; i < 25; i++) {
 			document.getElementById('cell_' + i).className = "water";
 		}
@@ -88,7 +87,6 @@
 
 	function demo() {
 		var arr = random(0, 25, 5);
-		console.log(arr);
 		for (var i = 0; i < 5; i++) {
 			document.getElementById('cell_' + arr[i]).click();
 		}
