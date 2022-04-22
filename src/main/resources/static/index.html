@@ -17,8 +17,11 @@
 </html>
 
 <script>
-	var audio = new Audio('opener.wav');
-	audio.play();
+	window.onload = function() {
+	    var audio = new Audio('opener.wav');
+		audio.play();
+		clearDemo();
+   };
 
 	var statusMessageId = 1;
 	var table = document.getElementById('playerBoard');
@@ -37,7 +40,6 @@
 
 				            var response = JSON.parse(xmlHttp.responseText);
 				            var audio = new Audio('confirm.wav');
-							audio.play();
 
 				            switch(response.u) {
 				            	case FIELD_STATE.MISSED_SHOT:
@@ -48,11 +50,13 @@
 				            		break;
 				            	case FIELD_STATE.ACCURATE_SHOT:
 				            		document.getElementById(cell.target.id).className="accurate";
+				            		audio = new Audio('explosion.wav');
 				            		break;
 				            	case FIELD_STATE.INTACT_SHIP:
 				            		document.getElementById(cell.target.id).className="intact";
 				            		break;
 				            }
+				            audio.play();
 
 				            if (response.t) {
 				            	var audio = new Audio('win.wav');
