@@ -23,6 +23,6 @@ class Pair <U, T> {
 
     @Override
     public String toString() {
-        return "u : " + u + ", t : " + t;
+        return "{\"u\":\"" + u + "\", \"t\":" + t + "}";
     }
 }
