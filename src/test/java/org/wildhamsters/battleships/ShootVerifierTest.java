@@ -1,7 +1,6 @@
 package org.wildhamsters.battleships;
 
 
-import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -11,36 +10,36 @@ import java.util.stream.IntStream;
 
 import static org.testng.Assert.*;
 
-public class ShootVerificatorTest {
+public class ShootVerifierTest {
 
     @Test(dataProvider = "data")
-    public void testValidShoot(ShootVerificator verificator, Board board) throws IllegalShootException {
-        FieldState actual = verificator.verificateShoot(15, board);
+    public void testValidShoot(ShootVerifier verifier, Board board) throws IllegalShootException {
+        FieldState actual = verifier.verifyShoot(15, board);
         FieldState expected = FieldState.MISSED_SHOT;
         assertEquals(actual, expected);
     }
 
     @Test(dataProvider = "data", expectedExceptions = IllegalShootException.class)
-    public void testAlreadyShotOnField(ShootVerificator verificator, Board board) throws IllegalShootException {
+    public void testAlreadyShotOnField(ShootVerifier verifier, Board board) throws IllegalShootException {
         board.setField(FieldState.ACCURATE_SHOT, 15);
-        verificator.verificateShoot(15, board);
+        verifier.verifyShoot(15, board);
     }
 
     @Test(dataProvider = "data", expectedExceptions = IllegalShootException.class)
-    public void testAlreadyMissedField(ShootVerificator verificator, Board board) throws IllegalShootException {
+    public void testAlreadyMissedField(ShootVerifier verifier, Board board) throws IllegalShootException {
         board.setField(FieldState.MISSED_SHOT, 10);
-        verificator.verificateShoot(10, board);
+        verifier.verifyShoot(10, board);
     }
 
     @Test(dataProvider = "data", expectedExceptions = IllegalShootException.class)
-    public void testOutOfBoundsShoot(ShootVerificator verificator, Board board) throws IllegalShootException {
-        verificator.verificateShoot(30, board);
+    public void testOutOfBoundsShoot(ShootVerifier verifier, Board board) throws IllegalShootException {
+        verifier.verifyShoot(30, board);
     }
 
     @DataProvider
     Object[][] data() {
         return new Object[][]{
-                {new ShootVerificator(new BoardDimension(0, 25)), new DummyBoard(25)}
+                {new ShootVerifier(new BoardDimension(0, 25)), new DummyBoard(25)}
         };
     }
 
