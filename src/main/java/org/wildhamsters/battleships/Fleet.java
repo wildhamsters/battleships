@@ -12,9 +12,9 @@ class Fleet {
 
     Fleet() {
         ships = new HashMap<>();
-        ships.put(new OneMastShip(6), List.of(6));
+        ships.put(new OneMastShip(11), List.of(11));
         ships.put(new TwoMastShip(1, 2), List.of(1, 2));
-        occupiedFields = List.of(1, 2, 6);
+        occupiedFields = List.of(1, 2, 11);
     }
 
     ShotResult makeShot(int field) {
@@ -31,6 +31,13 @@ class Fleet {
             return ShotResult.FLEET_SUNK;
         }
         return ShotResult.HIT;
+    }
+
+    Fleet resetAllShipsToUntouched() {
+        for (Ship ship : ships.keySet()) {
+            ship.resetToUntouched();
+        }
+        return this;
     }
 
     boolean checkIfAllShipsSunk() {
