@@ -2,6 +2,9 @@ package org.wildhamsters.battleships;
 
 import java.util.ArrayList;
 
+/**
+ * @author Dominik Żebracki
+ */
 class DefaultBoard implements Board {
 
     private final ArrayList<FieldState> board;
