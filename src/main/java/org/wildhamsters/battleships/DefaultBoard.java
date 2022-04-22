@@ -24,7 +24,7 @@ class DefaultBoard implements Board {
     }
 
     @Override
-    public FieldState getFiled(int position) {
+    public FieldState getField(int position) {
         return board.get(position);
     }
 

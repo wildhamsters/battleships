@@ -13,7 +13,7 @@ class ShootVerifier {
             throw new IllegalShootException();
         }
 
-        return switch (board.getFiled(position)) {
+        return switch (board.getField(position)) {
             case WATER -> FieldState.MISSED_SHOT;
             case INTACT_SHIP -> FieldState.ACCURATE_SHOT;
             default -> throw new IllegalShootException();
@@ -25,7 +25,7 @@ class ShootVerifier {
     }
 
     private boolean alreadyShot(int position, Board board) {
-        return switch (board.getFiled(position)) {
+        return switch (board.getField(position)) {
             case WATER, INTACT_SHIP -> false;
             case ACCURATE_SHOT, MISSED_SHOT -> true;
         };
