@@ -3,7 +3,8 @@ package org.wildhamsters.battleships;
 /**
  * @author Kevin Nowak
  */
-enum ShipSectionCondition {
-    UNTOUCHED,
-    DAMAGED;
+enum ShotResult {
+    HIT,
+    MISS,
+    FLEET_SUNK
 }

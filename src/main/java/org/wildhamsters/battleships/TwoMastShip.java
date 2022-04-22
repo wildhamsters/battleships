@@ -3,6 +3,9 @@ package org.wildhamsters.battleships;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author Kevin Nowak
+ */
 class TwoMastShip implements Ship {
     private final int length = 2;
     private Map<Integer, ShipSectionCondition> sections;
@@ -28,22 +31,23 @@ class TwoMastShip implements Ship {
             }
             sb.append("]");
         }
-
         return sb.toString();
     }
 
     @Override
     public Ship markHit(int field) {
-        if (sections.containsKey(field)) {
-            sections.put(field, ShipSectionCondition.DAMAGED);
-        } else {
-            throw new IllegalArgumentException();
+        try {
+            if (sections.containsKey(field)) {
+                sections.put(field, ShipSectionCondition.DAMAGED);
+            } else {
+                throw new IllegalArgumentException();
+            }
+        } catch (IllegalArgumentException illegalArgumentException) {
+            System.err.println("Ship does not contain section on given field");
         }
-
         if (condition != ShipCondition.HIT) {
             condition = ShipCondition.HIT;
         }
-
         return this;
     }
 
@@ -60,7 +64,6 @@ class TwoMastShip implements Ship {
         } else {
             condition = ShipCondition.UNTOUCHED;
         }
-
         return condition;
     }
 }

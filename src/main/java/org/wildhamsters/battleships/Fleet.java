@@ -1,27 +1,45 @@
 package org.wildhamsters.battleships;
 
-import java.util.ArrayList;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+/**
+ * @author Kevin Nowak
+ */
 class Fleet {
-    // Contains for now 1x OneMastShip and 1x TwoMastShip
-    ArrayList<Ship> ships;
+    Map<Ship, List<Integer>> ships;
+    List<Integer> occupied_fields;
 
     Fleet() {
-        ships = new ArrayList<>();
-        ships.add(new OneMastShip(6));
-        ships.add(new TwoMastShip(1, 2));
+        ships = new HashMap<>();
+        ships.put(new OneMastShip(6), List.of(6));
+        ships.put(new TwoMastShip(1, 2), List.of(1, 2));
+        occupied_fields = List.of(1, 2, 6);
     }
 
-    // TODO: check if any ship has the field
-    
+    ShotResult makeShot(int field) {
+        if (!occupied_fields.contains(field)) {
+            return ShotResult.MISS;
+        } else {
+            for (Map.Entry<Ship, List<Integer>> entry : ships.entrySet()) {
+                if (entry.getValue().contains(field)) {
+                    entry.getKey().markHit(field);
+                }
+            }
+        }
+        if (checkIfAllShipsSunk()) {
+            return ShotResult.FLEET_SUNK;
+        }
+        return ShotResult.HIT;
+    }
+
     boolean checkIfAllShipsSunk() {
         AtomicBoolean answer = new AtomicBoolean(true);
-        ships.forEach(elem -> {
-            if (elem.getShipCondition() != ShipCondition.SUNK) {
+        for (Ship ship : ships.keySet()) {
+            if (ship.getShipCondition() != ShipCondition.SUNK) {
                 answer.set(false);
             }
-        });
+        }
         return answer.get();
     }
 }
