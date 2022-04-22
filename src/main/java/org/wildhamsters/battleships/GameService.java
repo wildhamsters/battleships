@@ -2,9 +2,6 @@ package org.wildhamsters.battleships;
 
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.stream.IntStream;
-
 /**
  * @author Piotr Chowaniec
  */
@@ -16,10 +13,8 @@ class GameService {
     private final ShootVerifier shootVerifier;
     private final Board board;
 
-    GameService() {
-        ArrayList<FieldState> list = new ArrayList<>();
-        IntStream.range(0, 25).forEach(x -> list.add(FieldState.WATER));
-        board = new DefaultBoard(list);
+    GameService(Board board) {
+        this.board = board;
         shootVerifier = new ShootVerifier(board.size());
     }
 
