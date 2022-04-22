@@ -8,17 +8,17 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 class Fleet {
     Map<Ship, List<Integer>> ships;
-    List<Integer> occupied_fields;
+    List<Integer> occupiedFields;
 
     Fleet() {
         ships = new HashMap<>();
         ships.put(new OneMastShip(6), List.of(6));
         ships.put(new TwoMastShip(1, 2), List.of(1, 2));
-        occupied_fields = List.of(1, 2, 6);
+        occupiedFields = List.of(1, 2, 6);
     }
 
     ShotResult makeShot(int field) {
-        if (!occupied_fields.contains(field)) {
+        if (!occupiedFields.contains(field)) {
             return ShotResult.MISS;
         } else {
             for (Map.Entry<Ship, List<Integer>> entry : ships.entrySet()) {
