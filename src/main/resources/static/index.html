@@ -17,8 +17,11 @@
 </html>
 
 <script>
-	var audio = new Audio('opener.wav');
-	audio.play();
+	window.onload = function() {
+	    var audio = new Audio('opener.wav');
+		audio.play();
+		clearDemo();
+   };
 
 	var statusMessageId = 1;
 	var table = document.getElementById('playerBoard');
