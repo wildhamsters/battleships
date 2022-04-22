@@ -7,8 +7,7 @@ import java.util.Map;
  * @author Kevin Nowak
  */
 class OneMastShip implements Ship {
-    private final int length = 1;
-    private Map<Integer, ShipSectionCondition> sections;
+    private final Map<Integer, ShipSectionCondition> sections;
     private ShipCondition condition;
 
     OneMastShip(int field) {

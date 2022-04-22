@@ -7,8 +7,7 @@ import java.util.Map;
  * @author Kevin Nowak
  */
 class TwoMastShip implements Ship {
-    private final int length = 2;
-    private Map<Integer, ShipSectionCondition> sections;
+    private final Map<Integer, ShipSectionCondition> sections;
     private ShipCondition condition;
 
     TwoMastShip(int firstField, int secondField) {
