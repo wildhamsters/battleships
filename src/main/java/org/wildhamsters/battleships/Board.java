@@ -7,6 +7,6 @@ interface Board {
 
     FieldState getFiled(int position);
     void setField(FieldState fieldState, int position);
-
+    void clearBoard();
     BoardDimension size();
 }
