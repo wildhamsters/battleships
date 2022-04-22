@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 class GameService {
 
-    //TODO  Add Fleet, update fleet, check if Player won.
-
     private final ShootVerifier shootVerifier;
     private final Board board;
-    private final Fleet fleet;
+    private Fleet fleet;
 
     GameService(Board board) {
         this.board = board;
@@ -26,6 +24,12 @@ class GameService {
         fleet.makeShot(position);
         updateFieldState(state, position);
         return state;
+    }
+
+    void resetGameStatus() {
+        board.clearBoard();
+        fleet.resetAllShipsToUntouched();
+        placeShipsOnBoard();
     }
 
     boolean isRoundFinished() {
