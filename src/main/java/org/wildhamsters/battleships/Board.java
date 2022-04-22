@@ -5,7 +5,7 @@ package org.wildhamsters.battleships;
  */
 interface Board {
 
-    FieldState getFiled(int position);
+    FieldState getField(int position);
     void setField(FieldState fieldState, int position);
     void clearBoard();
     BoardDimension size();

@@ -17,7 +17,7 @@ public class DefaultBoardTest {
         //given
         var testBoard = new DefaultBoard(board);
         //when
-        var actual = testBoard.getFiled(position);
+        var actual = testBoard.getField(position);
         //then
         assertEquals(actual, expected);
     }
