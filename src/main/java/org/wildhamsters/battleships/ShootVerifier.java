@@ -1,13 +1,13 @@
 package org.wildhamsters.battleships;
 
-class ShootVerificator {
+class ShootVerifier {
     private final BoardDimension dimension;
 
-    ShootVerificator(BoardDimension boardDimension) {
+    ShootVerifier(BoardDimension boardDimension) {
         this.dimension = boardDimension;
     }
 
-    FieldState verificateShoot(int position, Board board) throws IllegalShootException {
+    FieldState verifyShoot(int position, Board board) throws IllegalShootException {
 
         if (invalidShoot(position, board)) {
             throw new IllegalShootException();
