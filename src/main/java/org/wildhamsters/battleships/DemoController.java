@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class DemoController {
 
-    private final Board board;
+    private final GameService gameService;
 
-    DemoController(Board board) {
-        this.board = board;
+    DemoController(GameService gameService) {
+        this.gameService = gameService;
     }
 
     @GetMapping("/clear")
     ResponseEntity<FieldState> clear() {
-        board.clearBoard();
+        gameService.resetGameStatus();
         return ResponseEntity.ok().build();
     }
 }
