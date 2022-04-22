@@ -1,6 +1,7 @@
 package org.wildhamsters.battleships;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,10 +19,11 @@ class GameplayController {
     }
 
     @GetMapping("/shoot/{cell}")
-    ResponseEntity<FieldState> shoot(@PathVariable int cell) {
+    ResponseEntity<String> shoot(@PathVariable int cell) {
         try {
             FieldState updatedState = gameService.verifyShoot(cell);
-            return ResponseEntity.ok(updatedState);
+            Boolean finished = gameService.isRoundFinished();
+            return ResponseEntity.ok(new Pair<>(updatedState, finished).toString());
         } catch (IllegalShootException e) {
             return ResponseEntity.badRequest().build();
         }

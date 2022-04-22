@@ -34,12 +34,12 @@
 				    xmlHttp.onreadystatechange = function() {
 
 				        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+
 				            var response = JSON.parse(xmlHttp.responseText);
-				            console.log(response);
 				            var audio = new Audio('confirm.wav');
 							audio.play();
 
-				            switch(response) {
+				            switch(response.u) {
 				            	case FIELD_STATE.MISSED_SHOT:
 				            		document.getElementById(cell.target.id).className="missed";
 				            		break;
@@ -52,6 +52,12 @@
 				            	case FIELD_STATE.INTACT_SHIP:
 				            		document.getElementById(cell.target.id).className="intact";
 				            		break;
+				            }
+
+				            if (response.t) {
+				            	var audio = new Audio('win.wav');
+								audio.play();
+								document.body.innerHTML = "<img src='https://c.tenor.com/D-pLzJqzkKcAAAAC/winner-wrestling.gif' />";
 				            }
 				        } else if (xmlHttp.readyState == 4 && xmlHttp.status == 400) {
 				        	document.getElementById("status").insertAdjacentHTML("afterbegin", "<p style='color: red;'>" + statusMessageId++ + ". Bad request! </p>");
@@ -121,9 +127,7 @@
 	  overflow:hidden
 	}
 
-	table {/*
-		width: 50%;
-		height: 50%;*/
+	table {
 		table-layout: fixed;
 		font-family: futura-pt, sans-serif;
 		font-size: 200%;
