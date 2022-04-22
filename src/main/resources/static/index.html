@@ -22,6 +22,7 @@
 				cell.onclick=function(cell) {
 					var xmlHttp = new XMLHttpRequest();
 				    xmlHttp.onreadystatechange = function() {
+
 				        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
 				            var response = JSON.parse(xmlHttp.responseText);
 				            console.log(response);
@@ -40,6 +41,8 @@
 				            		document.getElementById(cell.target.id).className="intact";
 				            		break;
 				            }
+				        } else if (xmlHttp.readyState == 4 && xmlHttp.status == 400) {
+				        	alert("Bad request");
 				        }
 				    };
 				    xmlHttp.open( "GET", 'http://localhost:8080/shoot/' + this.id.replace("cell_", ""), true );
@@ -73,6 +76,10 @@
 		text-align: center;
 	}
 
+	.water:hover {
+		background-color: lightgray;
+	}
+
 	.water {
 		background-color: aqua;
 	}
@@ -82,7 +89,7 @@
 	}
 
 	.accurate {
-		background-color: green;
+		background-color: indianred;
 	}
 
 	.intact {
