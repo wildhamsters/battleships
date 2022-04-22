@@ -1,25 +1,30 @@
 package org.wildhamsters.battleships;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 /**
  * @author Piotr Chowaniec
  */
 @Service
-public class GameService {
+class GameService {
 
-    private final ShootVerificator shootVerificator;
+    //TODO  Add Fleet, update fleet, check if Player won.
+
+    private final ShootVerifier shootVerifier;
     private final Board board;
 
-    @Autowired
-    public GameService(ShootVerificator shootVerificator, Board board) {
-        this.shootVerificator = shootVerificator;
-        this.board = board;
+    GameService() {
+        ArrayList<FieldState> list = new ArrayList<>();
+        IntStream.range(0, 25).forEach(x -> list.add(FieldState.WATER));
+        board = new DefaultBoard(list);
+        shootVerifier = new ShootVerifier(board.size());
     }
 
-    public FieldState validateShoot(int position) throws IllegalShootException {
-        FieldState state = shootVerificator.verificateShoot(position, board);
+    FieldState verifyShoot(int position) throws IllegalShootException {
+        FieldState state = shootVerifier.verifyShoot(position, board);
         updateFieldState(state, position);
         return state;
     }
