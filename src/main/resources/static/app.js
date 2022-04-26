@@ -45,6 +45,12 @@ function createPlayerBoard() { //todo change
 				    sendName(extractCellNumber(this));
 				    document.getElementById("status").insertAdjacentHTML("afterbegin", "<p>" + statusMessageId++ + ". Shooted at " + extractCellNumber(this) + " </p>");
 				}
+				cell.onmouseenter = function(){
+                    hoverMany(extractCellNumber(this), 4, "H");
+                };
+                cell.onmouseleave = function(){
+                    unhoverMany(extractCellNumber(this), 4, "H");
+                };
 				row.append(cell);
 			}
 			table.append(row);
@@ -114,6 +120,21 @@ function extractCellNumber(cell) {
 function badRequest() {
 	document.getElementById("status").insertAdjacentHTML("afterbegin", "<p style='color: red;'>" + statusMessageId++ + ". Bad request! </p>");
 	new Audio('alert.wav').play();
+}
+
+function hoverMany(startId, cellsCount, direction) {//todo make direction
+    var id = "cell_" +  startId;
+    for(var i=0; i<cellsCount; i++) {
+        document.getElementById("cell_" + (parseInt(startId) + i)).className='intact';
+    }
+}
+
+function unhoverMany(startId, cellsCount, direction) {//todo make direction
+    var id = "cell_" +  startId;
+    for(var i=0; i<cellsCount; i++) {
+        var number = startId + i;
+        document.getElementById("cell_" + (parseInt(startId) + i)).className='water';
+    }
 }
 
 function winner() {
