@@ -21,8 +21,10 @@ div > p {
 
 td {
 	text-align: center;
-	border: 1px solid black;
-	cursor: crosshair;
+    font-size: 80%;
+    padding: 3px;
+    border: 1px solid black;
+    cursor: crosshair
 }
 
 .water:hover {

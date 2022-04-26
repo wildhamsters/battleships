@@ -186,7 +186,7 @@ function shuffle(array) {
 	return array;
 }
 
-// websockets test
+// websockets
 
 function connect() {
     var socket = new SockJS('/shots-websocket');
@@ -194,7 +194,7 @@ function connect() {
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
         stompClient.subscribe('/shots/list', function (item) {
-            showGreeting(item);
+            readSubscribed(item);
         });
     });
 }
@@ -210,11 +210,15 @@ function sendName(id) {
     stompClient.send("/app/action", {}, id);
 }
 
-function showGreeting(message) {
+function readSubscribed(message) {
     console.log(message.body);
     var response = JSON.parse(message.body);
-    handleReturnedFieldType(response.u, response.t);
-    if (response.w) {
+    if(response.error != "") {
+        console.error(response.error);
+        return;
+    }
+    handleReturnedFieldType(response.updatedState, response.cell);
+    if (response.finished) {
     	winner();
     }
 }
