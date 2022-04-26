@@ -54,4 +54,15 @@ public class DefaultBoardTest {
         BoardDimension boardDimension = new BoardDimension(0, 24);
         assertEquals(board.size(), boardDimension);
     }
+
+    @Test
+    void testSettingBoardField() {
+        Board board = new DefaultBoard();
+        FieldState expected = FieldState.INTACT_SHIP;
+
+        board.setField(FieldState.INTACT_SHIP, 15);
+        FieldState actual = board.getField(15);
+
+        assertEquals(actual, expected);
+    }
 }
