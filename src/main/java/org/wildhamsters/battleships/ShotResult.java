@@ -6,5 +6,6 @@ package org.wildhamsters.battleships;
 enum ShotResult {
     HIT,
     MISS,
+    SHIP_SUNK,
     FLEET_SUNK
 }

@@ -8,7 +8,7 @@ import java.util.Map;
  */
 class Ship {
     Map<Integer, ShipSectionCondition> sections;
-    ShipCondition condition;
+    private ShipCondition condition;
 
     public Ship() {
         sections = new HashMap<>();
@@ -29,7 +29,7 @@ class Ship {
         return sb.toString();
     }
 
-    Ship markHit(int field) {
+    void markHit(int field) {
         try {
             if (sections.containsKey(field)) {
                 sections.put(field, ShipSectionCondition.DAMAGED);
@@ -42,7 +42,6 @@ class Ship {
         if (condition != ShipCondition.HIT) {
             condition = ShipCondition.HIT;
         }
-        return this;
     }
 
     ShipCondition getShipCondition() {
@@ -60,10 +59,9 @@ class Ship {
         return condition;
     }
 
-    Ship resetToUntouched() {
+    void resetToUntouched() {
         sections.replaceAll((k, v) -> v = ShipSectionCondition.UNTOUCHED);
         condition = ShipCondition.UNTOUCHED;
-        return this;
     }
 
 }
