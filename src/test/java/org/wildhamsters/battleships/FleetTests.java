@@ -68,8 +68,8 @@ public class FleetTests {
         fleet.makeShot(11);
         fleet.resetAllShipsToUntouched();
         // Then
-        assertTrue(fleet.ships.keySet().stream().allMatch(ship ->
-            ship.getShipCondition() == ShipCondition.UNTOUCHED
+        assertTrue(fleet.fleetShips().stream().allMatch(ship ->
+                ship.getShipCondition() == ShipCondition.UNTOUCHED
         ));
     }
 }

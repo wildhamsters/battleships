@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Kevin Nowak
  */
 class Fleet {
-    Map<Ship, List<Integer>> ships;
+    private Map<Ship, List<Integer>> ships;
     List<Integer> occupiedFields;
 
     Fleet() {
@@ -48,5 +48,9 @@ class Fleet {
             }
         }
         return answer.get();
+    }
+
+    Set<Ship> fleetShips() {
+        return ships.keySet();
     }
 }
