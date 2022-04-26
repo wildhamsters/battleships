@@ -1,40 +1,43 @@
 package org.wildhamsters.battleships;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.IntStream;
 
 /**
  * @author Dominik Żebracki
  */
-class shipPlacementConfigurer {
+class ShipPlacementConfigurer {
 
     private final List<Integer> shipSizesToBePlaced;
-    private final ConfigurationBoard board;
     private final int boardSize;
     private final int width;
+    private final ConfigurationBoard board;
 
-    shipPlacementConfigurer(List<Integer> shipsToBePlaced, ConfigurationBoard board, int boardSize, int width) {
-        this.shipSizesToBePlaced = shipsToBePlaced;
+    ShipPlacementConfigurer(List<Integer> shipSizedToBePlaced, ConfigurationBoard board, int boardSize, int width) {
+        shipSizedToBePlaced.sort(Comparator.reverseOrder());
+        this.shipSizesToBePlaced = shipSizedToBePlaced;
         this.board = board;
         this.boardSize = boardSize;
         this.width = width;
     }
 
-    void placeShips() {
-        var random = new Random();
-        List<Integer> mastPositions;
-        boolean direction;
-        for (Integer size: shipSizesToBePlaced) {
-
-            board.placeShip(createRandomValidMastPositions(size));
+    //TODO relaunch placing randomizer.
+    // Sometimes enters infinite loop with unlucky placing with small board and a lot of ships
+    // works fine with standard settings 10x10, standard fleet
+    List<List<Integer>> placeShips() {
+        var fleet = new ArrayList<List<Integer>>();
+        List<Integer> shipPositions = null;
+        for (Integer shipSize : shipSizesToBePlaced) {
+            shipPositions = createRandomValidMastPositions(shipSize);
+            board.placeShip(shipPositions);
+            fleet.add(shipPositions);
         }
+        return fleet;
     }
 
     private List<Integer> calculateMastPositions(int shipSize, int startingPosition, boolean horizontal) {
         var mastPositions = new ArrayList<Integer>();
-        if(horizontal) {
+        if (horizontal) {
             IntStream.range(0, shipSize).forEach(i -> mastPositions.add(startingPosition + i));
         } else {
             IntStream.range(0, shipSize).forEach(i -> mastPositions.add(startingPosition + i * width));
