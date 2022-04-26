@@ -2,6 +2,7 @@ package org.wildhamsters.battleships;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,37 +14,44 @@ import static org.testng.Assert.assertEquals;
 public class DefaultBoardTest {
 
     @Test(dataProvider = "boardProvider")
-    void shouldReturnProperFieldState(ArrayList<FieldState> board, int position, FieldState expected) {
+    void shouldReturnProperFieldState(Board board, int position, FieldState expected) {
         //given
-        var testBoard = new DefaultBoard(board);
         //when
-        var actual = testBoard.getField(position);
+        FieldState actual = board.getField(position);
         //then
         assertEquals(actual, expected);
+    }
+
+    @Test(dataProvider = "boardProvider")
+    void testClearingWholeBoard(Board board, int notUsedInt, FieldState notUsedObject) {
+        SoftAssert sa = new SoftAssert();
+        board.clearBoard();
+        for (int i = 0; i < board.size().max(); i++) {
+            sa.assertEquals(board.getField(i), FieldState.WATER);
+        }
+        sa.assertAll();
     }
 
     @DataProvider
     Object[][] boardProvider() {
         return new Object[][]{
-                {new ArrayList<>(List.of(FieldState.WATER)), 0, FieldState.WATER},
-                {setField(createBoardWithWater(10), 2, FieldState.INTACT_SHIP), 2, FieldState.INTACT_SHIP},
-                {setField(createBoardWithWater(2), 1, FieldState.ACCURATE_SHOT), 1, FieldState.ACCURATE_SHOT},
-                {setField(createBoardWithWater(13), 6, FieldState.MISSED_SHOT), 6, FieldState.MISSED_SHOT},
-                {setField(createBoardWithWater(123), 45, FieldState.MISSED_SHOT), 45, FieldState.MISSED_SHOT},
-                {setField(createBoardWithWater(14), 1, FieldState.MISSED_SHOT), 1, FieldState.MISSED_SHOT},
-                {setField(createBoardWithWater(89), 0, FieldState.MISSED_SHOT), 0, FieldState.MISSED_SHOT},
+                {createTestBoardWithSpecificStateAtPosition(FieldState.INTACT_SHIP, 0), 0, FieldState.INTACT_SHIP},
+                {createTestBoardWithSpecificStateAtPosition(FieldState.ACCURATE_SHOT, 5), 5, FieldState.ACCURATE_SHOT},
+                {createTestBoardWithSpecificStateAtPosition(FieldState.MISSED_SHOT, 10), 10, FieldState.MISSED_SHOT},
+                {createTestBoardWithSpecificStateAtPosition(FieldState.WATER, 15), 15, FieldState.WATER}
         };
     }
 
-    private ArrayList<FieldState> createBoardWithWater(int size) {
-        var board = new ArrayList<FieldState>(size);
-        IntStream.range(0, size)
-                .forEach(i -> board.add(i, FieldState.WATER));
+    private Board createTestBoardWithSpecificStateAtPosition(FieldState fieldState, int position) {
+        Board board = new DefaultBoard();
+        board.setField(fieldState, position);
         return board;
     }
 
-    private ArrayList<FieldState> setField(ArrayList<FieldState> board, int position, FieldState fieldState) {
-        board.set(position, fieldState);
-        return board;
+    @Test
+    void testBoardSize() {
+        Board board = new DefaultBoard();
+        BoardDimension boardDimension = new BoardDimension(0, 24);
+        assertEquals(board.size(), boardDimension);
     }
 }
