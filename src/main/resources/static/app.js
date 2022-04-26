@@ -4,8 +4,8 @@ window.onload = function() {
 	clearDemo();
 };
 
-var width = 25;
-var height = 25;
+var width = 10;
+var height = 10;
 
 var FIELD_STATE  = {
 	WATER: "WATER",
@@ -46,10 +46,10 @@ function createPlayerBoard() { //todo change
 				    document.getElementById("status").insertAdjacentHTML("afterbegin", "<p>" + statusMessageId++ + ". Shooted at " + extractCellNumber(this) + " </p>");
 				}
 				cell.onmouseenter = function(){
-                    hoverMany(extractCellNumber(this), 4, "H");
+                    //hoverMany(extractCellNumber(this), 4, "H");
                 };
                 cell.onmouseleave = function(){
-                    unhoverMany(extractCellNumber(this), 4, "H");
+                    //unhoverMany(extractCellNumber(this), 4, "H");
                 };
 				row.append(cell);
 			}

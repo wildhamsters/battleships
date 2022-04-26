@@ -1,15 +1,18 @@
 table {
 	table-layout: fixed;
-	font-family: futura-pt, sans-serif;
+	font-family: futura-pt, monospace;
 	border-collapse: collapse;
 	border-style: hidden;
 	border-radius: 15px;
 	overflow: hidden;
+	width: 48vw;
+	height: 80vh;
 }
 
 .board {
 	display: flex;
 	flex-direction: column;
+	gap: 2px;
 }
 
 div > p {
@@ -18,10 +21,8 @@ div > p {
 
 td {
 	text-align: center;
-	font-size: 80%;
-	padding: 3px;
 	border: 1px solid black;
-	cursor: crosshair
+	cursor: crosshair;
 }
 
 .water:hover {
@@ -47,5 +48,6 @@ td {
 body {
 	display: flex;
 	flex-direction: row;
-	column-gap: 15px
+	column-gap: 15px;
+	background-color: lightcyan;
 }
