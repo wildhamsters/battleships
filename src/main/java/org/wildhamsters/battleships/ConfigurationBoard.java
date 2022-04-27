@@ -26,12 +26,12 @@ class ConfigurationBoard {
         return newBoard;
     }
 
-    boolean isEnoughSpaceForShipWithinBoardBounds(int requiredSpace, int gameBoardPosition, boolean horizontal) {
+    boolean isEnoughSpaceForShipWithinBoardBounds(int requiredSpace, int gameBoardPosition, ShipDirection direction) {
         var position = toConfigurationBoardPosition(gameBoardPosition);
-        if(horizontal) {
-            return structure.rowEnd(structure.rowIndex(position)) - position >= requiredSpace;
-        }
-        return structure.height() - structure.rowIndex(position) > requiredSpace;
+        return switch (direction) {
+            case HORIZONTAL -> structure.rowEnd(structure.rowIndex(position)) - position >= requiredSpace;
+            case VERTICAL -> structure.height() - structure.rowIndex(position) > requiredSpace;
+        };
     }
 
     boolean areSurroundingFieldsNotOccupied(List<Integer> gameBoardPositions) {
@@ -48,8 +48,8 @@ class ConfigurationBoard {
         return gameBoardPosition + structure.width() + (gameBoardRowIndex * 2) + 1;
     }
 
-    boolean canShipBePlaced(List<Integer> shipMastPositions, boolean horizontal) {
-        return isEnoughSpaceForShipWithinBoardBounds(shipMastPositions.size(), shipMastPositions.get(0), horizontal) &&
+    boolean canShipBePlaced(List<Integer> shipMastPositions, ShipDirection direction) {
+        return isEnoughSpaceForShipWithinBoardBounds(shipMastPositions.size(), shipMastPositions.get(0), direction) &&
                 areSurroundingFieldsNotOccupied(shipMastPositions);
     }
 

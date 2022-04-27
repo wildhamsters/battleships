@@ -12,13 +12,19 @@ class ShipPlacementConfigurer {
     private final int boardSize;
     private final int width;
     private final ConfigurationBoard board;
+    private final Random random;
 
-    ShipPlacementConfigurer(List<Integer> shipSizedToBePlaced, ConfigurationBoard board, int boardSize, int width) {
+    ShipPlacementConfigurer(List<Integer> shipSizedToBePlaced,
+                            ConfigurationBoard board,
+                            int boardSize,
+                            int width,
+                            Random random) {
         shipSizedToBePlaced.sort(Comparator.reverseOrder());
         this.shipSizesToBePlaced = shipSizedToBePlaced;
         this.board = board;
         this.boardSize = boardSize;
         this.width = width;
+        this.random = random;
     }
 
     //TODO relaunch placing randomizer.
@@ -35,24 +41,30 @@ class ShipPlacementConfigurer {
         return fleet;
     }
 
-    private List<Integer> calculateMastPositions(int shipSize, int startingPosition, boolean horizontal) {
+    private List<Integer> calculateMastPositions(int shipSize, int startingPosition, ShipDirection direction) {
         var mastPositions = new ArrayList<Integer>();
-        if (horizontal) {
-            IntStream.range(0, shipSize).forEach(i -> mastPositions.add(startingPosition + i));
-        } else {
-            IntStream.range(0, shipSize).forEach(i -> mastPositions.add(startingPosition + i * width));
+        switch (direction) {
+            case HORIZONTAL -> IntStream.range(0, shipSize).forEach(i -> mastPositions.add(startingPosition + i));
+            case VERTICAL -> IntStream.range(0, shipSize).forEach(i -> mastPositions.add(startingPosition + i * width));
+            default -> throw new IllegalArgumentException("Unknown ship placement direction.");
         }
         return mastPositions;
     }
 
     private List<Integer> createRandomValidMastPositions(int shipSize) {
-        var random = new Random();
-        boolean direction;
+        var direction = establishShipDirection();
         List<Integer> mastPositions;
         do {
-            direction = random.nextInt(0, 2) == 0;
             mastPositions = calculateMastPositions(shipSize, random.nextInt(boardSize), direction);
         } while (!board.canShipBePlaced(mastPositions, direction));
         return mastPositions;
+    }
+
+    private ShipDirection establishShipDirection() {
+        return switch (random.nextInt(ShipDirection.values().length)) {
+            case 0 -> ShipDirection.HORIZONTAL;
+            case 1 -> ShipDirection.VERTICAL;
+            default -> ShipDirection.VERTICAL;
+        };
     }
 }
