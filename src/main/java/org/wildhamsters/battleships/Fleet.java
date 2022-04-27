@@ -90,7 +90,13 @@ class Fleet {
         return answer.get();
     }
 
-    Set<Ship> fleetShips() {
-        return ships.getKeySet();
+    boolean checkIfAllShipsUntouched() {
+        AtomicBoolean answer = new AtomicBoolean(true);
+        for (Ship ship : ships.getKeySet()) {
+            if (ship.getShipCondition() != ShipCondition.UNTOUCHED) {
+                answer.set(false);
+            }
+        }
+        return answer.get();
     }
 }
