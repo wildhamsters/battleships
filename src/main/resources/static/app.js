@@ -191,12 +191,58 @@ function shuffle(array) {
 function connect() {
     var socket = new SockJS('/shots-websocket');
     stompClient = Stomp.over(socket);
+
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
+
+        var url = stompClient.ws._transport.url;
+        console.log("URL " + url);
+        url = url.replace(
+          "ws://localhost:8080/app/room/",  "");
+        url = url.replace("/websocket", "");
+        url = url.replace(/^[0-9]+\//, "");
+        console.log("Your current session is: " + url);
+        sessionId = url;
+
+
         stompClient.subscribe('/shots/list', function (item) {
             readSubscribed(item);
         });
+
+        stompClient.subscribe('/user/queue/specific-user'
+              + '-user' + sessionId, function (msgOut) {
+                 console.log("RECEIVED FROM THE USER: " + sessionId + " " + msgOut);
+            });
     });
+}
+
+function connectUsers() {
+    var socket = new SockJS('/shots-websocket');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function (frame) {
+        console.log('Connected: ' + frame);
+
+        var url = stompClient.ws._transport.url;
+        console.log("URL " + url);
+        url = url.replace(
+          "ws://localhost:8080/shots-websocket/",  "");
+        url = url.replace("/websocket", "");
+        url = url.replace(/^[0-9]+\//, "");
+        console.log("Your current session is: " + url);
+        sessionId = url;
+
+        stompClient.subscribe('/user/' + sessionId + '/queue/specific-user', function (msgOut) {
+             console.log("RECEIVED FROM THE USER: " + sessionId + " " + msgOut);
+        });
+
+        stompClient.send("/app/room", {
+        }, JSON.stringify({
+            "s":sessionId
+        }));
+    });
+
+
 }
 
 function disconnect() {
@@ -225,4 +271,5 @@ function readSubscribed(message) {
 
 createPlayerBoard();
 createOpponentBoard()
-connect();
+//connect();
+connectUsers();
