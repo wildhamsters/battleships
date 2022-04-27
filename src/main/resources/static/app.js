@@ -1,5 +1,5 @@
 window.onload = function() {
-    var audio = new Audio('opener.wav');
+    var audio = new Audio('audio/opener.wav');
 	audio.play();
 	clearDemo();
 };
@@ -97,7 +97,7 @@ function handleReturnedFieldType(returnedFieldType, cell) {
 	switch(returnedFieldType) {
     	case FIELD_STATE.MISSED_SHOT:
     		changeDOMClassName(id, "missed");
-    		new Audio('confirm.wav').play();
+    		new Audio('audio/confirm.wav').play();
     		break;
     	case FIELD_STATE.WATER:
     		changeDOMClassName(id, "water");
@@ -105,7 +105,7 @@ function handleReturnedFieldType(returnedFieldType, cell) {
     	case FIELD_STATE.ACCURATE_SHOT:
     		changeDOMClassName(id, "accurate");
     		document.getElementById(id).innerHTML="<img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwI8LF99KrNGMyNAhXkUBD9CxR1K0FC2Rwhw&usqp=CAU' style='width: 90px; height: 90px; text-align: center;'/>";
-    		new Audio('explosion.wav').play();
+    		new Audio('audio/explosion.wav').play();
     		break;
     	case FIELD_STATE.INTACT_SHIP:
     		changeDOMClassName(id, "intact");
@@ -119,7 +119,7 @@ function extractCellNumber(cell) {
 
 function badRequest() {
 	document.getElementById("status").insertAdjacentHTML("afterbegin", "<p style='color: red;'>" + statusMessageId++ + ". Bad request! </p>");
-	new Audio('alert.wav').play();
+	new Audio('audio/alert.wav').play();
 }
 
 function hoverMany(startId, cellsCount, direction) {//todo make direction
@@ -138,7 +138,7 @@ function unhoverMany(startId, cellsCount, direction) {//todo make direction
 }
 
 function winner() {
-	new Audio('win.wav').play();
+	new Audio('audio/win.wav').play();
 	document.body.innerHTML = "<img src='https://c.tenor.com/D-pLzJqzkKcAAAAC/winner-wrestling.gif' />";
 }
 
