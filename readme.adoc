@@ -1,26 +1,29 @@
-= Awesome BattleShip Game
+= Awesome Battleship Game
 
-Mariusz Bal <developer.m.info@gmail.com>; Dominik Żebracki <d.zebracki@gmail.com>; Piotr Chowaniec <chowaniec.piotr@poczta.fm>; Kevin Nowak <nowakk96@icloud.com; Kamil Koziol <kamilkoziol92@gmail.com>
+== Contributors 
 
+Mariusz Bal developer.m.info@gmail.com +
+Dominik Żebracki d.zebracki@gmail.com +
+Piotr Chowaniec chowaniec.piotr@poczta.fm + 
+Kevin Nowak nowakk96@icloud.com +
+Kamil Koziol kamilkoziol92@gmail.com 
 
 == How to run
 
-To run the application the user need to :
+To run the application, the user needs to :
 
 
 * Compile and build application with `mvn package` command
-* Run server side with `java -jar target/battleships-x.x.x.jar` where x.x.x is the current version of the game. 
-* Type in the web browser `http://localhost:8080/` to enjoy a well made battleship game
-
+* Run server-side with `java -jar target/battleships-x.x.x.jar` where x.x.x is the current version of the game. 
+* Type in the web browser `http://localhost:8080/` to enjoy a well-made battleship game
 
 == Requirements 
 
-Application requires Java 17 and Maven 3.8.5 to run.
-
+The application requires Java 17 and Maven 3.8.5 to run.
 
 == Game rules 
-At the moment game rules are simple. The user can choose one of 25 board fields to shoot enemy ships and try to sunk them.
+At the moment, the game rules are simple. The user can choose one of 25 board fields to shoot enemy ships and try to sink them.
 
-This is work in progress and in final version the game should look similar to the one described in the link below.
+This is a work in progress, and the game's final version should look similar to the one described in the link below.
 
 * https://en.wikipedia.org/wiki/Battleship_(game)[BattleShips_(game)]
