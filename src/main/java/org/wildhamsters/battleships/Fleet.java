@@ -7,16 +7,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Kevin Nowak
  */
 class Fleet {
-    private final Map<Ship, List<Integer>> ships;
+    ShipsMap ships;
     FieldList allTakenFields;
 
     Fleet() {
-        ships = new HashMap<>();
+        ships = new ShipsMap();
         allTakenFields = new FieldList(List.of(List.of()));
     }
 
     Fleet(List<List<Integer>> list) {
-        ships = new HashMap<>();
+        ships = new ShipsMap();
         allTakenFields = new FieldList(list);
         putShipsIntoMap(allTakenFields.allFieldLists());
     }
@@ -52,7 +52,7 @@ class Fleet {
         if (!allTakenFields.contains(field)) {
             return ShotResult.MISS;
         } else {
-            for (Map.Entry<Ship, List<Integer>> entry : ships.entrySet()) {
+            for (Map.Entry<Ship, List<Integer>> entry : ships.getEntrySet()) {
                 if (entry.getValue().contains(field)) {
                     entry.getKey().markHit(field);
                     if (entry.getKey().getShipCondition() == ShipCondition.SUNK) {
@@ -75,14 +75,14 @@ class Fleet {
     }
 
     void resetAllShipsToUntouched() {
-        for (Ship ship : ships.keySet()) {
+        for (Ship ship : ships.getKeySet()) {
             ship.resetToUntouched();
         }
     }
 
     boolean checkIfAllShipsSunk() {
         AtomicBoolean answer = new AtomicBoolean(true);
-        for (Ship ship : ships.keySet()) {
+        for (Ship ship : ships.getKeySet()) {
             if (ship.getShipCondition() != ShipCondition.SUNK) {
                 answer.set(false);
             }
@@ -91,6 +91,6 @@ class Fleet {
     }
 
     Set<Ship> fleetShips() {
-        return ships.keySet();
+        return ships.getKeySet();
     }
 }

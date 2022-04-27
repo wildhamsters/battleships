@@ -15,8 +15,7 @@ class GameService {
     GameService(Board board) {
         this.board = board;
         shootVerifier = new ShootVerifier(board.size());
-        // Provide List<List<Integer>> in the Fleet constructor
-        fleet = new Fleet();
+        fleet = new Fleet();        // Call new Fleet(List<List<Integer>>
         placeShipsOnBoard();
     }
 
