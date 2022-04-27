@@ -104,7 +104,7 @@ function handleReturnedFieldType(returnedFieldType, cell) {
     		break;
     	case FIELD_STATE.ACCURATE_SHOT:
     		changeDOMClassName(id, "accurate");
-    		document.getElementById(id).innerHTML="<img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwI8LF99KrNGMyNAhXkUBD9CxR1K0FC2Rwhw&usqp=CAU' style='width: 90px; height: 90px; text-align: center;'/>";
+    		document.getElementById(id).innerHTML="&#128163";
     		new Audio('audio/explosion.wav').play();
     		break;
     	case FIELD_STATE.INTACT_SHIP:
