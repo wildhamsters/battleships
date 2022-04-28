@@ -1,5 +1,8 @@
 package org.wildhamsters.battleships;
 
+import org.wildhamsters.battleships.fleet.ShipPosition;
+import org.wildhamsters.battleships.fleet.ShipsPositions;
+
 import java.util.*;
 import java.util.stream.IntStream;
 

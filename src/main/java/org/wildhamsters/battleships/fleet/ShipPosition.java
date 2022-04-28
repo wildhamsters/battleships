@@ -1,11 +1,11 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.fleet;
 
 import java.util.List;
 
 /**
  * @author Kevin Nowak
  */
-record ShipPosition(List<Integer> positions) {
+public record ShipPosition(List<Integer> positions) {
 
     int shipSize() {
         return positions().size();

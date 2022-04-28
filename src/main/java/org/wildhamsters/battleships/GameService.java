@@ -1,6 +1,7 @@
 package org.wildhamsters.battleships;
 
 import org.springframework.stereotype.Service;
+import org.wildhamsters.battleships.fleet.Fleet;
 
 /**
  * @author Piotr Chowaniec
@@ -16,7 +17,7 @@ class GameService {
         this.board = board;
         shotVerifier = new ShotVerifier(board.size());
         fleet = new Fleet();
-        placeShipsOnBoard();
+//        placeShipsOnBoard();
     }
 
     FieldState verifyShot(int position) throws IllegalShotException {
@@ -28,19 +29,19 @@ class GameService {
 
     void resetGameStatus() {
         board.clearBoard();
-        fleet.resetAllShipsToUntouched();
-        placeShipsOnBoard();
+//        fleet.resetAllShipsToUntouched();
+//        placeShipsOnBoard();
     }
 
     boolean isRoundFinished() {
         return fleet.checkIfAllShipsSunk();
     }
 
-    private void placeShipsOnBoard() {
-        for(Integer position : fleet.allTakenFields.getAllFieldsInOneList()) {
-            board.setField(FieldState.INTACT_SHIP, position);
-        }
-    }
+//    private void placeShipsOnBoard() {
+//        for(Integer position : fleet.allTakenFields.getAllFieldsInOneList()) {
+//            board.setField(FieldState.INTACT_SHIP, position);
+//        }
+//    }
 
     private void updateFieldState(FieldState newState, int position) {
         board.setField(newState, position);

@@ -1,5 +1,7 @@
 package org.wildhamsters.battleships;
 
+import org.wildhamsters.battleships.fleet.Fleet;
+
 /**
  * @author Piotr Chowaniec
  */

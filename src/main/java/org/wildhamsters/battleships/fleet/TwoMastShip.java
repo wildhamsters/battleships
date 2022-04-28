@@ -1,7 +1,4 @@
-package org.wildhamsters.battleships;
-
-import java.util.HashMap;
-import java.util.Map;
+package org.wildhamsters.battleships.fleet;
 
 /**
  * @author Kevin Nowak

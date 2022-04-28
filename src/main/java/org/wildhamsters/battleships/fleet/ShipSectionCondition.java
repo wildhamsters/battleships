@@ -1,4 +1,4 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.fleet;
 
 /**
  * @author Kevin Nowak

@@ -1,21 +1,22 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.fleet;
 
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author Kevin Nowak
  */
-class Fleet {
+public class Fleet {
     ShipsMap ships;
     FieldList allTakenFields;
 
-    Fleet() {
+   public  Fleet() {
         ships = new ShipsMap();
         allTakenFields = new FieldList(List.of(new ShipPosition(List.of())));
     }
 
-    Fleet(ShipsPositions shipsPosition) {
+    public Fleet(ShipsPositions shipsPosition) {
         ships = new ShipsMap();
         allTakenFields = new FieldList(shipsPosition.getAllShipsPositions());
         putShipsIntoMap(allTakenFields.allFieldLists());
@@ -59,7 +60,7 @@ class Fleet {
         );
     }
 
-    ShotResult makeShot(int field) {
+    public ShotResult makeShot(int field) {
         AtomicBoolean tmp = new AtomicBoolean(false);
 
         allTakenFields.allFieldLists().forEach(shipPosition -> {
@@ -99,7 +100,7 @@ class Fleet {
         }
     }
 
-    boolean checkIfAllShipsSunk() {
+    public boolean checkIfAllShipsSunk() {
         AtomicBoolean answer = new AtomicBoolean(true);
         for (Ship ship : ships.getKeySet()) {
             if (ship.getShipCondition() != ShipCondition.SUNK) {

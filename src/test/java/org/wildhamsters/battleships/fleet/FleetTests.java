@@ -1,8 +1,12 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.fleet;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+import org.wildhamsters.battleships.fleet.Fleet;
+import org.wildhamsters.battleships.fleet.ShipPosition;
+import org.wildhamsters.battleships.fleet.ShipsPositions;
+import org.wildhamsters.battleships.fleet.ShotResult;
 
 import java.util.ArrayList;
 import java.util.List;

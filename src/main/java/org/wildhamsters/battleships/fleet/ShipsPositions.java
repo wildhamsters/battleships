@@ -1,15 +1,15 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.fleet;
 
 import java.util.List;
 
 /**
  * @author Dominik Żebracki
  */
-class ShipsPositions {
+public class ShipsPositions {
 
     private final List<ShipPosition> shipsPosition;
 
-    ShipsPositions(List<ShipPosition> shipsPosition) {
+    public ShipsPositions(List<ShipPosition> shipsPosition) {
         this.shipsPosition = shipsPosition;
     }
 
