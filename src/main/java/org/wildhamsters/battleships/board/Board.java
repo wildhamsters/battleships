@@ -1,9 +1,12 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.board;
 
 /**
  * @author Dominik Żebracki
  */
-interface Board {
+public interface Board {
+    static Board create() {
+        return new DefaultBoard();
+    }
 
     FieldState getField(int position);
     void setField(FieldState fieldState, int position);

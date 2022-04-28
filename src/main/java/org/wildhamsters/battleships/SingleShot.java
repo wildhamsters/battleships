@@ -1,5 +1,7 @@
 package org.wildhamsters.battleships;
 
+import org.wildhamsters.battleships.board.FieldState;
+
 /**
  * Contains both players. Indicate which is current (making shot) and which is enemy (fire upon).
  * Players are changed if current player missed.

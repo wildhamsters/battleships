@@ -2,6 +2,7 @@ package org.wildhamsters.battleships;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.wildhamsters.battleships.board.FieldState;
 
 import java.util.List;
 

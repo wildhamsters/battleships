@@ -1,6 +1,9 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.board;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.IntStream;
 
 /**

@@ -2,6 +2,8 @@ package org.wildhamsters.battleships;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.wildhamsters.battleships.board.Board;
+import org.wildhamsters.battleships.board.FieldState;
 import org.wildhamsters.battleships.fleet.Fleet;
 import org.wildhamsters.battleships.fleet.ShipPosition;
 import org.wildhamsters.battleships.fleet.ShipsPositions;
@@ -46,20 +48,20 @@ public class PlayerTest {
     @DataProvider
     private Object[][] testBoardForOutOfRangeShots() {
         return new Object[][]{
-                {new DefaultBoard(), -1},
-                {new DefaultBoard(), 25},
+                {Board.create(), -1},
+                {Board.create(), 25},
         };
     }
 
     private Board createBoardWithShipAtPosition(int position) {
-        Board board = new DefaultBoard();
+        Board board = Board.create();
         board.setField(FieldState.INTACT_SHIP, position);
         return board;
     }
 
     @Test(dataProvider = "fleetProvider")
     public void shouldReturnTrue_whenFleetIsSunk(ArrayList<ShipPosition> data) {
-        Board board = new DefaultBoard();
+        Board board = Board.create();
         Player player = new Player(1, board, new Fleet(new ShipsPositions(data)), new ShotVerifier(board.size()));
         player.enemyShotResult(1);
         player.enemyShotResult(2);
@@ -69,7 +71,7 @@ public class PlayerTest {
 
     @Test(dataProvider = "fleetProvider")
     public void shouldReturnFalse_whenFleetIsNotSunk(ArrayList<ShipPosition> data) {
-        Board board = new DefaultBoard();
+        Board board = Board.create();
         Player player = new Player(1, board, new Fleet(new ShipsPositions(data)), new ShotVerifier(board.size()));
         player.enemyShotResult(1);
         player.enemyShotResult(11);

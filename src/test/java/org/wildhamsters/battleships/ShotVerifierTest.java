@@ -3,6 +3,9 @@ package org.wildhamsters.battleships;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.wildhamsters.battleships.board.Board;
+import org.wildhamsters.battleships.board.BoardDimension;
+import org.wildhamsters.battleships.board.FieldState;
 
 import java.util.ArrayList;
 import java.util.List;

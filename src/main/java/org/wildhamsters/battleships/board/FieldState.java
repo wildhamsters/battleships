@@ -1,9 +1,9 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.board;
 
 /**
  * @author Dominik Żebracki
  */
-enum FieldState {
+public enum FieldState {
 
     WATER, MISSED_SHOT, ACCURATE_SHOT, INTACT_SHIP
 }

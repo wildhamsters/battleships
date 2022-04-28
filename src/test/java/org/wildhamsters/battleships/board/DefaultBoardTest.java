@@ -1,12 +1,12 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.board;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
+import org.wildhamsters.battleships.board.Board;
+import org.wildhamsters.battleships.board.BoardDimension;
+import org.wildhamsters.battleships.board.DefaultBoard;
+import org.wildhamsters.battleships.board.FieldState;
 
 import static org.testng.Assert.assertEquals;
 

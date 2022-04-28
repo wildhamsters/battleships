@@ -1,5 +1,7 @@
 package org.wildhamsters.battleships;
 
+import org.wildhamsters.battleships.board.Board;
+import org.wildhamsters.battleships.board.FieldState;
 import org.wildhamsters.battleships.fleet.Fleet;
 
 /**

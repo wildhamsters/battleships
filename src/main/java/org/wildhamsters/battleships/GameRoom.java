@@ -1,5 +1,7 @@
 package org.wildhamsters.battleships;
 
+import org.wildhamsters.battleships.board.FieldState;
+
 /**
  * Container for both players. Gives access to making shot and checking whether round is finished.
  *

@@ -1,7 +1,8 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.board;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.wildhamsters.battleships.board.BoardDimension;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertTrue;

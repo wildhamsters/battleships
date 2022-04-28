@@ -1,5 +1,9 @@
 package org.wildhamsters.battleships;
 
+import org.wildhamsters.battleships.board.Board;
+import org.wildhamsters.battleships.board.BoardDimension;
+import org.wildhamsters.battleships.board.FieldState;
+
 class ShotVerifier {
     private final BoardDimension dimension;
 
