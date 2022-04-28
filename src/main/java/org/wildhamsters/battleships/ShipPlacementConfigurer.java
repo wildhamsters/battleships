@@ -27,17 +27,14 @@ class ShipPlacementConfigurer {
         this.random = random;
     }
 
-    //TODO relaunch placing randomizer.
-    // Sometimes enters infinite loop with unlucky placing with small board and a lot of ships
-    // works fine with standard settings 10x10, standard fleet
+    // TODO relaunch placing randomizer.
+    //  Sometimes enters infinite loop with unlucky placing with small board and a lot of ships
+    //  works fine with standard settings 10x10, standard fleet
     ShipsPositions placeShips() {
         var fleet = new ArrayList<List<Integer>>();
-        List<Integer> shipPositions;
-        for (Integer shipSize : shipSizesToBePlaced) {
-            shipPositions = createRandomValidMastPositions(shipSize);
-            board.placeShip(shipPositions);
-            fleet.add(shipPositions);
-        }
+        shipSizesToBePlaced.stream()
+                .map(this::createRandomValidMastPositions)
+                .forEach(p -> {board.placeShip(p); fleet.add(p);});
         return new ShipsPositions(fleet.stream().map(ShipPosition::new).toList());
     }
 
