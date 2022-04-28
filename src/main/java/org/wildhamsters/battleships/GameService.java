@@ -1,9 +1,10 @@
-package org.wildhamsters.battleships.play;
+package org.wildhamsters.battleships;
 
 import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.board.FieldState;
 import org.wildhamsters.battleships.fleet.Fleet;
+import org.wildhamsters.battleships.play.IllegalShotException;
 
 /**
  * @author Piotr Chowaniec
@@ -12,22 +13,22 @@ import org.wildhamsters.battleships.fleet.Fleet;
 public
 class GameService {
 
-    private final ShotVerifier shotVerifier;
+//    private final ShotVerifier shotVerifier;
     private final Board board;
     private final Fleet fleet;
 
     public GameService(Board board) {
         this.board = board;
-        shotVerifier = new ShotVerifier();
+//        shotVerifier = new ShotVerifier();
         fleet = new Fleet();
 //        placeShipsOnBoard();
     }
 
     public FieldState verifyShot(int position) throws IllegalShotException {
-        FieldState state = shotVerifier.verifyShot(position, board);
+//        FieldState state = shotVerifier.verifyShot(position, board);
         fleet.makeShot(position);
-        updateFieldState(state, position);
-        return state;
+//        updateFieldState(state, position);
+        return null;
     }
 
     void resetGameStatus() {

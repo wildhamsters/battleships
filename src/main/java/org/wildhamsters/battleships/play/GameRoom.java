@@ -1,13 +1,13 @@
 package org.wildhamsters.battleships.play;
 
-import org.wildhamsters.battleships.board.FieldState;
+import org.wildhamsters.battleships.Result;
 
 /**
  * Container for both players. Gives access to making shot and checking whether round is finished.
  *
  * @author Piotr Chowaniec
  */
-class GameRoom {
+public class GameRoom {
 
     private Player playerOne;
     private Player playerTwo;
@@ -25,16 +25,7 @@ class GameRoom {
      * @param position cell index that is shot.
      * @return proper FieldState as a result of made shot.
      */
-    FieldState makeShot(int position) {
+    Result makeShot(int position) {
         return singleShot.makeShot(position);
-    }
-
-    /**
-     * Checks whether a player won the game after last shot.
-     *
-     * @return true if a player's fleet is sunk, false otherwise.
-     */
-    boolean isRoundFinished() {
-        return singleShot.isWinner();
     }
 }
