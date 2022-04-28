@@ -32,7 +32,6 @@ class ShipPlacementConfigurer {
     //  works fine with standard settings 10x10, standard fleet
     ShipsPositions placeShips() {
         var fleet = new ArrayList<List<Integer>>();
-        List<Integer> shipPositions;
         shipSizesToBePlaced.stream()
                 .map(this::createRandomValidMastPositions)
                 .forEach(p -> {board.placeShip(p); fleet.add(p);});
