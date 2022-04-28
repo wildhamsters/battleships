@@ -27,11 +27,11 @@ class WebSocketController {
     String shoot(int cell) throws JsonProcessingException {
         Result result;
         try {
-            FieldState updatedState = gameService.verifyShoot(cell);
+            FieldState updatedState = gameService.verifyShot(cell);
             Boolean finished = gameService.isRoundFinished();
             result = new Result(cell,updatedState, finished, "", "", "");
 
-        } catch (IllegalShootException e) {
+        } catch (IllegalShotException e) {
             result = new Result(cell, null, null, "Bad request", "", "");
         }
         return new ObjectMapper().writeValueAsString(result);
@@ -81,10 +81,10 @@ class WebSocketController {
             String opponent = opponentEntry.getKey();
             try {
                 GameService service = boards.get(opponent);
-                FieldState updatedState = service.verifyShoot(cell);
+                FieldState updatedState = service.verifyShot(cell);
                 Boolean finished = service.isRoundFinished();
                 result = new Result(cell, updatedState, finished, "", opponent, opponentEntry.getValue());
-            } catch (IllegalShootException e) {
+            } catch (IllegalShotException e) {
                 result = new Result(cell, null, null, "Bad request", opponent, opponentEntry.getValue());
             }
 

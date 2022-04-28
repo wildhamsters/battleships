@@ -3,6 +3,9 @@ package org.wildhamsters.battleships;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.testng.Assert.*;
 
 @Test
@@ -51,22 +54,33 @@ public class PlayerTest {
         return board;
     }
 
-    @Test
-    public void shouldReturnTrue_whenFleetIsSunk() {
+    @Test(dataProvider = "fleetProvider")
+    public void shouldReturnTrue_whenFleetIsSunk(ArrayList<ShipPosition> data) {
         Board board = new DefaultBoard();
-        Player player = new Player(1, board, new Fleet(), new ShotVerifier(board.size()));
+        Player player = new Player(1, board, new Fleet(new ShipsPositions(data)), new ShotVerifier(board.size()));
         player.enemyShotResult(1);
         player.enemyShotResult(2);
         player.enemyShotResult(11);
         assertTrue(player.isLost(), "Should return true when all ships are hit.");
     }
 
-    @Test
-    public void shouldReturnFalse_whenFleetIsNotSunk() {
+    @Test(dataProvider = "fleetProvider")
+    public void shouldReturnFalse_whenFleetIsNotSunk(ArrayList<ShipPosition> data) {
         Board board = new DefaultBoard();
-        Player player = new Player(1, board, new Fleet(), new ShotVerifier(board.size()));
+        Player player = new Player(1, board, new Fleet(new ShipsPositions(data)), new ShotVerifier(board.size()));
         player.enemyShotResult(1);
         player.enemyShotResult(11);
         assertFalse(player.isLost(), "Should return false when not all ships are hit.");
+    }
+    @DataProvider
+    public Object[][] fleetProvider() {
+        return new Object[][]{
+                {
+                        new ArrayList<>() {{
+                            add(new ShipPosition(List.of(1,2)));
+                            add(new ShipPosition(List.of(11)));
+                        }}
+                }
+        };
     }
 }
