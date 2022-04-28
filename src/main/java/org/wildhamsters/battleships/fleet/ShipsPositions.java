@@ -19,7 +19,7 @@ public class ShipsPositions {
                 .toList();
     }
 
-    List<ShipPosition> getAllShipsPositions() {
+    public List<ShipPosition> getAllShipsPositions() {
         return shipsPosition;
     }
 

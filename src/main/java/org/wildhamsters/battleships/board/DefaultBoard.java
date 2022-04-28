@@ -1,6 +1,7 @@
 package org.wildhamsters.battleships.board;
 
 import org.springframework.stereotype.Component;
+import org.wildhamsters.battleships.fleet.ShipsPositions;
 
 import java.util.ArrayList;
 import java.util.stream.IntStream;
@@ -17,9 +18,16 @@ class DefaultBoard implements Board {
         this.board = board;
     }
 
+    DefaultBoard(ShipsPositions shipsPositions) {
+        ArrayList<FieldState> list = new ArrayList<>();
+        IntStream.range(0, 100).forEach(x -> list.add(FieldState.WATER));
+        board = list;
+        fillBoardWithShips(shipsPositions);
+    }
+
     DefaultBoard() {
         ArrayList<FieldState> list = new ArrayList<>();
-        IntStream.range(0, 25).forEach(x -> list.add(FieldState.WATER));
+        IntStream.range(0, 100).forEach(x -> list.add(FieldState.WATER));
         this.board = list;
     }
 
@@ -40,6 +48,26 @@ class DefaultBoard implements Board {
 
     @Override
     public BoardDimension size() {
-        return new BoardDimension(0, board.size()-1);
+        return new BoardDimension(0, board.size() - 1);
+    }
+
+    private void fillBoardWithShips(ShipsPositions shipsPositions) {
+        shipsPositions.getAllShipsPositions()
+                .stream()
+                .flatMap(p -> p.positions().stream())
+                .forEach(i -> board.set(i, FieldState.INTACT_SHIP));
+    }
+
+    @Override
+    public String toString() {
+        var sb = new StringBuilder();
+        IntStream.range(1, board.size()+1)
+                .forEach(i -> {
+                    sb.append(board.get(i - 1).toString()).append(" ");
+                    if(i % 10 == 0) {
+                        sb.append(System.lineSeparator());
+                    }
+                });
+        return sb.toString();
     }
 }
