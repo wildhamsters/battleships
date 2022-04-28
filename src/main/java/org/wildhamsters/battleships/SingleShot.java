@@ -18,9 +18,9 @@ class SingleShot {
 
     /**
      * Takes board cell index and checks what FieldState will be after shot.
-     * It may be ACCURATE_SHOT if current player hit enemy's ship, MISSED_OUT
+     * It may be ACCURATE_SHOT if current player hit enemy's ship, MISSED_OUT.
      *
-     * @param position board cell that is being shot.
+     * @param position index of cell that is being shot.
      * @return FieldState of cell after shot.
      */
     FieldState makeShot(int position) {

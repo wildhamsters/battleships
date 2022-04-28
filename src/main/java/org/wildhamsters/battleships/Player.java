@@ -21,10 +21,20 @@ class Player {
         return new Player(id, board, new Fleet(), new ShotVerifier(board.size()));
     }
 
+    /**
+     * Takes index of the board cell and checks if it is in range, and gets the FieldState that will be set
+     * after shot. If the shot is not the range of board then IllegalShotException is being thrown.
+     * Shot cell is updated in the board.
+     * Position is passed to fleet which updates its internals.
+     *
+     * @param position index of cell that is being shot.
+     * @return FieldState of cell after shot.
+     * @throws IllegalShotException when shot is out of board.
+     */
     FieldState enemyShotResult(int position) throws IllegalShotException {
         FieldState state = shotVerifier.verifyShot(position, board);
-        fleet.makeShot(position);
         updateFieldState(state, position);
+        fleet.makeShot(position);
         return state;
     }
 
@@ -32,6 +42,11 @@ class Player {
         board.setField(newState, position);
     }
 
+    /**
+     * Checks if the player lost the game.
+     *
+     * @return true if whole fleet is sunk, false otherwise.
+     */
     boolean isLost() {
         return fleet.checkIfAllShipsSunk();
     }
