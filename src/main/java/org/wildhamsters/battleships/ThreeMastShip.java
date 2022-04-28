@@ -1,17 +1,15 @@
 package org.wildhamsters.battleships;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * @author Kevin Nowak
  */
-class TwoMastShip extends Ship {
-    private final int length = 2;
+class ThreeMastShip extends Ship {
+    private final int length = 3;
 
-    TwoMastShip(int firstField, int secondField) {
+    ThreeMastShip(int firstField, int secondField, int thirdField) {
         super();
         sections.put(firstField, ShipSectionCondition.UNTOUCHED);
         sections.put(secondField, ShipSectionCondition.UNTOUCHED);
+        sections.put(thirdField, ShipSectionCondition.UNTOUCHED);
     }
 }

@@ -1,75 +1,96 @@
 package org.wildhamsters.battleships;
 
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.testng.Assert.*;
 
-/**
- * @author Kevin Nowak
- */
 public class FleetTests {
-    @Test
-    void testCheckIfAllShipsSunk1() {
+    @DataProvider(name = "fieldList-provider")
+    public Object[][] fieldListProvider() {
+        return new Object[][]{
+                {
+                        new ArrayList<>() {{
+                            add(new ShipPosition(List.of(1)));
+                            add(new ShipPosition(List.of(10)));
+                            add(new ShipPosition(List.of(91)));
+                            add(new ShipPosition(List.of(100)));
+                            add(new ShipPosition(List.of(3, 4)));
+                            add(new ShipPosition(List.of(6, 7)));
+                            add(new ShipPosition(List.of(93, 94)));
+                            add(new ShipPosition(List.of(23, 24, 25)));
+                            add(new ShipPosition(List.of(43, 44, 45)));
+                            add(new ShipPosition(List.of(63, 64, 65, 66)));
+                        }}
+                }
+        };
+    }
+
+    @Test(dataProvider = "fieldList-provider")
+    void testNewFleetNotAllShipsSunk(List<ShipPosition> data) {
         // Given
-        Fleet fleet = new Fleet();
+        Fleet fleet = new Fleet(data);
         // When
         boolean check = fleet.checkIfAllShipsSunk();
         // Then
         assertFalse(check);
     }
 
-    @Test
-    void testShotResult1() {
+    @Test(dataProvider = "fieldList-provider")
+    void testMakeShotWithResultMiss(List<ShipPosition> data) {
         // Given
-        Fleet fleet = new Fleet();
-        // Then
-        assertEquals(fleet.makeShot(8), ShotResult.MISS);
-    }
-
-    @Test
-    void testShotResult2() {
-        // Given
-        Fleet fleet = new Fleet();
-        // Then
-        assertEquals(fleet.makeShot(11), ShotResult.HIT);
-    }
-
-    @Test
-    void testShotResult3() {
-        // Given
-        Fleet fleet = new Fleet();
+        Fleet fleet = new Fleet(data);
         // When
-        fleet.makeShot(11);
-        fleet.makeShot(1);
+        ShotResult shotResult = fleet.makeShot(8);
         // Then
-        assertEquals(fleet.makeShot(2), ShotResult.FLEET_SUNK);
+        assertEquals(shotResult, ShotResult.MISS);
     }
 
-    @Test
-    void testResetFleet1() {
+    @Test(dataProvider = "fieldList-provider")
+    void testMakeShotWithResultHit(List<ShipPosition> data) {
         // Given
-        Fleet fleet = new Fleet();
+        Fleet fleet = new Fleet(data);
         // When
-        fleet.makeShot(1);
-        fleet.makeShot(2);
-        fleet.makeShot(11);
+        ShotResult shotResult = fleet.makeShot(3);
+        // Then
+        assertEquals(shotResult, ShotResult.HIT);
+    }
+
+    @Test(dataProvider = "fieldList-provider")
+    void testMakeShotWithResultShipSunk(List<ShipPosition> data) {
+        // Given
+        Fleet fleet = new Fleet(data);
+        // When
+        ShotResult shotResult = fleet.makeShot(1);
+        // Then
+        assertEquals(shotResult, ShotResult.SHIP_SUNK);
+    }
+
+    @Test(dataProvider = "fieldList-provider")
+    void testMakeShotsWithResultFleetSunk(List<ShipPosition> data) {
+        // Given
+        Fleet fleet = new Fleet(data);
+        // When
+        ShotResult shotResult = fleet.makeShot(data);
+        // Then
+        assertEquals(shotResult, ShotResult.FLEET_SUNK);
+    }
+
+    @Test(dataProvider = "fieldList-provider")
+    void testFleetReset(List<ShipPosition> data) {
+        // Given
+        SoftAssert softAssert = new SoftAssert();
+        Fleet fleet = new Fleet(data);
+        // When
+        fleet.makeShot(data);
+        softAssert.assertFalse(fleet.checkIfAllShipsUntouched());
         fleet.resetAllShipsToUntouched();
         // Then
-        assertFalse(fleet.checkIfAllShipsSunk());
-    }
-
-    @Test
-    void testResetFleet2() {
-        // Given
-        Fleet fleet = new Fleet();
-        // When
-        fleet.makeShot(1);
-        fleet.makeShot(2);
-        fleet.makeShot(11);
-        fleet.resetAllShipsToUntouched();
-        // Then
-        assertTrue(fleet.fleetShips().stream().allMatch(ship ->
-                ship.getShipCondition() == ShipCondition.UNTOUCHED
-        ));
+        softAssert.assertTrue(fleet.checkIfAllShipsUntouched());
+        softAssert.assertAll();
     }
 }

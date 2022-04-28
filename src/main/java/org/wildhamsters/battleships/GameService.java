@@ -10,12 +10,12 @@ class GameService {
 
     private final ShootVerifier shootVerifier;
     private final Board board;
-    private Fleet fleet;
+    private final Fleet fleet;
 
     GameService(Board board) {
         this.board = board;
         shootVerifier = new ShootVerifier(board.size());
-        fleet = new Fleet();
+        fleet = new Fleet();        // Call new Fleet(List<List<Integer>>
         placeShipsOnBoard();
     }
 
@@ -37,7 +37,7 @@ class GameService {
     }
 
     private void placeShipsOnBoard() {
-        for(Integer position : fleet.occupiedFields) {
+        for(Integer position : fleet.allTakenFields.getAllFieldsInOneList()) {
             board.setField(FieldState.INTACT_SHIP, position);
         }
     }
