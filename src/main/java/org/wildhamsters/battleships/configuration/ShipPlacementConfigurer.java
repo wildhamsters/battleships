@@ -1,4 +1,4 @@
-package org.wildhamsters.battleships.board;
+package org.wildhamsters.battleships.configuration;
 
 import org.wildhamsters.battleships.fleet.ShipPosition;
 import org.wildhamsters.battleships.fleet.ShipsPositions;

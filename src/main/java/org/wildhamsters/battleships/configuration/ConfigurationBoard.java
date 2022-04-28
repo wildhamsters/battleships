@@ -1,4 +1,4 @@
-package org.wildhamsters.battleships.board;
+package org.wildhamsters.battleships.configuration;
 
 import java.util.Collection;
 import java.util.HashMap;
