@@ -1,17 +1,18 @@
 package org.wildhamsters.battleships.board;
 
-import org.wildhamsters.battleships.board.ConfigurationBoard;
-import org.wildhamsters.battleships.board.ShipDirection;
 import org.wildhamsters.battleships.fleet.ShipPosition;
 import org.wildhamsters.battleships.fleet.ShipsPositions;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
 import java.util.stream.IntStream;
 
 /**
  * @author Dominik Żebracki
  */
-class ShipPlacementConfigurer {
+public class ShipPlacementConfigurer {
 
     private final List<Integer> shipSizesToBePlaced;
     private final int boardSize;
@@ -35,7 +36,7 @@ class ShipPlacementConfigurer {
     // TODO relaunch placing randomizer.
     //  Sometimes enters infinite loop with unlucky placing with small board and a lot of ships
     //  works fine with standard settings 10x10, standard fleet
-    ShipsPositions placeShips() {
+    public ShipsPositions placeShips() {
         var fleet = new ArrayList<List<Integer>>();
         shipSizesToBePlaced.stream()
                 .map(this::createRandomValidMastPositions)
