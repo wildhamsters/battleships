@@ -23,15 +23,6 @@ import java.util.List;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    /*@Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.cors().configurationSource(request -> new CorsConfiguration().applyPermitDefaultValues());
-        http.addFilter(new AuthenticationProcessingFilter())
-                .authorizeRequests().antMatchers("/**").permitAll()
-                .anyRequest().permitAll();
-    }
-    */
-
     private static final String SECURE_ADMIN_PASSWORD = "rockandroll";
 
     @Override
@@ -40,9 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .formLogin()
-//                .loginPage("/index.html")
-//                .loginProcessingUrl("/login")
-//                .defaultSuccessUrl("/sender.html")
                 .permitAll()
                 .and()
                 .logout()
@@ -50,9 +38,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .authorizeRequests()
-//                .antMatchers("/js/**", "/lib/**", "/images/**", "/css/**", "/index.html", "/","/*.css","/webjars/**", "/*.js").permitAll()
-//                .antMatchers("/websocket").hasRole("ADMIN")
-                //.requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ADMIN")
                 .anyRequest().authenticated();
 
     }
