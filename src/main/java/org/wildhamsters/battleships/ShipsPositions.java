@@ -22,4 +22,9 @@ class ShipsPositions {
     List<ShipPosition> getAllShipsPositions() {
         return shipsPosition;
     }
+
+    @Override
+    public String toString() {
+        return shipsPosition.toString();
+    }
 }
