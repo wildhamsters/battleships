@@ -10,18 +10,10 @@ import java.util.Random;
  */
 public class GameConfigurer {
 
-    private final ShipPlacementConfigurer shipPlacementConfigurer;
-
-    public GameConfigurer(List<Integer> shipSizesToBePlaced,
-                          int boardSize,
-                          int height,
-                          int width) {
-        this.shipPlacementConfigurer = new ShipPlacementConfigurer(
-                shipSizesToBePlaced, new ConfigurationBoard(height, width),
-                boardSize, width, new Random());
-    }
-
-    public ShipsPositions createConfiguration() {
-        return shipPlacementConfigurer.placeShips();
+    public ShipsPositions createConfiguration(List<Integer> shipSizesToBePlaced,
+                                              int height,
+                                              int width) {
+        var shipPlacementConfigurer = new ShipPlacementConfigurer(height, width, new Random());
+        return shipPlacementConfigurer.placeShips(shipSizesToBePlaced);
     }
 }
