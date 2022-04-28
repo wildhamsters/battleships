@@ -8,19 +8,19 @@ import org.springframework.stereotype.Service;
 @Service
 class GameService {
 
-    private final ShootVerifier shootVerifier;
+    private final ShotVerifier shotVerifier;
     private final Board board;
     private final Fleet fleet;
 
     GameService(Board board) {
         this.board = board;
-        shootVerifier = new ShootVerifier(board.size());
-        fleet = new Fleet();        // Call new Fleet(List<List<Integer>>
+        shotVerifier = new ShotVerifier(board.size());
+        fleet = new Fleet();
         placeShipsOnBoard();
     }
 
-    FieldState verifyShoot(int position) throws IllegalShootException {
-        FieldState state = shootVerifier.verifyShoot(position, board);
+    FieldState verifyShot(int position) throws IllegalShotException {
+        FieldState state = shotVerifier.verifyShot(position, board);
         fleet.makeShot(position);
         updateFieldState(state, position);
         return state;
