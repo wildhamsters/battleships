@@ -5,4 +5,9 @@ import java.util.List;
 /**
  * @author Kevin Nowak
  */
-record ShipPosition(List<Integer> positions) {}
+record ShipPosition(List<Integer> positions) {
+
+    int shipSize() {
+        return positions().size();
+    }
+}

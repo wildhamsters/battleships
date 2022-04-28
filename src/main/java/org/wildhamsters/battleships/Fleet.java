@@ -15,9 +15,9 @@ class Fleet {
         allTakenFields = new FieldList(List.of(new ShipPosition(List.of())));
     }
 
-    Fleet(List<ShipPosition> list) {
+    Fleet(ShipsPositions shipsPosition) {
         ships = new ShipsMap();
-        allTakenFields = new FieldList(list);
+        allTakenFields = new FieldList(shipsPosition.getAllShipsPositions());
         putShipsIntoMap(allTakenFields.allFieldLists());
     }
 

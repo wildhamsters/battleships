@@ -33,7 +33,7 @@ public class FleetTests {
     @Test(dataProvider = "fieldList-provider")
     void testNewFleetNotAllShipsSunk(List<ShipPosition> data) {
         // Given
-        Fleet fleet = new Fleet(data);
+        Fleet fleet = new Fleet(new ShipsPositions(data));
         // When
         boolean check = fleet.checkIfAllShipsSunk();
         // Then
@@ -43,7 +43,7 @@ public class FleetTests {
     @Test(dataProvider = "fieldList-provider")
     void testMakeShotWithResultMiss(List<ShipPosition> data) {
         // Given
-        Fleet fleet = new Fleet(data);
+        Fleet fleet = new Fleet(new ShipsPositions(data));
         // When
         ShotResult shotResult = fleet.makeShot(8);
         // Then
@@ -53,7 +53,7 @@ public class FleetTests {
     @Test(dataProvider = "fieldList-provider")
     void testMakeShotWithResultHit(List<ShipPosition> data) {
         // Given
-        Fleet fleet = new Fleet(data);
+        Fleet fleet = new Fleet(new ShipsPositions(data));
         // When
         ShotResult shotResult = fleet.makeShot(3);
         // Then
@@ -63,7 +63,7 @@ public class FleetTests {
     @Test(dataProvider = "fieldList-provider")
     void testMakeShotWithResultShipSunk(List<ShipPosition> data) {
         // Given
-        Fleet fleet = new Fleet(data);
+        Fleet fleet = new Fleet(new ShipsPositions(data));
         // When
         ShotResult shotResult = fleet.makeShot(1);
         // Then
@@ -73,7 +73,7 @@ public class FleetTests {
     @Test(dataProvider = "fieldList-provider")
     void testMakeShotsWithResultFleetSunk(List<ShipPosition> data) {
         // Given
-        Fleet fleet = new Fleet(data);
+        Fleet fleet = new Fleet(new ShipsPositions(data));
         // When
         ShotResult shotResult = fleet.makeShot(data);
         // Then
@@ -84,7 +84,7 @@ public class FleetTests {
     void testFleetReset(List<ShipPosition> data) {
         // Given
         SoftAssert softAssert = new SoftAssert();
-        Fleet fleet = new Fleet(data);
+        Fleet fleet = new Fleet(new ShipsPositions(data));
         // When
         fleet.makeShot(data);
         softAssert.assertFalse(fleet.checkIfAllShipsUntouched());
