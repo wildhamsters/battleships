@@ -1,5 +1,6 @@
 package org.wildhamsters.battleships.play;
 
+import org.wildhamsters.battleships.Result;
 import org.wildhamsters.battleships.board.FieldState;
 
 /**
@@ -13,7 +14,7 @@ class SingleShot {
     private Player current;
     private Player enemy;
 
-    public SingleShot(Player current, Player enemy) {
+    SingleShot(Player current, Player enemy) {
         this.current = current;
         this.enemy = enemy;
     }
@@ -25,26 +26,28 @@ class SingleShot {
      * @param position index of cell that is being shot.
      * @return FieldState of cell after shot.
      */
-    FieldState makeShot(int position) {
-        FieldState state = enemy.enemyShotResult(position);
-        if (state == FieldState.MISSED_SHOT) {
-            switchPlayers();
+    Result makeShot(int position) {
+        String error = "";
+        FieldState state = null;
+        try {
+            state = enemy.enemyShotResult(position);
+        } catch (IllegalShotException e) {
+            error = e.getMessage();
         }
-        return enemy.enemyShotResult(position);
+        switchPlayers(state);
+
+        return new Result(position, state, isWinner(), error, current.getId(), current.getName());
     }
 
-    private void switchPlayers() {
-        Player temp = current;
-        current = enemy;
-        enemy = temp;
+    private void switchPlayers(FieldState state) {
+        if (state == FieldState.MISSED_SHOT) {
+            Player temp = current;
+            current = enemy;
+            enemy = temp;
+        }
     }
 
-    /**
-     * Checks whether current player won the game after last shot.
-     *
-     * @return true is all enemy's ships are sunk, false otherwise.
-     */
-    boolean isWinner() {
+    private boolean isWinner() {
         return enemy.isLost();
     }
 }

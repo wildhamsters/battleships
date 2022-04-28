@@ -9,20 +9,22 @@ import org.wildhamsters.battleships.fleet.Fleet;
  */
 class Player {
 
-    private final int id;
+    private final String id;
+    private final String name;
     private final Board board;
     private final Fleet fleet;
     private final ShotVerifier shotVerifier;
 
-    Player(int id, Board board, Fleet fleet, ShotVerifier shotVerifier) {
+    Player(String id, String name, Board board, Fleet fleet, ShotVerifier shotVerifier) {
         this.id = id;
+        this.name = name;
         this.board = board;
         this.fleet = fleet;
         this.shotVerifier = shotVerifier;
     }
 
-    static Player of(int id, Board board) {
-        return new Player(id, board, new Fleet(), new ShotVerifier());
+    static Player of(String id, String name, Board board, Fleet fleet) {
+        return new Player(id, name, board, fleet, new ShotVerifier());
     }
 
     /**
@@ -53,5 +55,13 @@ class Player {
      */
     boolean isLost() {
         return fleet.checkIfAllShipsSunk();
+    }
+
+    String getId() {
+        return id;
+    }
+
+    String getName() {
+        return name;
     }
 }

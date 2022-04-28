@@ -7,9 +7,6 @@ import org.wildhamsters.battleships.board.FieldState;
 import org.wildhamsters.battleships.fleet.Fleet;
 import org.wildhamsters.battleships.fleet.ShipPosition;
 import org.wildhamsters.battleships.fleet.ShipsPositions;
-import org.wildhamsters.battleships.play.IllegalShotException;
-import org.wildhamsters.battleships.play.Player;
-import org.wildhamsters.battleships.play.ShotVerifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +18,7 @@ public class PlayerTest {
 
     @Test(dataProvider = "testBoardForInRangeShots")
     public void shouldReturnProperFieldState_whenShotIsInBoard(Board board, int position, FieldState expected) {
-        Player player = Player.of(1, board);
+        Player player = createPlayer(board);
         assertEquals(player.enemyShotResult(position), expected,
                 "Returned FieldState is not appropriate to original cell value.");
     }
@@ -44,7 +41,7 @@ public class PlayerTest {
 
     @Test(dataProvider = "testBoardForOutOfRangeShots", expectedExceptions = IllegalShotException.class)
     public void shouldThrowException_whenShotIsOutOfBoard(Board board, int position) {
-        Player player = Player.of(1, board);
+        Player player = createPlayer(board);
         player.enemyShotResult(position);
     }
 
@@ -62,33 +59,30 @@ public class PlayerTest {
         return board;
     }
 
-    @Test(dataProvider = "fleetProvider")
-    public void shouldReturnTrue_whenFleetIsSunk(ArrayList<ShipPosition> data) {
-        Board board = Board.create();
-        Player player = new Player(1, board, new Fleet(new ShipsPositions(data)), new ShotVerifier());
+    public void shouldReturnTrue_whenFleetIsSunk() {
+        Player player = createPlayer(Board.create());
         player.enemyShotResult(1);
         player.enemyShotResult(2);
         player.enemyShotResult(11);
         assertTrue(player.isLost(), "Should return true when all ships are hit.");
     }
 
-    @Test(dataProvider = "fleetProvider")
-    public void shouldReturnFalse_whenFleetIsNotSunk(ArrayList<ShipPosition> data) {
-        Board board = Board.create();
-        Player player = new Player(1, board, new Fleet(new ShipsPositions(data)), new ShotVerifier());
+    public void shouldReturnFalse_whenFleetIsNotSunk() {
+        Player player = createPlayer(Board.create());
         player.enemyShotResult(1);
         player.enemyShotResult(11);
         assertFalse(player.isLost(), "Should return false when not all ships are hit.");
     }
-    @DataProvider
-    public Object[][] fleetProvider() {
-        return new Object[][]{
-                {
-                        new ArrayList<>() {{
-                            add(new ShipPosition(List.of(1,2)));
-                            add(new ShipPosition(List.of(11)));
-                        }}
-                }
-        };
+
+    private Player createPlayer(Board board) {
+        return Player.of("1", "", board, createFleet());
+    }
+
+    private Fleet createFleet() {
+        List<ShipPosition> ships = new ArrayList<>() {{
+            add(new ShipPosition(List.of(1, 2)));
+            add(new ShipPosition(List.of(11)));
+        }};
+        return new Fleet(new ShipsPositions(ships));
     }
 }
