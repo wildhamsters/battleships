@@ -21,8 +21,10 @@ div > p {
 
 td {
 	text-align: center;
-	border: 1px solid black;
-	cursor: crosshair;
+    font-size: 80%;
+    padding: 3px;
+    border: 1px solid black;
+    cursor: crosshair
 }
 
 .water:hover {
@@ -50,4 +52,20 @@ body {
 	flex-direction: row;
 	column-gap: 15px;
 	background-color: lightcyan;
+}
+
+span {
+	align-self: center;
+}
+
+#rightSide {
+    border-radius: 15px;
+}
+
+.opponentTurn {
+	background-color: coral;
+}
+
+.playerTurn {
+	background-color: greenyellow;
 }
