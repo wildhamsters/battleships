@@ -51,7 +51,7 @@ public class DefaultBoardTest {
     @Test
     void testBoardSize() {
         Board board = new DefaultBoard();
-        BoardDimension boardDimension = new BoardDimension(0, 24);
+        BoardDimension boardDimension = new BoardDimension(0, 99);
         assertEquals(board.size(), boardDimension);
     }
 

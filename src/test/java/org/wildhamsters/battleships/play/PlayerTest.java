@@ -52,7 +52,7 @@ public class PlayerTest {
     private Object[][] testBoardForOutOfRangeShots() {
         return new Object[][]{
                 {Board.create(), -1},
-                {Board.create(), 25},
+                {Board.create(), 100},
         };
     }
 
