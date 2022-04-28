@@ -62,10 +62,23 @@ span {
     border-radius: 15px;
 }
 
+#playerBoard td {
+    cursor: default;
+}
+
 .opponentTurn {
 	background-color: coral;
 }
 
 .playerTurn {
 	background-color: greenyellow;
+}
+
+#status {
+    bottom: 4vh;
+    left: 44vw;
+    background-color: red;
+    font-size: 1.3em;
+    color: white;
+    padding: 1vh;
 }
