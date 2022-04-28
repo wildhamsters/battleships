@@ -1,0 +1,8 @@
+package org.wildhamsters.battleships;
+
+import java.util.List;
+
+/**
+ * @author Kevin Nowak
+ */
+record ShipPosition(List<Integer> positions) {}

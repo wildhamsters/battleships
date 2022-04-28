@@ -6,23 +6,18 @@ import java.util.List;
 /**
  * @author Kevin Nowak
  */
-record FieldList(List<List<Integer>> allFieldLists) {
+record FieldList(List<ShipPosition> allFieldLists) {
 
     boolean contains(int field) {
-        for (List<Integer> fieldList : allFieldLists) {
-            if (fieldList.contains(field)) {
-                return true;
-            }
-        }
-        return false;
+        return allFieldLists.stream().allMatch(shipPosition -> shipPosition
+                .positions()
+                .stream()
+                .allMatch(integer -> integer != field));
     }
 
     List<Integer> getAllFieldsInOneList() {
         List<Integer> ret = new ArrayList<>();
-        for (List<Integer> fieldList : allFieldLists) {
-            ret.addAll(fieldList);
-        }
+        allFieldLists.forEach(shipPosition -> ret.addAll(shipPosition.positions()));
         return ret;
     }
-
 }

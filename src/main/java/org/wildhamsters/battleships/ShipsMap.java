@@ -9,17 +9,17 @@ import java.util.Set;
  * @author Kevin Nowak
  */
 class ShipsMap {
-    Map<Ship, List<Integer>> ships;
+    private final Map<Ship, ShipPosition> ships;
 
     ShipsMap() {
         ships = new HashMap<>();
     }
 
-    void put(Ship ship, List<Integer> list) {
-        ships.put(ship, list);
+    void put(Ship ship, ShipPosition shipPosition) {
+        ships.put(ship, shipPosition);
     }
 
-    Set<Map.Entry<Ship, List<Integer>>> getEntrySet() {
+    Set<Map.Entry<Ship, ShipPosition>> getEntrySet() {
         return ships.entrySet();
     }
 

@@ -15,6 +15,7 @@ class Ship {
         condition = ShipCondition.UNTOUCHED;
     }
 
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Integer, ShipSectionCondition> entry : sections.entrySet()) {

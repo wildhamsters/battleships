@@ -9,32 +9,29 @@ import java.util.List;
 
 import static org.testng.Assert.*;
 
-/**
- * @author Kevin Nowak
- */
 public class FleetTests {
     @DataProvider(name = "fieldList-provider")
     public Object[][] fieldListProvider() {
         return new Object[][]{
                 {
                         new ArrayList<>() {{
-                            add(List.of(1));
-                            add(List.of(10));
-                            add(List.of(91));
-                            add(List.of(100));
-                            add(List.of(3, 4));
-                            add(List.of(6, 7));
-                            add(List.of(93, 94));
-                            add(List.of(23, 24, 25));
-                            add(List.of(43, 44, 45));
-                            add(List.of(63, 64, 65, 66));
+                            add(new ShipPosition(List.of(1)));
+                            add(new ShipPosition(List.of(10)));
+                            add(new ShipPosition(List.of(91)));
+                            add(new ShipPosition(List.of(100)));
+                            add(new ShipPosition(List.of(3, 4)));
+                            add(new ShipPosition(List.of(6, 7)));
+                            add(new ShipPosition(List.of(93, 94)));
+                            add(new ShipPosition(List.of(23, 24, 25)));
+                            add(new ShipPosition(List.of(43, 44, 45)));
+                            add(new ShipPosition(List.of(63, 64, 65, 66)));
                         }}
                 }
         };
     }
 
     @Test(dataProvider = "fieldList-provider")
-    void testNewFleetNotAllShipsSunk(List<List<Integer>> data) {
+    void testNewFleetNotAllShipsSunk(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(data);
         // When
@@ -44,7 +41,7 @@ public class FleetTests {
     }
 
     @Test(dataProvider = "fieldList-provider")
-    void testMakeShotWithResultMiss(List<List<Integer>> data) {
+    void testMakeShotWithResultMiss(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(data);
         // When
@@ -54,7 +51,7 @@ public class FleetTests {
     }
 
     @Test(dataProvider = "fieldList-provider")
-    void testMakeShotWithResultHit(List<List<Integer>> data) {
+    void testMakeShotWithResultHit(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(data);
         // When
@@ -64,7 +61,7 @@ public class FleetTests {
     }
 
     @Test(dataProvider = "fieldList-provider")
-    void testMakeShotWithResultShipSunk(List<List<Integer>> data) {
+    void testMakeShotWithResultShipSunk(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(data);
         // When
@@ -74,7 +71,7 @@ public class FleetTests {
     }
 
     @Test(dataProvider = "fieldList-provider")
-    void testMakeShotsWithResultFleetSunk(List<List<Integer>> data) {
+    void testMakeShotsWithResultFleetSunk(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(data);
         // When
@@ -84,7 +81,7 @@ public class FleetTests {
     }
 
     @Test(dataProvider = "fieldList-provider")
-    void testFleetReset(List<List<Integer>> data) {
+    void testFleetReset(List<ShipPosition> data) {
         // Given
         SoftAssert softAssert = new SoftAssert();
         Fleet fleet = new Fleet(data);

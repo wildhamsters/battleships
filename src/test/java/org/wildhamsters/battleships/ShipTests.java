@@ -4,9 +4,6 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import static org.testng.Assert.assertEquals;
 
-/**
- * @author Kevin Nowak
- */
 public class ShipTests {
 
     @Test
