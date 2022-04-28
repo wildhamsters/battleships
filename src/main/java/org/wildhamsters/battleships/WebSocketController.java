@@ -81,8 +81,8 @@ class WebSocketController {
             String opponent = opponentEntry.getKey();
             try {
                 GameService service = boards.get(opponent);
-                FieldState updatedState = gameService.verifyShoot(cell);
-                Boolean finished = gameService.isRoundFinished();
+                FieldState updatedState = service.verifyShoot(cell);
+                Boolean finished = service.isRoundFinished();
                 result = new Result(cell, updatedState, finished, "", opponent, opponentEntry.getValue());
             } catch (IllegalShootException e) {
                 result = new Result(cell, null, null, "Bad request", opponent, opponentEntry.getValue());

@@ -235,9 +235,9 @@ function readSubscribed(message) {
         var myTurn = (sessionId!=(message.body.split(" ")[1]));
         console.log("myTurn " + myTurn);
         if(!myTurn) {
-            document.getElementById("opponentBoard").className="playerTurn";
+            document.getElementById("rightSide").className="playerTurn";
         } else {
-            document.getElementById("opponentBoard").className="opponentTurn";
+            document.getElementById("rightSide").className="opponentTurn";
         }
         return;
     }
@@ -252,9 +252,9 @@ function readSubscribed(message) {
     var myTurn = (sessionId!=response.currentTurnPlayer);
     console.log("myTurn " + myTurn);
     if(!myTurn) {
-        document.getElementById("opponentBoard").className="playerTurn";
+        document.getElementById("rightSide").className="playerTurn";
     } else {
-        document.getElementById("opponentBoard").className="opponentTurn";
+        document.getElementById("rightSide").className="opponentTurn";
     }
 
     if (response.finished) {

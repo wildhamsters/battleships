@@ -58,10 +58,14 @@ span {
 	align-self: center;
 }
 
-.opponentTurn td {
-	background-color: red;
+#rightSide {
+    border-radius: 15px;
 }
 
-.playerTurn td {
-	background-color: green;
+.opponentTurn {
+	background-color: coral;
+}
+
+.playerTurn {
+	background-color: greenyellow;
 }
