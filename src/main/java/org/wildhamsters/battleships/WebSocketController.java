@@ -4,9 +4,16 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
-import org.springframework.messaging.handler.annotation.*;
+import org.springframework.messaging.handler.annotation.Header;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
+import org.wildhamsters.battleships.board.Board;
+import org.wildhamsters.battleships.board.FieldState;
+import org.wildhamsters.battleships.play.GameService;
+import org.wildhamsters.battleships.play.IllegalShotException;
 
 import java.security.Principal;
 import java.util.*;
@@ -60,8 +67,8 @@ class WebSocketController {
             String opponent = opponentEntry.getKey();
             pair.add(new AbstractMap.SimpleEntry<>(sessionId, user.getName()));
             pair.add(opponentEntry);
-            boards.put(sessionId, new GameService(new DefaultBoard()));
-            boards.put(opponent, new GameService(new DefaultBoard()));
+            boards.put(sessionId, new GameService(Board.create()));
+            boards.put(opponent, new GameService(Board.create()));
             String s = "You %s the opponent %s. Starts: %s".formatted(sessionId, opponent, user.getName());
             simpMessagingTemplate.convertAndSendToUser(sessionId,
                     "/queue/specific-user", s);

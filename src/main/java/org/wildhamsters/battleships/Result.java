@@ -1,5 +1,7 @@
 package org.wildhamsters.battleships;
 
+import org.wildhamsters.battleships.board.FieldState;
+
 /**
  * @author Mariusz Bal
  */
