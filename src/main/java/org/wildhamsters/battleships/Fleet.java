@@ -7,23 +7,76 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Kevin Nowak
  */
 class Fleet {
-    private Map<Ship, List<Integer>> ships;
-    List<Integer> occupiedFields;
+    ShipsMap ships;
+    FieldList allTakenFields;
 
     Fleet() {
-        ships = new HashMap<>();
-        ships.put(new OneMastShip(11), List.of(11));
-        ships.put(new TwoMastShip(1, 2), List.of(1, 2));
-        occupiedFields = List.of(1, 2, 11);
+        ships = new ShipsMap();
+        allTakenFields = new FieldList(List.of(new ShipPosition(List.of())));
+    }
+
+    Fleet(List<ShipPosition> list) {
+        ships = new ShipsMap();
+        allTakenFields = new FieldList(list);
+        putShipsIntoMap(allTakenFields.allFieldLists());
+    }
+
+    private void putShipsIntoMap(List<ShipPosition> allFieldLists) {
+        for (ShipPosition shipPosition : allFieldLists) {
+            switch (shipPosition.positions().size()) {
+                case 1 -> putOneMastShip(shipPosition);
+                case 2 -> putTwoMastShip(shipPosition);
+                case 3 -> putThreeMastShip(shipPosition);
+                case 4 -> putFourMastShip(shipPosition);
+            }
+        }
+    }
+
+    private void putOneMastShip(ShipPosition shipPosition) {
+        ships.put(new OneMastShip(shipPosition.positions().get(0)), shipPosition);
+    }
+
+    private void putTwoMastShip(ShipPosition shipPosition) {
+        ships.put(new TwoMastShip(shipPosition.positions().get(0), shipPosition.positions().get(1)), shipPosition);
+    }
+
+    private void putThreeMastShip(ShipPosition shipPosition) {
+        ships.put(new ThreeMastShip(
+                        shipPosition.positions().get(0),
+                        shipPosition.positions().get(1),
+                        shipPosition.positions().get(2)),
+                shipPosition
+        );
+    }
+
+    private void putFourMastShip(ShipPosition shipPosition) {
+        ships.put(new FourMastShip(
+                        shipPosition.positions().get(0),
+                        shipPosition.positions().get(1),
+                        shipPosition.positions().get(2),
+                        shipPosition.positions().get(3)),
+                shipPosition
+        );
     }
 
     ShotResult makeShot(int field) {
-        if (!occupiedFields.contains(field)) {
+        AtomicBoolean tmp = new AtomicBoolean(false);
+
+        allTakenFields.allFieldLists().forEach(shipPosition -> {
+            if (shipPosition.positions().contains(field)) {
+                tmp.set(true);
+            }
+        });
+
+        if (!tmp.get()) {
             return ShotResult.MISS;
         } else {
-            for (Map.Entry<Ship, List<Integer>> entry : ships.entrySet()) {
-                if (entry.getValue().contains(field)) {
+            for (Map.Entry<Ship, ShipPosition> entry : ships.getEntrySet()) {
+                if (entry.getValue().positions().contains(field)) {
                     entry.getKey().markHit(field);
+                    if (entry.getKey().getShipCondition() == ShipCondition.SUNK) {
+                        return ShotResult.SHIP_SUNK;
+                    }
                 }
             }
         }
@@ -33,16 +86,22 @@ class Fleet {
         return ShotResult.HIT;
     }
 
-    Fleet resetAllShipsToUntouched() {
-        for (Ship ship : ships.keySet()) {
+    ShotResult makeShot(List<ShipPosition> fields) {
+        fields.forEach(shipPosition -> {
+            shipPosition.positions().forEach(this::makeShot);
+        });
+        return checkIfAllShipsSunk() ? ShotResult.FLEET_SUNK : ShotResult.HIT;
+    }
+
+    void resetAllShipsToUntouched() {
+        for (Ship ship : ships.getKeySet()) {
             ship.resetToUntouched();
         }
-        return this;
     }
 
     boolean checkIfAllShipsSunk() {
         AtomicBoolean answer = new AtomicBoolean(true);
-        for (Ship ship : ships.keySet()) {
+        for (Ship ship : ships.getKeySet()) {
             if (ship.getShipCondition() != ShipCondition.SUNK) {
                 answer.set(false);
             }
@@ -50,7 +109,13 @@ class Fleet {
         return answer.get();
     }
 
-    Set<Ship> fleetShips() {
-        return ships.keySet();
+    boolean checkIfAllShipsUntouched() {
+        AtomicBoolean answer = new AtomicBoolean(true);
+        for (Ship ship : ships.getKeySet()) {
+            if (ship.getShipCondition() != ShipCondition.UNTOUCHED) {
+                answer.set(false);
+            }
+        }
+        return answer.get();
     }
 }
