@@ -12,6 +12,8 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.board.FieldState;
+import org.wildhamsters.battleships.play.GameService;
+import org.wildhamsters.battleships.play.IllegalShotException;
 
 import java.security.Principal;
 import java.util.*;

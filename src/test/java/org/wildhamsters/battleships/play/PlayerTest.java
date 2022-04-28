@@ -1,4 +1,4 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.play;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -7,6 +7,9 @@ import org.wildhamsters.battleships.board.FieldState;
 import org.wildhamsters.battleships.fleet.Fleet;
 import org.wildhamsters.battleships.fleet.ShipPosition;
 import org.wildhamsters.battleships.fleet.ShipsPositions;
+import org.wildhamsters.battleships.play.IllegalShotException;
+import org.wildhamsters.battleships.play.Player;
+import org.wildhamsters.battleships.play.ShotVerifier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,7 +65,7 @@ public class PlayerTest {
     @Test(dataProvider = "fleetProvider")
     public void shouldReturnTrue_whenFleetIsSunk(ArrayList<ShipPosition> data) {
         Board board = Board.create();
-        Player player = new Player(1, board, new Fleet(new ShipsPositions(data)), new ShotVerifier(board.size()));
+        Player player = new Player(1, board, new Fleet(new ShipsPositions(data)), new ShotVerifier());
         player.enemyShotResult(1);
         player.enemyShotResult(2);
         player.enemyShotResult(11);
@@ -72,7 +75,7 @@ public class PlayerTest {
     @Test(dataProvider = "fleetProvider")
     public void shouldReturnFalse_whenFleetIsNotSunk(ArrayList<ShipPosition> data) {
         Board board = Board.create();
-        Player player = new Player(1, board, new Fleet(new ShipsPositions(data)), new ShotVerifier(board.size()));
+        Player player = new Player(1, board, new Fleet(new ShipsPositions(data)), new ShotVerifier());
         player.enemyShotResult(1);
         player.enemyShotResult(11);
         assertFalse(player.isLost(), "Should return false when not all ships are hit.");

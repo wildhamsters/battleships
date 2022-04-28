@@ -1,4 +1,4 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.play;
 
 
 import org.testng.annotations.DataProvider;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.IntStream;
 
-import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
 
 public class ShotVerifierTest {
 
@@ -42,7 +42,7 @@ public class ShotVerifierTest {
     @DataProvider
     Object[][] data() {
         return new Object[][]{
-                {new ShotVerifier(new BoardDimension(0, 25)), new DummyBoard(25)}
+                {new ShotVerifier(), new DummyBoard(25)}
         };
     }
 

@@ -1,4 +1,4 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.play;
 
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.board.FieldState;
@@ -22,7 +22,7 @@ class Player {
     }
 
     static Player of(int id, Board board) {
-        return new Player(id, board, new Fleet(), new ShotVerifier(board.size()));
+        return new Player(id, board, new Fleet(), new ShotVerifier());
     }
 
     /**

@@ -1,4 +1,4 @@
-package org.wildhamsters.battleships;
+package org.wildhamsters.battleships.play;
 
 import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.board.Board;
@@ -9,20 +9,21 @@ import org.wildhamsters.battleships.fleet.Fleet;
  * @author Piotr Chowaniec
  */
 @Service
+public
 class GameService {
 
     private final ShotVerifier shotVerifier;
     private final Board board;
     private final Fleet fleet;
 
-    GameService(Board board) {
+    public GameService(Board board) {
         this.board = board;
-        shotVerifier = new ShotVerifier(board.size());
+        shotVerifier = new ShotVerifier();
         fleet = new Fleet();
 //        placeShipsOnBoard();
     }
 
-    FieldState verifyShot(int position) throws IllegalShotException {
+    public FieldState verifyShot(int position) throws IllegalShotException {
         FieldState state = shotVerifier.verifyShot(position, board);
         fleet.makeShot(position);
         updateFieldState(state, position);
@@ -35,7 +36,7 @@ class GameService {
 //        placeShipsOnBoard();
     }
 
-    boolean isRoundFinished() {
+    public boolean isRoundFinished() {
         return fleet.checkIfAllShipsSunk();
     }
 
