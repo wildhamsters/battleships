@@ -53,3 +53,15 @@ body {
 	column-gap: 15px;
 	background-color: lightcyan;
 }
+
+span {
+	align-self: center;
+}
+
+.opponentTurn td {
+	background-color: red;
+}
+
+.playerTurn td {
+	background-color: green;
+}

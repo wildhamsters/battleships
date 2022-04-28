@@ -27,23 +27,7 @@ function createPlayerBoard() { //todo change
 				cell.innerHTML=(i * width + j);
 				cell.className="water";
 				cell.onclick=function(cell) {
-					var xmlHttp = new XMLHttpRequest();
-				    xmlHttp.onreadystatechange = function() {
-
-				        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-				            var response = JSON.parse(xmlHttp.responseText);
-
-				            handleReturnedFieldType(response.u, cell.target.id);
-
-				            if (response.t) {
-				            	winner();
-				            }
-				        } else if (xmlHttp.readyState == 4 && xmlHttp.status == 400) {
-				        	badRequest();
-				        }
-				    };
-				    sendName(extractCellNumber(this));
-				    document.getElementById("status").insertAdjacentHTML("afterbegin", "<p>" + statusMessageId++ + ". Shooted at " + extractCellNumber(this) + " </p>");
+				    //sendName(extractCellNumber(this)); //todo disabled to disallow my board clicking
 				}
 				cell.onmouseenter = function(){
                     //hoverMany(extractCellNumber(this), 4, "H");
@@ -64,27 +48,11 @@ function createOpponentBoard() { //todo change
 		var row = document.createElement('tr');
 			for(var j = 0; j<width; j++) {
 				var cell = document.createElement('td');
-				cell.id = 'cell_' + (i * width + j);
+				cell.id = 'ocell_' + (i * width + j);
 				cell.innerHTML=(i * width + j);
 				cell.className="water";
 				cell.onclick=function(cell) {
-					var xmlHttp = new XMLHttpRequest();
-				    xmlHttp.onreadystatechange = function() {
-
-				        if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
-				            var response = JSON.parse(xmlHttp.responseText);
-
-				            handleReturnedFieldType(response.u, cell.target.id);
-
-				            if (response.t) {
-				            	winner();
-				            }
-				        } else if (xmlHttp.readyState == 4 && xmlHttp.status == 400) {
-				        	badRequest();
-				        }
-				    };
 				    sendName(extractCellNumber(this));
-				    document.getElementById("status").insertAdjacentHTML("afterbegin", "<p>" + statusMessageId++ + ". Shooted at " + extractCellNumber(this) + " </p>");
 				}
 				row.append(cell);
 			}
@@ -92,8 +60,10 @@ function createOpponentBoard() { //todo change
 	}
 }
 
-function handleReturnedFieldType(returnedFieldType, cell) {
+function handleReturnedFieldType(returnedFieldType, cell, opponent) {
 	var id = "cell_" +  cell;
+	if(opponent)
+	    id = "o" + id;
 	switch(returnedFieldType) {
     	case FIELD_STATE.MISSED_SHOT:
     		changeDOMClassName(id, "missed");
@@ -114,11 +84,12 @@ function handleReturnedFieldType(returnedFieldType, cell) {
 }
 
 function extractCellNumber(cell) {
-	return cell.id.replace("cell_", "")
+    if(cell.id.startsWith("ocell"))
+        return cell.id.replace("ocell_", "");
+	return cell.id.replace("cell_", "");
 }
 
 function badRequest() {
-	document.getElementById("status").insertAdjacentHTML("afterbegin", "<p style='color: red;'>" + statusMessageId++ + ". Bad request! </p>");
 	new Audio('audio/alert.wav').play();
 }
 
@@ -210,9 +181,9 @@ function connect() {
         });
 
         stompClient.subscribe('/user/queue/specific-user'
-              + '-user' + sessionId, function (msgOut) {
-                 console.log("RECEIVED FROM THE USER: " + sessionId + " " + msgOut);
-            });
+          + '-user' + sessionId, function (msgOut) {
+             console.log("RECEIVED FROM THE USER: " + sessionId + " " + msgOut);
+        });
     });
 }
 
@@ -234,6 +205,7 @@ function connectUsers() {
 
         stompClient.subscribe('/user/' + sessionId + '/queue/specific-user', function (msgOut) {
              console.log("RECEIVED FROM THE USER: " + sessionId + " " + msgOut);
+             readSubscribed(msgOut);
         });
 
         stompClient.send("/app/room", {
@@ -253,17 +225,38 @@ function disconnect() {
 }
 
 function sendName(id) {
-    stompClient.send("/app/action", {}, id);
+    stompClient.send("/app/gameplay", {}, id);
 }
 
 function readSubscribed(message) {
-    console.log(message.body);
+    console.log("message body " + message.body);
+    if(message.body.startsWith("You")) {
+        document.getElementById("playerSpan").innerHTML=("Starts " + message.body.split(" ").pop());
+        var myTurn = (sessionId!=(message.body.split(" ")[1]));
+        console.log("myTurn " + myTurn);
+        if(!myTurn) {
+            document.getElementById("opponentBoard").className="playerTurn";
+        } else {
+            document.getElementById("opponentBoard").className="opponentTurn";
+        }
+        return;
+    }
     var response = JSON.parse(message.body);
     if(response.error != "") {
         console.error(response.error);
         return;
     }
-    handleReturnedFieldType(response.updatedState, response.cell);
+    //handleReturnedFieldType(response.updatedState, response.cell, true);
+    handleReturnedFieldType(response.updatedState, response.cell, sessionId!=response.currentTurnPlayer);
+    document.getElementById("playerSpan").innerHTML="Now plays: " + response.currentTurnPlayerName;
+    var myTurn = (sessionId!=response.currentTurnPlayer);
+    console.log("myTurn " + myTurn);
+    if(!myTurn) {
+        document.getElementById("opponentBoard").className="playerTurn";
+    } else {
+        document.getElementById("opponentBoard").className="opponentTurn";
+    }
+
     if (response.finished) {
     	winner();
     }
