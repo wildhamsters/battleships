@@ -7,6 +7,10 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 /**
+ * Special board used only for placing fleet purposes.
+ * Contains additional two columns and rows that constitute "frame" around a regular game board.
+ * Indexes of a regular board are translated accordingly.
+ *
  * @author Dominik Żebracki
  */
 class ConfigurationBoard {
@@ -19,12 +23,24 @@ class ConfigurationBoard {
         this.board = fillBoard();
     }
 
+    /**
+     * Places ship on a board. No other subsequently added ship can interfere with already placed ships.
+     *
+     * @param shipFields positions of a ship to place.
+     */
     void placeShip(List<Integer> shipFields) {
         shipFields.stream()
                 .map(this::toConfigurationBoardPosition)
                 .forEach(i -> board.put(i, FieldState.SHIP));
     }
 
+    /**
+     * Checks if a ship can be placed by searching board if space is not occupied.
+     *
+     * @param shipMastPositions number of ships masts
+     * @param direction direction of a ship
+     * @return If ship can be placed.
+     */
     boolean canShipBePlaced(List<Integer> shipMastPositions, ShipDirection direction) {
         return isEnoughSpaceForShipWithinBoardBounds(shipMastPositions.size(), shipMastPositions.get(0), direction) &&
                 areSurroundingFieldsNotOccupied(shipMastPositions);
@@ -47,19 +63,21 @@ class ConfigurationBoard {
                 .noneMatch(fieldState -> fieldState == FieldState.SHIP);
     }
 
+    private int toConfigurationBoardPosition(int gameBoardPosition) {
+        var gameBoardRowIndex = gameBoardPosition / (structure.width() - 2);
+        return gameBoardPosition + structure.width() + (gameBoardRowIndex * 2) + 1;
+    }
+
     private Map<Integer, FieldState> fillBoard() {
         var newBoard = new HashMap<Integer, FieldState>();
         IntStream.range(0, structure.size()-1).forEach(i -> newBoard.put(i, FieldState.WATER));
         IntStream.range(0, structure.width()).forEach(i -> newBoard.put(i, FieldState.WALL));
         IntStream.range(1, structure.height())
-                .forEach(i -> {newBoard.put(structure.rowBegin(i), FieldState.WALL); newBoard.put(structure.rowEnd(i), FieldState.WALL);});
-        IntStream.range(structure.rowBegin(structure.height() - 1), structure.rowEnd(structure.height() - 1)).forEach(i -> newBoard.put(i, FieldState.WALL));
+                .forEach(i -> {newBoard.put(structure.rowBegin(i), FieldState.WALL);
+                    newBoard.put(structure.rowEnd(i), FieldState.WALL);});
+        IntStream.range(structure.rowBegin(structure.height() - 1), structure.rowEnd(structure.height() - 1))
+                .forEach(i -> newBoard.put(i, FieldState.WALL));
         return newBoard;
-    }
-
-    private int toConfigurationBoardPosition(int gameBoardPosition) {
-        var gameBoardRowIndex = gameBoardPosition / (structure.width() - 2);
-        return gameBoardPosition + structure.width() + (gameBoardRowIndex * 2) + 1;
     }
 
     @Override

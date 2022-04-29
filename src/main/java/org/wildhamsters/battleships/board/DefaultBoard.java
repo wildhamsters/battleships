@@ -6,6 +6,8 @@ import org.wildhamsters.battleships.fleet.ShipsPositions;
 import java.util.ArrayList;
 import java.util.stream.IntStream;
 
+//TODO board is hardcoded to be of size 100. Change it whole application supports it.
+// Change representation to map.
 /**
  * @author Dominik Żebracki
  */

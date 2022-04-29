@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Structure of a board that is used to place ships.
+ * Fields are filled with integers from 0 to board size minus 1.
+ * Can be usd to calculate row number of a particular field number,
+ * field number of a beginning of a particular row etc.
+ *
  * @author Dominik Żebracki
  */
 class BoardStructure {

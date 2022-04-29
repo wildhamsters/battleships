@@ -8,6 +8,8 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 /**
+ * Creates configuration of a whole game.
+ *
  * @author Dominik Żebracki
  */
 public class GameConfigurer {
