@@ -2,6 +2,7 @@ package org.wildhamsters.battleships.play;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.wildhamsters.battleships.Event;
 import org.wildhamsters.battleships.Result;
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.board.FieldState;
@@ -28,12 +29,12 @@ public class GameRoomTest {
     @DataProvider
     private Object[][] resultDtoForGameRoom() {
         return new Object[][] {
-                {prepareGameRoom(), prepareResult(0, FieldState.MISSED_SHOT, "2", "Player Two"), 0},
-                {prepareGameRoom(), prepareResult(1, FieldState.ACCURATE_SHOT, "1", "Player One"), 1},
-                {prepareGameRoom(), prepareResult(11, FieldState.ACCURATE_SHOT, "1", "Player One"), 11},
-                {prepareGameRoom(), prepareResult(14, FieldState.MISSED_SHOT, "2", "Player Two"), 14},
-                {prepareGameRoom(), prepareResult(23, FieldState.MISSED_SHOT, "2", "Player Two"), 23},
-                {prepareGameRoom(), prepareResult(24, FieldState.MISSED_SHOT, "2", "Player Two"), 24},
+                {prepareGameRoom(), prepareResult(0, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 0},
+                {prepareGameRoom(), prepareResult(1, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 1},
+                {prepareGameRoom(), prepareResult(11, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 11},
+                {prepareGameRoom(), prepareResult(14, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 14},
+                {prepareGameRoom(), prepareResult(23, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 23},
+                {prepareGameRoom(), prepareResult(24, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 24},
         };
     }
 
@@ -51,8 +52,8 @@ public class GameRoomTest {
         return board;
     }
 
-    private Result prepareResult(int cell, FieldState newState, String id, String name) {
-        return new Result(cell, newState, false, "", id, name);
+    private Result prepareResult(int cell, FieldState newState, String id, String name, String opponent) {
+        return new Result(Event.GAMEPLAY, cell, newState, false, "", id, name, opponent);
     }
 
     private Fleet prepareFleet() {

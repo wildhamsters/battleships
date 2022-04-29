@@ -31,15 +31,22 @@ class WebSocketController {
                              @Header("simpSessionId") String sessionId) throws JsonProcessingException {
         ConnectionStatus connectionStatus = gameService.processConnectingPlayers(new ConnectedPlayer(user.getName(), sessionId));
 
+        String resultJSON = new ObjectMapper().writeValueAsString(connectionStatus);
         simpMessagingTemplate.convertAndSendToUser(sessionId,
-                "/queue/specific-user", new ObjectMapper().writeValueAsString(connectionStatus));
+                "/queue/specific-user", resultJSON);
         simpMessagingTemplate.convertAndSendToUser(connectionStatus.playerOneSessionId(),
-                "/queue/specific-user", new ObjectMapper().writeValueAsString(connectionStatus));
+                "/queue/specific-user", resultJSON);
     }
 
     @MessageMapping("/gameplay")
     public void sendGameplay(int cell, Principal user,
                              @Header("simpSessionId") String sessionId) throws JsonProcessingException {
+        Result result = gameService.shoot(cell);
 
+        String resultJSON = new ObjectMapper().writeValueAsString(result);
+        simpMessagingTemplate.convertAndSendToUser(result.currentTurnPlayer(),
+                "/queue/specific-user", resultJSON);
+        simpMessagingTemplate.convertAndSendToUser(result.opponent(),
+                "/queue/specific-user", resultJSON);
     }
 }

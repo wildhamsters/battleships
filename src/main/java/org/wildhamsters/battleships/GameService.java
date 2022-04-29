@@ -53,7 +53,7 @@ class GameService {
         }
     }
 
-    Result shot(int position) {
+    Result shoot(int position) {
         return gameRoom.makeShot(position);
     }
 }

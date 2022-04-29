@@ -66,18 +66,18 @@ function createOpponentBoard() {
 	}
 }
 
-function handleReturnedFieldType(returnedFieldType, cell, opponent) {
+function handleReturnedFieldType(returnedFieldType, cell, player) {
 	var id = "cell_" +  cell;
-	if(opponent)
+	if(player)
 	    id = "o" + id;
 	switch(returnedFieldType) {
     	case FIELD_STATE.MISSED_SHOT:
     		changeDOMClassName(id, "missed");
-    		new Audio('audio/confirm.wav').play();
+    		new Audio('audio/water.wav').play();
     		break;
     	case FIELD_STATE.WATER:
     		changeDOMClassName(id, "water");
-    		new Audio('audio/water.wav').play();
+    		new Audio('audio/confirm.wav').play();
     		break;
     	case FIELD_STATE.ACCURATE_SHOT:
     		changeDOMClassName(id, "accurate");
@@ -180,9 +180,14 @@ function readSubscribed(message) {
     }
 }
 
+var lastShootingPlayer;
+
 function processConnectMessage(response) {
     document.getElementById("playerSpan").innerText=(response.startingPlayerName + " starts");
-    var myTurn = (sessionId!=response.playerOneSessionId);
+    var myTurn = (sessionId==response.playerOneSessionId);
+
+    lastShootingPlayer=response.playerOneSessionId;
+
     if(sessionId!=response.playerOneSessionId) {
         response.playerOneShipPositions.forEach(el => document.getElementById("cell_"+el).innerHTML="&#128755;");
     } else {
@@ -195,24 +200,26 @@ function processConnectMessage(response) {
 function processGameplayMessage(response) {
     if(response.error != "") {
         console.error(response.error);
+        badRequest();
         showStatus(response.error)
         setTimeout(() => {hideStatus();}, 1000)
         return;
     }
-    handleReturnedFieldType(response.updatedState, response.cell, sessionId!=response.currentTurnPlayer);
+    handleReturnedFieldType(response.updatedState, response.cell, lastShootingPlayer==response.currentTurnPlayer);
+    lastShootingPlayer=response.currentTurnPlayer;
     document.getElementById("playerSpan").innerHTML="Now plays: " + response.currentTurnPlayerName;
-    var myTurn = (sessionId!=response.currentTurnPlayer);
+    var myTurn = (sessionId==response.currentTurnPlayer);
     highlightBoard(myTurn);
 
-    if (response.finished) {
+    if (response.finished && sessionId==response.currentTurnPlayer) {
         winner();
-    } else {
+    } else if (response.finished && sessionId!=response.currentTurnPlayer) {
         lose();
     }
 }
 
 function highlightBoard(currentPlayerTurn) {
-    if(!currentPlayerTurn) {
+    if(currentPlayerTurn) {
         document.getElementById("rightSide").className="playerTurn";
     } else {
         document.getElementById("rightSide").className="opponentTurn";
