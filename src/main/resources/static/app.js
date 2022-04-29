@@ -219,9 +219,9 @@ function processGameplayMessage(response) {
     var myTurn = (sessionId==response.currentTurnPlayer);
     highlightBoard(myTurn);
 
-    if (response.finished && sessionId==response.currentTurnPlayer) {
+    if (response.finished && sessionId==lastShootingPlayer) {
         winner();
-    } else if (response.finished && sessionId!=response.currentTurnPlayer) {
+    } else if (response.finished && sessionId!=lastShootingPlayer) {
         lose();
     }
 }

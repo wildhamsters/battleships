@@ -18,9 +18,9 @@ import java.util.List;
 @Service
 class GameService {
 
-    private final static List<Integer> SHIP_SIZES_TO_BE_CREATED = List.of(4, 3, 3, 2, 2, 2, 1, 1, 1, 1);
-    private final static int BOARD_WIDTH = 10;
-    private final static int BOARD_HEIGHT = 10;
+    private static final List<Integer> SHIP_SIZES_TO_BE_CREATED = List.of(4, 3, 3, 2, 2, 2, 1, 1, 1, 1);
+    private static final int BOARD_WIDTH = 10;
+    private static final int BOARD_HEIGHT = 10;
 
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
@@ -69,12 +69,18 @@ class GameService {
                 BOARD_HEIGHT, BOARD_WIDTH, connectedPlayers.names(), connectedPlayers.ids());
         this.gameRoom = new GameRoom(gameSettings);
         //TODO refactor Optionals
-        return new ConnectionStatus("Players paired.",
+         var connectionStatus = new ConnectionStatus("Players paired.",
                 connectedPlayers.firstOneConnected().get().sessionId(),
                 gameSettings.firstPlayersFleet().get().getFleetPositions(),
                 connectedPlayers.secondOneConnected().get().sessionId(),
                 gameSettings.secondPlayersFleet().get().getFleetPositions(),
                 connectedPlayers.firstOneConnected().get().name(),
                 Event.CONNECT);
+        clearConnectedPlayersAfterPairing();
+        return connectionStatus;
+    }
+
+    private void clearConnectedPlayersAfterPairing() {
+        connectedPlayers = new ConnectedPlayers(new ArrayList<>());
     }
 }

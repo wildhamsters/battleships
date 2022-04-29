@@ -79,6 +79,7 @@ span {
 }
 
 #status {
+    position: fixed;
     bottom: 4vh;
     left: 44vw;
     background-color: red;
