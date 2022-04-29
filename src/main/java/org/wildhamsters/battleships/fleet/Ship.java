@@ -6,7 +6,7 @@ import java.util.Map;
 /**
  * @author Kevin Nowak
  */
-class Ship {
+sealed class Ship permits OneMastShip, TwoMastShip, ThreeMastShip, FourMastShip {
     Map<Integer, ShipSectionCondition> sections;
     private ShipCondition condition;
 

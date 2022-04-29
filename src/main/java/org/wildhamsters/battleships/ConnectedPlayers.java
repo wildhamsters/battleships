@@ -27,6 +27,10 @@ class ConnectedPlayers {
         return players.stream().map(ConnectedPlayer::name).toList();
     }
 
+    List<String> ids() {
+        return players.stream().map(ConnectedPlayer::sessionId).toList();
+    }
+
     ConnectedPlayers add(ConnectedPlayer player) {
         var afterAdding = new ArrayList<>(players);
         afterAdding.add(player);

@@ -78,5 +78,6 @@ public class ShipTests {
         softAssert.assertEquals(untouched_ship.getShipCondition(), ShipCondition.UNTOUCHED);
         softAssert.assertEquals(hit_ship.getShipCondition(), ShipCondition.HIT);
         softAssert.assertEquals(sunk_ship.getShipCondition(), ShipCondition.SUNK);
+        softAssert.assertAll();
     }
 }
