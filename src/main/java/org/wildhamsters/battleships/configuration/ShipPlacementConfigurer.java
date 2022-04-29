@@ -10,6 +10,8 @@ import java.util.Random;
 import java.util.stream.IntStream;
 
 /**
+ * Creates positions of ships on a board.
+ *
  * @author Dominik Żebracki
  */
 class ShipPlacementConfigurer {
@@ -29,6 +31,13 @@ class ShipPlacementConfigurer {
     // TODO relaunch placing randomizer.
     //  Sometimes enters infinite loop with unlucky placing with small board and a lot of ships
     //  works fine with standard settings 10x10, standard fleet
+
+    /**
+     * Creates randomly generated fleet of given ship sizes.
+     *
+     * @param shipSizesToBePlaced ship sizes in a fleet.
+     * @return ship positions.
+     */
     ShipsPositions placeShips(List<Integer> shipSizesToBePlaced) {
         var shipSizes = new ArrayList<>(shipSizesToBePlaced); //in case immutable list is passed
         shipSizes.sort(Comparator.reverseOrder());

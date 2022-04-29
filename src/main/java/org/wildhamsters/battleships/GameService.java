@@ -8,6 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Main entry point to the game.
+ * Manages connection of players and handles interactions between players and a game.
+ *
  * @author Dominik Żebracki
  */
 @Service
@@ -29,6 +32,13 @@ class GameService {
         this.gameConfigurer = new GameConfigurer();
     }
 
+    /**
+     * Manages process of connecting players.
+     * After connecting the second player, ships and boards are created.
+     *
+     * @param connectedPlayer details of connected players.
+     * @return players fleets, boards and their identifiers.
+     */
     ConnectionStatus processConnectingPlayers(ConnectedPlayer connectedPlayer) {
         connectedPlayers = connectedPlayers.add(connectedPlayer);
         if(!connectedPlayers.areBothConnected()) {
@@ -53,6 +63,11 @@ class GameService {
         }
     }
 
+    /**
+     *
+     * @param position of a shot on the board.
+     * @return result of the shot.
+     */
     Result shoot(int position) {
         return gameRoom.makeShot(position);
     }

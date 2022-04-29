@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * Collection of connected players.
+ *
  * @author Dominik Żebracki
  */
 class ConnectedPlayers {
