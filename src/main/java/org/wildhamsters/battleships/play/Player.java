@@ -2,6 +2,7 @@ package org.wildhamsters.battleships.play;
 
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.board.FieldState;
+import org.wildhamsters.battleships.configuration.GameSettings;
 import org.wildhamsters.battleships.fleet.Fleet;
 
 /**
@@ -23,8 +24,17 @@ class Player {
         this.shotVerifier = shotVerifier;
     }
 
+    // Factory method for tests
     static Player of(String id, String name, Board board, Fleet fleet) {
         return new Player(id, name, board, fleet, new ShotVerifier());
+    }
+
+    static Player of(GameSettings.PlayerSettings playerSettings) {
+        return new Player(playerSettings.id(),
+                playerSettings.name(),
+                playerSettings.board(),
+                playerSettings.fleet(),
+                new ShotVerifier());
     }
 
     /**
