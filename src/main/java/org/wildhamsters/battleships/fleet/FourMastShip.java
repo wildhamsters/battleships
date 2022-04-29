@@ -3,7 +3,7 @@ package org.wildhamsters.battleships.fleet;
 /**
  * @author Kevin Nowak
  */
-class FourMastShip extends Ship {
+final class FourMastShip extends Ship {
     private final int length = 4;
 
     FourMastShip(int firstField, int secondField, int thirdField, int fourthField) {
