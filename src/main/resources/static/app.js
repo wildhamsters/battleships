@@ -17,6 +17,11 @@ var FIELD_STATE  = {
 	INTACT_SHIP: "INTACT_SHIP"
 };
 
+var EVENT = {
+    CONNECT: "CONNECT",
+    GAMEPLAY: "GAMEPLAY"
+};
+
 function createPlayerBoard() {
 	var table = document.getElementById('playerBoard');
 
@@ -164,16 +169,34 @@ function sendName(id) {
 }
 
 function readSubscribed(message) {
-    console.log("message body " + message.body);
-    if(message.body.startsWith("You")) {
-        document.getElementById("playerSpan").innerHTML=("Starts " + message.body.split(" ").pop());
-        var myTurn = (sessionId!=(message.body.split(" ")[1]));
-        highlightBoard(myTurn);
-        return;
-    }
+    console.log("received message body " + message.body);
+
     var response = JSON.parse(message.body);
+    if(response.event==EVENT.CONNECT) {
+        if(response.playerOneSessionId!=null)
+            processConnectMessage(response);
+    } else if (response.event==EVENT.GAMEPLAY) {
+        processGameplayMessage(response)
+    }
+}
+
+function processConnectMessage(response) {
+    document.getElementById("playerSpan").innerText=(response.startingPlayerName + " starts");
+    var myTurn = (sessionId!=response.playerOneSessionId);
+    if(sessionId!=response.playerOneSessionId) {
+        response.playerOneShipPositions.forEach(el => document.getElementById("cell_"+el).innerHTML="&#128755;");
+    } else {
+        response.playerTwoShipPositions.forEach(el => document.getElementById("cell_"+el).innerHTML="&#128755;");
+    }
+
+    highlightBoard(myTurn);
+}
+
+function processGameplayMessage(response) {
     if(response.error != "") {
         console.error(response.error);
+        showStatus(response.error)
+        setTimeout(() => {hideStatus();}, 1000)
         return;
     }
     handleReturnedFieldType(response.updatedState, response.cell, sessionId!=response.currentTurnPlayer);
@@ -182,7 +205,7 @@ function readSubscribed(message) {
     highlightBoard(myTurn);
 
     if (response.finished) {
-    	winner();
+        winner();
     } else {
         lose();
     }

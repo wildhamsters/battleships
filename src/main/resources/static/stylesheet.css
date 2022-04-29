@@ -21,7 +21,7 @@ div > p {
 
 td {
 	text-align: center;
-    font-size: 80%;
+    font-size: 2em;
     padding: 3px;
     border: 1px solid black;
     cursor: crosshair
@@ -32,7 +32,7 @@ td {
 }
 
 .water {
-	background-color: lightblue;
+	background-color: beige;
 }
 
 .missed {
@@ -51,7 +51,7 @@ body {
 	display: flex;
 	flex-direction: row;
 	column-gap: 15px;
-	background-color: lightcyan;
+	background-color: aliceblue;
 }
 
 span {
@@ -68,10 +68,14 @@ span {
 
 .opponentTurn {
 	background-color: coral;
+	transition: 2s;
+	cursor: not-allowed;
 }
 
 .playerTurn {
 	background-color: greenyellow;
+	transition: 2s;
+	cursor: crosshair;
 }
 
 #status {
