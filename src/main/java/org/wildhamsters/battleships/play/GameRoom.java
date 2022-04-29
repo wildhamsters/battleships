@@ -13,7 +13,7 @@ public class GameRoom {
     private Player playerTwo;
     private SingleShot singleShot;
 
-    GameRoom(Player playerOne, Player playerTwo) {
+    public GameRoom(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
         singleShot = new SingleShot(playerOne, playerTwo);

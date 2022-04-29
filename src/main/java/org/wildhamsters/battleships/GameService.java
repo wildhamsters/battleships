@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
 import org.wildhamsters.battleships.play.GameRoom;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -15,6 +16,12 @@ class GameService {
     private final GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
     private final GameConfigurer gameConfigurer;
+
+    GameService() {
+        this.gameRoom = new GameRoom(null, null);
+        this.connectedPlayers = new ConnectedPlayers(Collections.emptyList());
+        this.gameConfigurer = new GameConfigurer();
+    }
 
     GameService(GameRoom gameRoom, ConnectedPlayers connectedPlayers, GameConfigurer gameConfigurer) {
         this.gameRoom = gameRoom;
