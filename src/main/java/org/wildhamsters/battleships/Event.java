@@ -3,6 +3,6 @@ package org.wildhamsters.battleships;
 /**
  * @author Dominik Żebracki
  */
-enum Event {
+public enum Event {
     CONNECT, GAMEPLAY
 }

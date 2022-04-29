@@ -32,7 +32,7 @@ public class GameRoom {
      * @param position cell index that is shot.
      * @return proper FieldState as a result of made shot.
      */
-    Result makeShot(int position) {
+    public Result makeShot(int position) {
         return singleShot.makeShot(position);
     }
 }

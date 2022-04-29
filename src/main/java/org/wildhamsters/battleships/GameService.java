@@ -52,4 +52,8 @@ class GameService {
             return connectionStatus;
         }
     }
+
+    Result shoot(int position) {
+        return gameRoom.makeShot(position);
+    }
 }

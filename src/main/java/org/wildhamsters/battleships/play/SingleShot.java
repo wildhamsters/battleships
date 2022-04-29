@@ -1,5 +1,6 @@
 package org.wildhamsters.battleships.play;
 
+import org.wildhamsters.battleships.Event;
 import org.wildhamsters.battleships.Result;
 import org.wildhamsters.battleships.board.FieldState;
 
@@ -36,7 +37,7 @@ class SingleShot {
         }
         switchPlayers(state);
 
-        return new Result(position, state, isWinner(), error, current.getId(), current.getName());
+        return new Result(Event.GAMEPLAY, position, state, isWinner(), error, current.getId(), current.getName(), enemy.getId());
     }
 
     private void switchPlayers(FieldState state) {
