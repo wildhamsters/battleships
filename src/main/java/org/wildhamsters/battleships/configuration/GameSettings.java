@@ -19,7 +19,5 @@ public record GameSettings(List<PlayerSettings> playerSettings) {
         return playerSettings.size() > 1 ? Optional.of(playerSettings.get(1).fleet) : Optional.empty();
     }
 
-    public record PlayerSettings(String name,
-            Board board,
-            Fleet fleet){}
+    public record PlayerSettings(String name, Board board, Fleet fleet){}
 }
