@@ -195,7 +195,7 @@ function processConnectMessage(response) {
     lastShootingPlayer=response.playerOneSessionId;
     currentTurnPlayer=response.playerOneSessionId;
 
-    if(sessionId!=response.playerOneSessionId) {
+    if(sessionId==response.playerOneSessionId) {
         response.playerOneShipPositions.forEach(el => document.getElementById("cell_"+el).innerHTML="&#128755;");
     } else {
         response.playerTwoShipPositions.forEach(el => document.getElementById("cell_"+el).innerHTML="&#128755;");
