@@ -37,9 +37,8 @@ class GameService {
                     null, null,
                     null, Event.CONNECT);
         } else {
-
             var gameSettings = gameConfigurer.createConfiguration(List.of(4, 3, 3, 2, 2, 2, 1, 1, 1, 1)
-                    ,10, 10, connectedPlayers.names());
+                    ,10, 10, connectedPlayers.names(), connectedPlayers.ids());
             var connectionStatus = new ConnectionStatus("Players paired.",
                     connectedPlayers.firstOneConnected().get().sessionId(),
                     gameSettings.firstPlayersFleet().get().getFleetPositions(),
