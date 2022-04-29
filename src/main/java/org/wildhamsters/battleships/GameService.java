@@ -1,40 +1,47 @@
 package org.wildhamsters.battleships;
 
 import org.springframework.stereotype.Service;
-import org.wildhamsters.battleships.board.Board;
-import org.wildhamsters.battleships.board.FieldState;
-import org.wildhamsters.battleships.fleet.Fleet;
-import org.wildhamsters.battleships.play.IllegalShotException;
+import org.wildhamsters.battleships.configuration.GameConfigurer;
+import org.wildhamsters.battleships.play.GameRoom;
+
+import java.util.List;
 
 /**
- * @author Piotr Chowaniec
+ * @author Dominik Żebracki
  */
 @Service
-public
 class GameService {
 
-    private final Board board;
-    private final Fleet fleet;
+    private final GameRoom gameRoom;
+    private ConnectedPlayers connectedPlayers;
+    private final GameConfigurer gameConfigurer;
 
-    public GameService(Board board) {
-        this.board = board;
-        fleet = new Fleet();
+    GameService(GameRoom gameRoom, ConnectedPlayers connectedPlayers, GameConfigurer gameConfigurer) {
+        this.gameRoom = gameRoom;
+        this.connectedPlayers = connectedPlayers;
+        this.gameConfigurer = gameConfigurer;
     }
 
-    public FieldState verifyShot(int position) throws IllegalShotException {
-        fleet.makeShot(position);
-        return null;
-    }
+    ConnectionStatus processConnectingPlayers(ConnectedPlayer connectedPlayer) {
+        connectedPlayers = connectedPlayers.add(connectedPlayer);
+        if(!connectedPlayers.areBothConnected()) {
+            return new ConnectionStatus("No opponents for now",
+                    null, null,
+                    null, null,
+                    null, Event.CONNECT);
+        } else {
 
-    void resetGameStatus() {
-        board.clearBoard();
-    }
-
-    public boolean isRoundFinished() {
-        return fleet.checkIfAllShipsSunk();
-    }
-
-    private void updateFieldState(FieldState newState, int position) {
-        board.setField(newState, position);
+            var gameSettings = gameConfigurer.createConfiguration(List.of(4, 3, 3, 2, 2, 2, 1, 1, 1, 1)
+                    ,10, 10, connectedPlayers.names());
+            var connectionStatus = new ConnectionStatus("Players paired.",
+                    connectedPlayers.firstOneConnected().get().sessionId(),
+                    gameSettings.firstPlayersFleet().get().getFleetPositions(),
+                    connectedPlayers.secondOneConnected().get().sessionId(),
+                    gameSettings.secondPlayersFleet().get().getFleetPositions(),
+                    connectedPlayers.firstOneConnected().get().name(),
+                    Event.CONNECT);
+            System.out.println(connectionStatus);
+            return connectionStatus;
+        }
     }
 }

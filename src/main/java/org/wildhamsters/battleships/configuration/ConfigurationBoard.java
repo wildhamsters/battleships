@@ -1,4 +1,4 @@
-package org.wildhamsters.battleships.board;
+package org.wildhamsters.battleships.configuration;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -25,7 +25,12 @@ class ConfigurationBoard {
                 .forEach(i -> board.put(i, FieldState.SHIP));
     }
 
-    boolean isEnoughSpaceForShipWithinBoardBounds(int requiredSpace, int gameBoardPosition, ShipDirection direction) {
+    boolean canShipBePlaced(List<Integer> shipMastPositions, ShipDirection direction) {
+        return isEnoughSpaceForShipWithinBoardBounds(shipMastPositions.size(), shipMastPositions.get(0), direction) &&
+                areSurroundingFieldsNotOccupied(shipMastPositions);
+    }
+
+    private boolean isEnoughSpaceForShipWithinBoardBounds(int requiredSpace, int gameBoardPosition, ShipDirection direction) {
         var position = toConfigurationBoardPosition(gameBoardPosition);
         return switch (direction) {
             case HORIZONTAL -> structure.rowEnd(structure.rowIndex(position)) - position >= requiredSpace;
@@ -33,7 +38,7 @@ class ConfigurationBoard {
         };
     }
 
-    boolean areSurroundingFieldsNotOccupied(List<Integer> gameBoardPositions) {
+    private boolean areSurroundingFieldsNotOccupied(List<Integer> gameBoardPositions) {
         return gameBoardPositions.stream()
                 .map(this::toConfigurationBoardPosition)
                 .map(structure::fieldSurrounding)
@@ -55,11 +60,6 @@ class ConfigurationBoard {
     private int toConfigurationBoardPosition(int gameBoardPosition) {
         var gameBoardRowIndex = gameBoardPosition / (structure.width() - 2);
         return gameBoardPosition + structure.width() + (gameBoardRowIndex * 2) + 1;
-    }
-
-    boolean canShipBePlaced(List<Integer> shipMastPositions, ShipDirection direction) {
-        return isEnoughSpaceForShipWithinBoardBounds(shipMastPositions.size(), shipMastPositions.get(0), direction) &&
-                areSurroundingFieldsNotOccupied(shipMastPositions);
     }
 
     @Override
