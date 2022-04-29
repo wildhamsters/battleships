@@ -23,6 +23,12 @@ public class ShipsPositions {
         return shipsPosition;
     }
 
+    public List<Integer> getAllOccupiedFields() {
+        return shipsPosition.stream()
+                .flatMap(p -> p.positions().stream())
+                .toList();
+    }
+
     @Override
     public String toString() {
         return shipsPosition.toString();

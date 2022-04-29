@@ -87,6 +87,13 @@ public class Fleet {
         return ShotResult.HIT;
     }
 
+    public List<Integer> getFleetPositions() {
+       return ships.getKeySet()
+               .stream()
+               .flatMap(s -> s.sections.keySet().stream())
+               .toList();
+    }
+
     ShotResult makeShot(List<ShipPosition> fields) {
         fields.forEach(shipPosition -> {
             shipPosition.positions().forEach(this::makeShot);
