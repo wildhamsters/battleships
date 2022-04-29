@@ -205,7 +205,7 @@ function processGameplayMessage(response) {
         setTimeout(() => {hideStatus();}, 1000)
         return;
     }
-    handleReturnedFieldType(response.updatedState, response.cell, lastShootingPlayer==response.currentTurnPlayer);
+    handleReturnedFieldType(response.updatedState, response.cell, lastShootingPlayer==sessionId);
     lastShootingPlayer=response.currentTurnPlayer;
     document.getElementById("playerSpan").innerHTML="Now plays: " + response.currentTurnPlayerName;
     var myTurn = (sessionId==response.currentTurnPlayer);
