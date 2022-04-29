@@ -165,7 +165,12 @@ function disconnect() {
 }
 
 function sendName(id) {
-    stompClient.send("/app/gameplay", {}, id);
+    if(sessionId==currentTurnPlayer)
+        stompClient.send("/app/gameplay", {}, id);
+    else {
+        showStatus("NOT YOUR TURN!")
+        setTimeout(() => {hideStatus();}, 1000)
+    }
 }
 
 function readSubscribed(message) {
@@ -181,12 +186,14 @@ function readSubscribed(message) {
 }
 
 var lastShootingPlayer;
+var currentTurnPlayer;
 
 function processConnectMessage(response) {
     document.getElementById("playerSpan").innerText=(response.startingPlayerName + " starts");
     var myTurn = (sessionId==response.playerOneSessionId);
 
     lastShootingPlayer=response.playerOneSessionId;
+    currentTurnPlayer=response.playerOneSessionId;
 
     if(sessionId!=response.playerOneSessionId) {
         response.playerOneShipPositions.forEach(el => document.getElementById("cell_"+el).innerHTML="&#128755;");
@@ -207,6 +214,7 @@ function processGameplayMessage(response) {
     }
     handleReturnedFieldType(response.updatedState, response.cell, lastShootingPlayer==sessionId);
     lastShootingPlayer=response.currentTurnPlayer;
+    currentTurnPlayer=response.currentTurnPlayer;
     document.getElementById("playerSpan").innerHTML="Now plays: " + response.currentTurnPlayerName;
     var myTurn = (sessionId==response.currentTurnPlayer);
     highlightBoard(myTurn);
