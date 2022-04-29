@@ -86,3 +86,7 @@ span {
     color: white;
     padding: 1vh;
 }
+
+#logout {
+    position: absolute;
+}
