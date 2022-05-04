@@ -22,10 +22,10 @@ class SingleShot {
 
     /**
      * Takes board cell index and checks what FieldState will be after shot.
-     * It may be ACCURATE_SHOT if current player hit enemy's ship, MISSED_OUT.
+     * It may be ACCURATE_SHOT if current player hit enemy's ship, MISSED_SHOT.
      *
      * @param position index of cell that is being shot.
-     * @return FieldState of cell after shot.
+     * @return Result DTO with data needed to prepare front-end.
      */
     Result makeShot(int position) {
         String error = "";
@@ -36,8 +36,9 @@ class SingleShot {
             error = e.getMessage();
         }
         switchPlayers(state);
+        var fieldsToMark = enemy.takeShot(position, state);
 
-        return new Result(Event.GAMEPLAY, position, state, isWinner(), error, current.getId(), current.getName(), enemy.getId());
+        return new Result(Event.GAMEPLAY, fieldsToMark, isWinner(), error, current.getId(), current.getName(), enemy.getId());
     }
 
     private void switchPlayers(FieldState state) {
