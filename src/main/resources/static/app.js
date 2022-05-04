@@ -260,7 +260,7 @@ for (i = 0; i < coll.length; i++) {
     } else {
       content.style.maxHeight = content.scrollHeight + "px";
     }
-  });
+  } );
 }
 
 function logMove(fieldState, name, cell) {
@@ -270,7 +270,7 @@ function logMove(fieldState, name, cell) {
     } else {
         entry.appendChild(document.createTextNode(getTime() + " Player " + name + " missed a shot on cell " + cell));
     }
-    moveList.appendChild(entry);
+    moveList.insertAdjacentElement("afterbegin", entry);
 }
 
 function getTime() {
