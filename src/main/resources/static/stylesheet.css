@@ -1,0 +1,93 @@
+table {
+	table-layout: fixed;
+	font-family: futura-pt, monospace;
+	border-collapse: collapse;
+	border-style: hidden;
+	border-radius: 15px;
+	overflow: hidden;
+	width: 48vw;
+	height: 80vh;
+}
+
+.board {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+}
+
+div > p {
+	text-align: center;
+}
+
+td {
+	text-align: center;
+    font-size: 2em;
+    padding: 3px;
+    border: 1px solid black;
+    cursor: crosshair
+}
+
+.water:hover {
+	background-color: lightgray;
+}
+
+.water {
+	background-color: beige;
+}
+
+.missed {
+	background-color: dimgray;
+}
+
+.accurate {
+	background-color: indianred;
+}
+
+.intact {
+	background-color: salmon;
+}
+
+body {
+	display: flex;
+	flex-direction: row;
+	column-gap: 15px;
+	background-color: aliceblue;
+}
+
+span {
+	align-self: center;
+}
+
+#rightSide {
+    border-radius: 15px;
+}
+
+#playerBoard td {
+    cursor: default;
+}
+
+.opponentTurn {
+	background-color: coral;
+	transition: 2s;
+	cursor: not-allowed;
+}
+
+.playerTurn {
+	background-color: greenyellow;
+	transition: 2s;
+	cursor: crosshair;
+}
+
+#status {
+    position: fixed;
+    bottom: 4vh;
+    left: 44vw;
+    background-color: red;
+    font-size: 1.3em;
+    color: white;
+    padding: 1vh;
+}
+
+#logout {
+    position: absolute;
+}
