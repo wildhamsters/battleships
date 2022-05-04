@@ -15,25 +15,37 @@
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
 	enabled. Please enable Javascript and reload this page!</h2></noscript>
 
-<button id="logout" onclick="location.href='/logout'">LOGOUT</button>
 
-<div id="leftSide">
-	<p>Your board</p>
-	<div id="player" class="board">
-		<table id="playerBoard"></table>
-		<span id="playerSpan">WAIT NOW</span>
+
+
+<div id="boards">
+	<button id="logout" onclick="location.href='/logout'">LOGOUT</button>
+	<div id="leftSide">
+		<p>Your board</p>
+		<div id="player" class="board">
+			<table id="playerBoard"></table>
+			<span id="playerSpan">WAIT NOW</span>
+		</div>
 	</div>
+	
+	<div id="rightSide">
+		<p>The opponent's board</p>
+		<div id="opponent" class="board">
+			<table id="opponentBoard"></table>
+			<span> </span>
+		</div>
+	</div>
+	<div id="status"></div>
 </div>
 
-<div id="rightSide">
-	<p>The opponent's board</p>
-	<div id="opponent" class="board">
-		<table id="opponentBoard"></table>
-		<span> </span>
-	</div>
-</div>
 
-<div id="status"></div>
+
+
+
+<button type="button" class="collapsible">Move list</button>
+<div class="content">
+	<ol id="loglist"></ol>
+</div>
 
 </body>
 </html>
