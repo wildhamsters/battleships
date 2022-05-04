@@ -138,10 +138,8 @@ function connectUsers() {
 
         var url = stompClient.ws._transport.url;
         console.log("URL " + url);
-        url = url.replace(
-          "ws://localhost:8080/shots-websocket/",  "");
-        url = url.replace("/websocket", "");
-        url = url.replace(/^[0-9]+\//, "");
+        var splitUrl = url.split("/");
+        url = splitUrl[splitUrl.length - 2];
         console.log("Your current session is: " + url);
         sessionId = url;
 
