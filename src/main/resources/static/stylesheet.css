@@ -96,6 +96,12 @@ span {
 #logout {
     position: absolute;
 }
+#name {
+	position: absolute;
+	left: 5vw;
+	margin-top: 1px;
+	
+}
 
 .collapsible {
 	margin-top: 20px;

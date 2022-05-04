@@ -196,8 +196,12 @@ function processConnectMessage(response) {
 
     if(sessionId==response.playerOneSessionId) {
         response.playerOneShipPositions.forEach(el => document.getElementById("cell_"+el).innerHTML="&#128755;");
+        document.getElementById("name").innerHTML = response.playerOneName;
+        console.log(response.playerOneName);
     } else {
         response.playerTwoShipPositions.forEach(el => document.getElementById("cell_"+el).innerHTML="&#128755;");
+        document.getElementById("name").innerHTML = response.playerTwoName;
+        console.log(response.playerTwoName);
     }
 
     highlightBoard(myTurn);

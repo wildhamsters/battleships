@@ -61,6 +61,7 @@ class GameService {
         return new ConnectionStatus("No opponents for now",
                 null, null,
                 null, null,
+                null, null,
                 null, Event.CONNECT);
     }
 
@@ -75,6 +76,8 @@ class GameService {
                 connectedPlayers.secondOneConnected().get().sessionId(),
                 gameSettings.secondPlayersFleet().get().getFleetPositions(),
                 connectedPlayers.firstOneConnected().get().name(),
+                connectedPlayers.firstOneConnected().get().name(),
+                connectedPlayers.secondOneConnected().get().name(),
                 Event.CONNECT);
         clearConnectedPlayersAfterPairing();
         return connectionStatus;
