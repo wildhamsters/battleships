@@ -1,5 +1,7 @@
 package org.wildhamsters.battleships.fleet;
 
+import org.wildhamsters.battleships.board.FieldState;
+
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -115,6 +117,13 @@ public class Fleet {
             }
         }
         return answer.get();
+    }
+
+    public List<Integer> getSinkingShipPosition(int field) {
+       if (makeShot(field) == ShotResult.SHIP_SUNK) {
+           return ships.getShipPosition(field);
+       }
+       return List.of(field);
     }
 
     boolean checkIfAllShipsUntouched() {
