@@ -12,6 +12,7 @@ import org.wildhamsters.battleships.fleet.ShipsPositions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
 
@@ -53,7 +54,7 @@ public class GameRoomTest {
     }
 
     private Result prepareResult(int cell, FieldState newState, String id, String name, String opponent) {
-        return new Result(Event.GAMEPLAY, cell, newState, false, "", id, name, opponent);
+        return new Result(Event.GAMEPLAY, Map.of(cell, newState), false, "", id, name, opponent);
     }
 
     private Fleet prepareFleet() {
