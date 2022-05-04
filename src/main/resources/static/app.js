@@ -244,7 +244,7 @@ function showStatus(message) {
 }
 
 function hideStatus() {
-    document.getElementById("status").hidden=true;
+    document.getElementById("status").hidden=true; 
 }
 
 var moveList = document.getElementById('loglist');
@@ -266,13 +266,20 @@ for (i = 0; i < coll.length; i++) {
 function logMove(fieldState, name, cell) {
     var entry = document.createElement('li');
     if(fieldState === "ACCURATE_SHOT") {
-        entry.appendChild(document.createTextNode("Player " + name + " hit a ship on cell " + cell));
+        entry.appendChild(document.createTextNode(getTime() + " Player " + name + " hit a ship on cell " + cell));
     } else {
-        entry.appendChild(document.createTextNode("Player " + name + " missed a shot on cell " + cell));
+        entry.appendChild(document.createTextNode(getTime() + " Player " + name + " missed a shot on cell " + cell));
     }
     moveList.appendChild(entry);
 }
 
+function getTime() {
+    var timeStamp = new Date();
+    var h = (timeStamp.getHours() < 10 ? '0' : '') + timeStamp.getHours();
+    var m = (timeStamp.getMinutes() < 10 ? '0' : '') + timeStamp.getMinutes();
+    var s = (timeStamp.getSeconds() < 10 ? '0' : '') + timeStamp.getSeconds();
+    return  h + ":" + m + ":" + s;
+}
 
 createPlayerBoard();
 createOpponentBoard();

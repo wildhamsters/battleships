@@ -85,8 +85,8 @@ span {
 
 #status {
     position: fixed;
-    bottom: 4vh;
-    left: 44vw;
+    top: 89vh;
+    left: 65vw;
     background-color: red;
     font-size: 1.3em;
     color: white;
@@ -98,11 +98,12 @@ span {
 }
 
 .collapsible {
+	margin-top: 20px;
 	background-color: #eee;
 	color: #444;
 	cursor: pointer;
 	padding: 18px;
-	width: 100%;
+	width: 49%;
 	border: none;
 	text-align: center;
 	outline: none;
@@ -124,7 +125,7 @@ span {
   }
   
   .content {
-	padding: 0 18px;
+	width: 49%;
 	background-color: white;
 	max-height: 0;
 	overflow: hidden;
