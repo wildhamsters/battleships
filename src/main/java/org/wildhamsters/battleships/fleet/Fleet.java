@@ -127,10 +127,6 @@ public class Fleet {
         return answer.get();
     }
 
-    public Ship getShipByPosition(int position) {
-        return ships.getShipByPosition(position);
-    }
-
     public ShipCondition getShipConditionByIndex(int position) {
         return ships.getShipByPosition(position).getShipCondition();
     }
