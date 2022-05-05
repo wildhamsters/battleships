@@ -3,6 +3,7 @@ package org.wildhamsters.battleships;
 import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
 import org.wildhamsters.battleships.play.GameRoom;
+import org.wildhamsters.battleships.play.GameRooms;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,7 @@ class GameService {
     private static final int BOARD_WIDTH = 10;
     private static final int BOARD_HEIGHT = 10;
 
+    private final GameRooms gameRooms = new GameRooms();
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
     private final GameConfigurer gameConfigurer;
@@ -59,6 +61,7 @@ class GameService {
 
     private ConnectionStatus createPlayerWaitingForOpponentStatus() {
         return new ConnectionStatus("No opponents for now",
+                null,
                 null, null,
                 null, null,
                 null, null,
@@ -69,8 +72,10 @@ class GameService {
         var gameSettings = gameConfigurer.createConfiguration(SHIP_SIZES_TO_BE_CREATED,
                 BOARD_HEIGHT, BOARD_WIDTH, connectedPlayers.names(), connectedPlayers.ids());
         this.gameRoom = new GameRoom(gameSettings);
+        var roomId = gameRooms.addRoom(gameRoom);
         //TODO refactor Optionals
          var connectionStatus = new ConnectionStatus("Players paired.",
+                roomId,
                 connectedPlayers.firstOneConnected().get().sessionId(),
                 gameSettings.firstPlayersFleet().get().getFleetPositions(),
                 connectedPlayers.secondOneConnected().get().sessionId(),

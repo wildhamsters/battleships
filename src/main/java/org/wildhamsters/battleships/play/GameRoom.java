@@ -3,6 +3,8 @@ package org.wildhamsters.battleships.play;
 import org.wildhamsters.battleships.Result;
 import org.wildhamsters.battleships.configuration.GameSettings;
 
+import java.util.UUID;
+
 /**
  * Container for both players. Gives access to making shot and checking whether round is finished.
  *
@@ -10,6 +12,7 @@ import org.wildhamsters.battleships.configuration.GameSettings;
  */
 public class GameRoom {
 
+    private final String id = UUID.randomUUID().toString();
     private final Player playerOne;
     private final Player playerTwo;
     private final SingleShot singleShot;
@@ -34,5 +37,9 @@ public class GameRoom {
      */
     public Result makeShot(int position) {
         return singleShot.makeShot(position);
+    }
+
+    String obtainUUID() {
+        return id;
     }
 }
