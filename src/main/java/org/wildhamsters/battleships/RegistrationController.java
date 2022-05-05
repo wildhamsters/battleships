@@ -22,9 +22,13 @@ class RegistrationController {
     }
 
     @PostMapping("/registration")
-    ResponseEntity<String> register(@RequestParam Map<String, String> map, HttpServletResponse response) throws IOException, AccountExistException {
-        users.save(new UserDto(map.get("username"), map.get("password"), map.get("email")));
-        return ResponseEntity.status(HttpStatus.CREATED).body("/index");
+    ResponseEntity<String> register(@RequestParam Map<String, String> map) {
+        try {
+            users.save(new UserDto(map.get("username"), map.get("password"), map.get("email")));
+            return ResponseEntity.status(HttpStatus.CREATED).body("/index");
+        } catch (AccountExistException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User account could not be created");
+        }
     }
 
     @GetMapping("/register")

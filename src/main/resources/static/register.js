@@ -20,7 +20,10 @@ function register() {
             clearInput(password);
             console.log(xhr.response);
             window.location.replace(xhr.responseText);
-        }
+        } else if (this.readyState == 4 && this.status == 400) {
+           console.log(xhr.response);
+           alert(xhr.responseText);
+       }
     };
 }
 
