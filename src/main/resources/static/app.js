@@ -9,6 +9,7 @@ window.beforeunload = function (e) {
 
 var width = 10;
 var height = 10;
+var roomId;
 
 var FIELD_STATE  = {
 	WATER: "WATER",
@@ -166,7 +167,7 @@ function disconnect() {
 
 function sendName(id) {
     if(sessionId==currentTurnPlayer)
-        stompClient.send("/app/gameplay", {}, id);
+        stompClient.send("/app/gameplay", {}, JSON.stringify({"cell":id, "roomId":roomId}));
     else {
         showStatus("NOT YOUR TURN!")
         setTimeout(() => {hideStatus();}, 1000)
@@ -190,6 +191,7 @@ var lastShootingPlayer;
 var currentTurnPlayer;
 
 function processConnectMessage(response) {
+    roomId=response.roomId;
     document.getElementById("playerSpan").innerText=(response.startingPlayerName + " starts");
     var myTurn = (sessionId==response.playerOneSessionId);
 
