@@ -4,18 +4,20 @@ import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Map;
 
 /**
  * @author Dominik Żebracki
  */
+@Transactional
 class DatabaseUsers implements Users {
 
     private final static String FIND_USER_BY_USERNAME_QUERY = "SELECT * FROM users WHERE name = :username";
-    private final static String INSERT_USER_QUERY = "INSERT INTO users(name, email, password, account_non_expired," +
-            "account_non_locked, credentials_non_expired, enabled, authority) values (:username, :email, :password, " +
-            ":account_non_expired, :account_non_locked, :credentials_non_expired, :enabled, :authority)";
+    private final static String INSERT_USER_QUERY = "INSERT INTO users(name, email, password, acc_expired," +
+            "acc_locked, cred_expired, disabled, authority) values (:username, :email, :password, " +
+            ":acc_expired, :acc_locked, :cred_expired, :disabled, :authority)";
 
     private final NamedParameterJdbcTemplate jdbcTemplate;
     private final PasswordEncoder passwordEncoder;
@@ -34,10 +36,10 @@ class DatabaseUsers implements Users {
                 Map.of("username", userDto.name(),
                         "email", userDto.email(),
                         "password", passwordEncoder.encode(userDto.password()),
-                        "account_non_expired", false,
-                        "account_non_locked", false,
-                        "credentials_non_expired", false,
-                        "enabled", false,
+                        "acc_expired", false,
+                        "acc_locked", false,
+                        "cred_expired", false,
+                        "disabled", false,
                         "authority", "USER"));
     }
 
@@ -53,10 +55,10 @@ class DatabaseUsers implements Users {
                             rs.getString("email"),
                             rs.getString("password"),
                             new SimpleGrantedAuthority(rs.getString("authority")),
-                            rs.getBoolean("account_non_expired"),
-                            rs.getBoolean("account_non_locked"),
-                            rs.getBoolean("credentials_non_expired"),
-                            rs.getBoolean("enabled")));
+                            rs.getBoolean("acc_expired"),
+                            rs.getBoolean("acc_locked"),
+                            rs.getBoolean("cred_expired"),
+                            rs.getBoolean("disabled")));
         } catch (EmptyResultDataAccessException e) {
             userEntity = null;
         }

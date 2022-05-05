@@ -8,7 +8,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.sql.DataSource;
-import java.util.HashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -26,12 +25,14 @@ class Beans {
     public UserDetailsService battleshipsUserDetailsService(Users users) {
         return new UsersService(users);
     }
+
     @Bean
     public NamedParameterJdbcTemplate jdbcTemp(DataSource dataSource) {
         return new NamedParameterJdbcTemplate(dataSource);
     }
+
     @Bean
     public Users users(NamedParameterJdbcTemplate jdbcTemplate, PasswordEncoder passwordEncoder) {
-        return new InMemoryUsers(new ConcurrentHashMap<>(), passwordEncoder);
+        return new DatabaseUsers(jdbcTemplate, passwordEncoder);
     }
 }
