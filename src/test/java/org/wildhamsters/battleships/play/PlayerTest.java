@@ -61,16 +61,16 @@ public class PlayerTest {
 
     public void shouldReturnTrue_whenFleetIsSunk() {
         Player player = createPlayer(Board.create());
-        player.enemyShotResult(1);
-        player.enemyShotResult(2);
-        player.enemyShotResult(11);
+        player.takeShot(1, FieldState.ACCURATE_SHOT);
+        player.takeShot(2, FieldState.ACCURATE_SHOT);
+        player.takeShot(43, FieldState.ACCURATE_SHOT);
         assertTrue(player.isLost(), "Should return true when all ships are hit.");
     }
 
     public void shouldReturnFalse_whenFleetIsNotSunk() {
         Player player = createPlayer(Board.create());
-        player.enemyShotResult(1);
-        player.enemyShotResult(11);
+        player.takeShot(1, FieldState.ACCURATE_SHOT);
+        player.takeShot(43, FieldState.ACCURATE_SHOT);
         assertFalse(player.isLost(), "Should return false when not all ships are hit.");
     }
 
@@ -81,7 +81,7 @@ public class PlayerTest {
     private Fleet createFleet() {
         List<ShipPosition> ships = new ArrayList<>() {{
             add(new ShipPosition(List.of(1, 2)));
-            add(new ShipPosition(List.of(11)));
+            add(new ShipPosition(List.of(43)));
         }};
         return new Fleet(new ShipsPositions(ships));
     }
