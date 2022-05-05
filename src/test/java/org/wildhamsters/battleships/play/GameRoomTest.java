@@ -12,6 +12,7 @@ import org.wildhamsters.battleships.fleet.ShipsPositions;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.testng.Assert.assertEquals;
 
@@ -31,7 +32,7 @@ public class GameRoomTest {
         return new Object[][] {
                 {prepareGameRoom(), prepareResult(0, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 0},
                 {prepareGameRoom(), prepareResult(1, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 1},
-                {prepareGameRoom(), prepareResult(11, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 11},
+                {prepareGameRoom(), prepareResult(43, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 43},
                 {prepareGameRoom(), prepareResult(14, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 14},
                 {prepareGameRoom(), prepareResult(23, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 23},
                 {prepareGameRoom(), prepareResult(24, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 24},
@@ -48,18 +49,19 @@ public class GameRoomTest {
         Board board = Board.create();
         board.setField(FieldState.INTACT_SHIP, 1);
         board.setField(FieldState.INTACT_SHIP, 2);
-        board.setField(FieldState.INTACT_SHIP, 11);
+        board.setField(FieldState.INTACT_SHIP, 43);
+        board.setField(FieldState.INTACT_SHIP, 44);
         return board;
     }
 
     private Result prepareResult(int cell, FieldState newState, String id, String name, String opponent) {
-        return new Result(Event.GAMEPLAY, cell, newState, false, "", id, name, opponent);
+        return new Result(Event.GAMEPLAY, Map.of(cell, newState), null , false, "", id, name, opponent);
     }
 
     private Fleet prepareFleet() {
         List<ShipPosition> ships = new ArrayList<>() {{
             add(new ShipPosition(List.of(1, 2)));
-            add(new ShipPosition(List.of(11)));
+            add(new ShipPosition(List.of(43, 44)));
         }};
         return new Fleet(new ShipsPositions(ships));
     }
