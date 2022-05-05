@@ -33,9 +33,6 @@ function createPlayerBoard() {
             cell.id = 'cell_' + (i * width + j);
             cell.innerHTML = (i * width + j);
             cell.className = "water";
-            cell.onclick = function (cell) {
-                //sendName(extractCellNumber(this)); //todo disabled to disallow player's board clicking
-            }
             cell.onmouseenter = function () {
                 //hoverMany(extractCellNumber(this), 4, "H");
             };
@@ -90,8 +87,23 @@ function handleReturnedFieldType(returnedFieldType, cell, player) {
             break;
     }
 }
-function handleShipShink(cells, player) {
+function handleShipShink(cells, keys, player) {
+    for (let i = 0; i < keys.length; i++) {
+        var id = "cell_" + keys[i];
+        if (player)
+            id = "o" + id;
 
+        switch (cells[keys[i]]) {
+            case FIELD_STATE.MISSED_SHOT:
+                changeDOMClassName(id, "missed");
+                break;
+            case FIELD_STATE.ACCURATE_SHOT:
+                changeDOMClassName(id, "accurate");
+                document.getElementById(id).innerHTML = "&#128163";
+                break;
+        }
+    }
+    new Audio('audio/explosion.wav').play();
 }
 
 
@@ -229,15 +241,14 @@ function processGameplayMessage(response) {
     }
 
     var cellArray = response.cells;
-
     var keys = Object.keys(cellArray);
 
     if (keys.length > 1) {
-        handleShipShink(cellArray, lastShootingPlayer == sessionId);
-        logMove()
+        handleShipShink(cellArray, keys, lastShootingPlayer == sessionId);
+        logSunkedShip(response.shipCells, response.currentTurnPlayerName);
     } else {
         handleReturnedFieldType(cellArray[keys[0]], keys[0], lastShootingPlayer == sessionId);
-        logMove(response.updatedState, response.currentTurnPlayerName, response.cell);
+        logMove(cellArray[keys[0]], response.currentTurnPlayerName, keys[0]);
     }
 
     lastShootingPlayer = response.currentTurnPlayer;
@@ -296,6 +307,12 @@ function logMove(fieldState, name, cell) {
     } else {
         entry.appendChild(document.createTextNode(getTime() + " Player " + name + " missed a shot on cell " + cell));
     }
+    moveList.insertAdjacentElement("afterbegin", entry);
+}
+
+function logSunkedShip(shipCells, name) {
+    var entry = document.createElement('li');
+    entry.appendChild(document.createTextNode(getTime() + " Player " + name + " sunk ship on cells [" + shipCells.join() + "]"));
     moveList.insertAdjacentElement("afterbegin", entry);
 }
 

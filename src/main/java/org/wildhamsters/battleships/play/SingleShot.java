@@ -1,5 +1,7 @@
 package org.wildhamsters.battleships.play;
 
+import java.util.List;
+
 import org.wildhamsters.battleships.Event;
 import org.wildhamsters.battleships.Result;
 import org.wildhamsters.battleships.board.FieldState;
@@ -36,9 +38,12 @@ class SingleShot {
             error = e.getMessage();
         }
         var fieldsToMark = enemy.takeShot(position, state);
+        
+        List<Integer> shipCells = (fieldsToMark.size() > 1) ? enemy.getSunkShipPositions(position) : null;
+
         switchPlayers(state);
 
-        return new Result(Event.GAMEPLAY, fieldsToMark, isWinner(), error, current.getId(), current.getName(), enemy.getId());
+        return new Result(Event.GAMEPLAY, fieldsToMark, shipCells, isWinner(), error, current.getId(), current.getName(), enemy.getId());
     }
 
     private void switchPlayers(FieldState state) {
