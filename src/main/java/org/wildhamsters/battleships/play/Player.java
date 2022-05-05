@@ -7,6 +7,7 @@ import org.wildhamsters.battleships.fleet.Fleet;
 import org.wildhamsters.battleships.fleet.ShotResult;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -84,6 +85,10 @@ class Player {
             });
         }
         return fields;
+    }
+
+    List<Integer> getSunkShipPositions(int position) {
+        return fleet.getSinkingShipPosition(position);
     }
 
     private Set<Integer> getFieldsAroundSinkingShip(int position) {

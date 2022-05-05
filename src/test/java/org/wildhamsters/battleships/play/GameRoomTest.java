@@ -55,7 +55,7 @@ public class GameRoomTest {
     }
 
     private Result prepareResult(int cell, FieldState newState, String id, String name, String opponent) {
-        return new Result(Event.GAMEPLAY, Map.of(cell, newState), false, "", id, name, opponent);
+        return new Result(Event.GAMEPLAY, Map.of(cell, newState), null , false, "", id, name, opponent);
     }
 
     private Fleet prepareFleet() {
