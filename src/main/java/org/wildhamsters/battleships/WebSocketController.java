@@ -39,9 +39,10 @@ class WebSocketController {
     }
 
     @MessageMapping("/gameplay")
-    public void sendGameplay(int cell, Principal user,
+    public void sendGameplay(String json, Principal user,
                              @Header("simpSessionId") String sessionId) throws JsonProcessingException {
-        Result result = gameService.shoot(cell);
+        GameplayUserShotData data = new ObjectMapper().readValue(json, GameplayUserShotData.class);
+        Result result = gameService.shoot(data.roomId(), data.cell());
 
         String resultJSON = new ObjectMapper().writeValueAsString(result);
         simpMessagingTemplate.convertAndSendToUser(result.currentTurnPlayer(),

@@ -55,8 +55,8 @@ class GameService {
      * @param position of a shot on the board.
      * @return result of the shot.
      */
-    Result shoot(int position) {
-        return gameRoom.makeShot(position);
+    Result shoot(String roomId, int position) {
+        return gameRooms.findRoom(roomId).makeShot(position);
     }
 
     private ConnectionStatus createPlayerWaitingForOpponentStatus() {

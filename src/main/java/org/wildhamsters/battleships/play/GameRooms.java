@@ -13,4 +13,9 @@ public class GameRooms {
         gameRooms.add(room);
         return room.obtainUUID();
     }
+
+    public GameRoom findRoom(String roomId) {
+        return gameRooms.stream().filter(r -> r.obtainUUID().equals(roomId))
+                .findFirst().orElseThrow(IllegalArgumentException::new);
+    }
 }
