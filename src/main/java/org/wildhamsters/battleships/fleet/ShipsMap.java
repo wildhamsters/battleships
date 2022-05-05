@@ -23,6 +23,15 @@ class ShipsMap {
     }
 
     Set<Ship> getKeySet() {
-      return ships.keySet();
+        return ships.keySet();
+    }
+
+    Ship getShipByPosition(int position) {
+        for (Map.Entry<Ship, ShipPosition> entry : ships.entrySet()) {
+            if (entry.getValue().positions().contains(position)) {
+                return entry.getKey();
+            }
+        }
+        return null;
     }
 }

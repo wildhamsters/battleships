@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
  * @author Dominik Żebracki
  */
 @Component
-class DefaultBoard implements Board {
+public class DefaultBoard implements Board {
 
     private final ArrayList<FieldState> board;
 
@@ -20,7 +20,7 @@ class DefaultBoard implements Board {
         this.board = board;
     }
 
-    DefaultBoard(ShipsPositions shipsPositions) {
+    public DefaultBoard(ShipsPositions shipsPositions) {
         ArrayList<FieldState> list = new ArrayList<>();
         IntStream.range(0, 100).forEach(x -> list.add(FieldState.WATER));
         board = list;
