@@ -35,8 +35,8 @@ class SingleShot {
         } catch (IllegalShotException e) {
             error = e.getMessage();
         }
-        switchPlayers(state);
         var fieldsToMark = enemy.takeShot(position, state);
+        switchPlayers(state);
 
         return new Result(Event.GAMEPLAY, fieldsToMark, isWinner(), error, current.getId(), current.getName(), enemy.getId());
     }
