@@ -48,10 +48,15 @@ td {
 }
 
 body {
-	display: flex;
 	flex-direction: row;
 	column-gap: 15px;
 	background-color: aliceblue;
+}
+
+#boards {
+	display: flex;
+	column-gap: 15px;
+	flex-direction: row;
 }
 
 span {
@@ -80,8 +85,8 @@ span {
 
 #status {
     position: fixed;
-    bottom: 4vh;
-    left: 44vw;
+    top: 89vh;
+    left: 65vw;
     background-color: red;
     font-size: 1.3em;
     color: white;
@@ -91,3 +96,45 @@ span {
 #logout {
     position: absolute;
 }
+#name {
+	position: absolute;
+	left: 5vw;
+	margin-top: 1px;
+	
+}
+
+.collapsible {
+	margin-top: 20px;
+	background-color: #eee;
+	color: #444;
+	cursor: pointer;
+	padding: 18px;
+	width: 49%;
+	border: none;
+	text-align: center;
+	outline: none;
+	font-size: 15px;
+  }
+  .collapsible:after {
+	content: '\02795'; 
+	font-size: 13px;
+	color: white;
+	float: right;
+	margin-left: 5px;
+  }
+  .active:after {
+	content: "\2796"; 
+  }
+  
+  .active, .collapsible:hover {
+	background-color: #ccc;
+  }
+  
+  .content {
+	width: 49%;
+	background-color: white;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height 0.2s ease-out;
+  }
+  

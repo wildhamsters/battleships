@@ -175,6 +175,7 @@ function readSubscribed(message) {
     console.log("received message body " + message.body);
 
     var response = JSON.parse(message.body);
+
     if(response.event==EVENT.CONNECT) {
         if(response.playerOneSessionId!=null)
             processConnectMessage(response);
@@ -195,8 +196,12 @@ function processConnectMessage(response) {
 
     if(sessionId==response.playerOneSessionId) {
         response.playerOneShipPositions.forEach(el => document.getElementById("cell_"+el).innerHTML="&#128755;");
+        document.getElementById("name").innerHTML = response.playerOneName;
+        console.log(response.playerOneName);
     } else {
         response.playerTwoShipPositions.forEach(el => document.getElementById("cell_"+el).innerHTML="&#128755;");
+        document.getElementById("name").innerHTML = response.playerTwoName;
+        console.log(response.playerTwoName);
     }
 
     highlightBoard(myTurn);
@@ -214,6 +219,8 @@ function processGameplayMessage(response) {
     lastShootingPlayer=response.currentTurnPlayer;
     currentTurnPlayer=response.currentTurnPlayer;
     document.getElementById("playerSpan").innerHTML="Now plays: " + response.currentTurnPlayerName;
+
+    logMove(response.updatedState, response.currentTurnPlayerName, response.cell);
     var myTurn = (sessionId==response.currentTurnPlayer);
     highlightBoard(myTurn);
 
@@ -239,7 +246,41 @@ function showStatus(message) {
 }
 
 function hideStatus() {
-    document.getElementById("status").hidden=true;
+    document.getElementById("status").hidden=true; 
+}
+
+var moveList = document.getElementById('loglist');
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.maxHeight){
+      content.style.maxHeight = null;
+    } else {
+      content.style.maxHeight = content.scrollHeight + "px";
+    }
+  } );
+}
+
+function logMove(fieldState, name, cell) {
+    var entry = document.createElement('li');
+    if(fieldState === "ACCURATE_SHOT") {
+        entry.appendChild(document.createTextNode(getTime() + " Player " + name + " hit a ship on cell " + cell));
+    } else {
+        entry.appendChild(document.createTextNode(getTime() + " Player " + name + " missed a shot on cell " + cell));
+    }
+    moveList.insertAdjacentElement("afterbegin", entry);
+}
+
+function getTime() {
+    var timeStamp = new Date();
+    var h = (timeStamp.getHours() < 10 ? '0' : '') + timeStamp.getHours();
+    var m = (timeStamp.getMinutes() < 10 ? '0' : '') + timeStamp.getMinutes();
+    var s = (timeStamp.getSeconds() < 10 ? '0' : '') + timeStamp.getSeconds();
+    return  h + ":" + m + ":" + s;
 }
 
 createPlayerBoard();

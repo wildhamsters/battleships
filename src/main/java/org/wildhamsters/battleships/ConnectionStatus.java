@@ -13,5 +13,7 @@ record ConnectionStatus(String message,
                         String playerTwoSessionId,
                         List<Integer> playerTwoShipPositions,
                         String startingPlayerName,
+                        String playerOneName,
+                        String playerTwoName,
                         Event event) {
 }
