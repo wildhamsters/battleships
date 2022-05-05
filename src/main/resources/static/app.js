@@ -118,11 +118,13 @@ function unhoverMany(startId, cellsCount, direction) {//todo make direction
 function winner() {
 	new Audio('audio/win.wav').play();
 	document.body.innerHTML = "<img src='https://c.tenor.com/D-pLzJqzkKcAAAAC/winner-wrestling.gif' alt='YOU WON!' />";
+    document.body.className = "centered";
 }
 
 function lose() {
     new Audio('audio/lose.wav').play();
     document.body.innerHTML = "<img src='https://media.giphy.com/media/l2Je3n9VXC8z3baTe/giphy.gif' alt='YOU LOST!' />";
+    document.body.className = "centered";
 }
 
 function changeDOMClassName(elementId, className) {

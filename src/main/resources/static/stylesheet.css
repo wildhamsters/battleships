@@ -136,10 +136,6 @@ span {
 	max-height: 0;
 	overflow: hidden;
 	transition: max-height 0.2s ease-out;
-  }
-
-#license {
-
 }
 
 .tooltip {
@@ -170,4 +166,10 @@ span {
     visibility: visible;
     opacity: 1;
 }
-  
+
+  .centered {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
