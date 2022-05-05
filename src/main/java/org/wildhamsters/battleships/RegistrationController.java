@@ -22,13 +22,18 @@ class RegistrationController {
     }
 
     @PostMapping("/registration")
-    void register(@RequestParam Map<String, String> map, HttpServletResponse response) throws IOException {
+    ResponseEntity<String> register(@RequestParam Map<String, String> map, HttpServletResponse response) throws IOException, AccountExistException {
         users.save(new UserDto(map.get("username"), map.get("password"), map.get("email")));
-        response.sendRedirect("/login");
+        return ResponseEntity.status(HttpStatus.CREATED).body("/index");
     }
 
     @GetMapping("/register")
     String showRegistrationPage() {
         return "register.html";
+    }
+
+    @GetMapping("/index")
+    String showPage() {
+        return "index.html";
     }
 }

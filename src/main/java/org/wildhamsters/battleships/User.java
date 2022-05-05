@@ -1,7 +1,17 @@
 package org.wildhamsters.battleships;
 
+import org.springframework.security.core.GrantedAuthority;
+
 /**
- * @author Mariusz Bal
+ * @author Dominik Żebracki
  */
-record User(String name, String email, String password) {
+record UserEntity(int id,
+                  String name,
+                  String email,
+                  String password,
+                  GrantedAuthority authority,
+                  boolean accountExpired,
+                  boolean accountLocked,
+                  boolean credentialsExpired,
+                  boolean disabled) {
 }

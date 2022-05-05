@@ -9,27 +9,8 @@ import java.util.Map;
 /**
  * @author Dominik Żebracki
  */
-class Users {
+interface Users {
+    void save(UserDto userDto) throws AccountExistException;
 
-    private final Map<String, UserDetails> users;
-    private final PasswordEncoder passwordEncoder;
-
-    Users(Map<String, UserDetails> users, PasswordEncoder passwordEncoder) {
-        this.users = users;
-        this.passwordEncoder = passwordEncoder;
-        System.err.println(users);
-    }
-
-    void save(UserDto userDto) {
-        users.put(userDto.name(), User.withUsername(userDto.name())
-                .password(passwordEncoder.encode(userDto.password()))
-                .authorities("USER")
-                .build());
-        System.err.println(users);
-    }
-
-    UserDetails findByUsername(String username) {
-        System.out.println(users);
-        return users.get(username);
-    }
+    UserEntity findByUsername(String username);
 }

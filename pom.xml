@@ -33,6 +33,7 @@
 	<jquery.version>3.1.1-1</jquery.version>
         <spring.security.config.version>5.6.3</spring.security.config.version>
         <spring.security.web.version>5.6.3</spring.security.web.version>
+        <postgresql.version>42.3.4</postgresql.version>
     </properties>
     <dependencies>
         <dependency>
@@ -83,6 +84,11 @@
             <version>${spring.security.config.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jdbc</artifactId>
+        </dependency>
+
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -110,6 +116,11 @@
 		<artifactId>bootstrap</artifactId>
 		<version>${bootstrap.version}</version>
 	</dependency>
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>${postgresql.version}</version>
+    </dependency>
 	</dependencies>
 	
     <build>
