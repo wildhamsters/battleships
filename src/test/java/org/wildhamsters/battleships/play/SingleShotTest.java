@@ -27,7 +27,7 @@ public class SingleShotTest {
         // When
         Result actual = singleShot.makeShot(position);
         // Then
-        assertEquals(actual, expected);
+        assertEquals(actual, expected, "Should return Result with one accurate shot, players stays the same.");
     }
 
     @DataProvider
@@ -49,7 +49,8 @@ public class SingleShotTest {
         // When
         Result actual = singleShot.makeShot(position);
         // Then
-        assertEquals(actual, expected);
+        assertEquals(actual, expected, "Should return Result with single accurate shot field, missed fields" +
+                "around sinking ship, player stays the same.");
     }
 
     @DataProvider
@@ -75,7 +76,7 @@ public class SingleShotTest {
         // When
         Result actual = singleShot.makeShot(position);
         // Then
-        assertEquals(actual, expected);
+        assertEquals(actual, expected, "Should return Result with single missed field and with switched players.");
     }
 
     @DataProvider
