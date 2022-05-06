@@ -12,7 +12,7 @@ import java.util.stream.IntStream;
  * @author Dominik Żebracki
  */
 @Component
-public class DefaultBoard implements Board {
+class DefaultBoard implements Board {
 
     private final ArrayList<FieldState> board;
 

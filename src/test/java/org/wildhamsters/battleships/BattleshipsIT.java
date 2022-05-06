@@ -3,7 +3,6 @@ package org.wildhamsters.battleships;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 import org.wildhamsters.battleships.board.Board;
-import org.wildhamsters.battleships.board.DefaultBoard;
 import org.wildhamsters.battleships.board.FieldState;
 import org.wildhamsters.battleships.configuration.GameSettings;
 import org.wildhamsters.battleships.fleet.*;
@@ -26,7 +25,7 @@ public class BattleshipsIT {
     public void testMakingShots(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(new ShipsPositions(data));
-        Board board = new DefaultBoard(new ShipsPositions(data));
+        Board board = Board.create(new ShipsPositions(data));
         GameSettings.PlayerSettings player1Settings = new GameSettings.PlayerSettings(
                 "001",
                 "TestPlayer1",
