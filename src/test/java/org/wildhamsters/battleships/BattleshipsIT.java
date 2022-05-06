@@ -10,6 +10,7 @@ import org.wildhamsters.battleships.play.GameRoom;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class BattleshipsIT {
 
@@ -45,8 +46,8 @@ public class BattleshipsIT {
         GameRoom gameRoom = new GameRoom(gameSettings);
         Result result = new Result(
                 Event.GAMEPLAY,
-                4,
-                FieldState.ACCURATE_SHOT,
+                Map.of(4, FieldState.ACCURATE_SHOT, 5, FieldState.MISSED_SHOT, 13, FieldState.MISSED_SHOT, 14, FieldState.MISSED_SHOT, 15, FieldState.MISSED_SHOT),
+                List.of(3, 4),
                 false,
                 "",
                 "001",
@@ -63,7 +64,7 @@ public class BattleshipsIT {
         softAssert.assertEquals(board.getField(1), FieldState.ACCURATE_SHOT);
         softAssert.assertEquals(board.getField(3), FieldState.ACCURATE_SHOT);
         softAssert.assertEquals(board.getField(4), FieldState.INTACT_SHIP);
-        softAssert.assertEquals(board.getField(0), FieldState.WATER);
+        softAssert.assertEquals(board.getField(0), FieldState.MISSED_SHOT);
         softAssert.assertEquals(gameRoom.makeShot(4), result);
 
         for (int i = 0; i < 99; i++) {
@@ -72,13 +73,13 @@ public class BattleshipsIT {
 
         Result resultFinished = new Result(
                 Event.GAMEPLAY,
-                99,
-                FieldState.ACCURATE_SHOT,
+                Map.of(99, FieldState.ACCURATE_SHOT),
+                null,
                 true,
                 "",
-                "001",
-                "TestPlayer1",
-                "002"
+                "002",
+                "TestPlayer2",
+                "001"
         );
         softAssert.assertEquals(gameRoom.makeShot(99), resultFinished);
         softAssert.assertAll();
