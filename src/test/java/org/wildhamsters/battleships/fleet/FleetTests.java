@@ -15,14 +15,14 @@ import static org.testng.Assert.*;
 
 public class FleetTests {
     @DataProvider(name = "fieldList-provider")
-    public Object[][] fieldListProvider() {
+    public static Object[][] fieldListProvider() {
         return new Object[][]{
                 {
                         new ArrayList<>() {{
                             add(new ShipPosition(List.of(1)));
                             add(new ShipPosition(List.of(10)));
                             add(new ShipPosition(List.of(91)));
-                            add(new ShipPosition(List.of(100)));
+                            add(new ShipPosition(List.of(99)));
                             add(new ShipPosition(List.of(3, 4)));
                             add(new ShipPosition(List.of(6, 7)));
                             add(new ShipPosition(List.of(93, 94)));
