@@ -55,7 +55,8 @@ public class SunkShipMarkerTest {
             add(new ShipPosition(List.of(43)));
             add(new ShipPosition(List.of(69, 79, 89)));
         }};
-        Fleet fleet = new Fleet(new ShipsPositions(ships));
+        // Fleet fleet = new Fleet(new ShipsPositions(ships));
+        Fleet fleet = new Fleet();
         fleet.makeShot(1);
         fleet.makeShot(2);
         fleet.makeShot(43);

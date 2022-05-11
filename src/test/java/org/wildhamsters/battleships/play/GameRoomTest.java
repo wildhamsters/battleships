@@ -63,6 +63,7 @@ public class GameRoomTest {
             add(new ShipPosition(List.of(1, 2)));
             add(new ShipPosition(List.of(43, 44)));
         }};
-        return new Fleet(new ShipsPositions(ships));
+        // return new Fleet(new ShipsPositions(ships));
+        return new Fleet();
     }
 }

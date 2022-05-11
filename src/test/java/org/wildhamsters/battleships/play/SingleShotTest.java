@@ -128,7 +128,8 @@ public class SingleShotTest {
             add(new ShipPosition(List.of(61, 62, 63)));
             add(new ShipPosition(List.of(69, 79, 89)));
         }};
-        Fleet fleet = new Fleet(new ShipsPositions(ships));
+        // Fleet fleet = new Fleet(new ShipsPositions(ships));
+        Fleet fleet = new Fleet();
         fleet.makeShot(45);
         fleet.makeShot(61);
         fleet.makeShot(69);
