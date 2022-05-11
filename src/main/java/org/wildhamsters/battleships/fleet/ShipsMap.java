@@ -1,6 +1,8 @@
 package org.wildhamsters.battleships.fleet;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author Kevin Nowak
@@ -21,24 +23,6 @@ class ShipsMap {
     }
 
     Set<Ship> getKeySet() {
-        return ships.keySet();
-    }
-
-    Ship getShipByPosition(int position) {
-        for (Map.Entry<Ship, ShipPosition> entry : ships.entrySet()) {
-            if (entry.getValue().positions().contains(position)) {
-                return entry.getKey();
-            }
-        }
-        return null;
-    }
-
-    List<Integer> getShipPosition(int field) {
-        for (var entry : ships.entrySet()) {
-            if (entry.getValue().positions().contains(field)) {
-                return entry.getValue().positions();
-            }
-        }
-        return Collections.emptyList();
+      return ships.keySet();
     }
 }

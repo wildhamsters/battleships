@@ -4,18 +4,8 @@ import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.board.FieldState;
 import org.wildhamsters.battleships.configuration.GameSettings;
 import org.wildhamsters.battleships.fleet.Fleet;
-import org.wildhamsters.battleships.fleet.ShotResult;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 /**
- * Contains all data of Player such as his id, name, board, fleet.
- * ShotVerifier to validate shots.
- * Its methods interact with fleet and board to update it after shot and indicate when player lost the match.
- *
  * @author Piotr Chowaniec
  */
 class Player {
@@ -48,51 +38,20 @@ class Player {
     }
 
     /**
-     * Takes index of the board cell, checks if it is in range and gets the FieldState that will be set
+     * Takes index of the board cell and checks if it is in range, and gets the FieldState that will be set
      * after shot. If the shot is not the range of board then IllegalShotException is being thrown.
-     * <p>
      * Shot cell is updated in the board.
      * Position is passed to fleet which updates its internals.
      *
      * @param position index of cell that is being shot.
-     * @return FieldState of cell being shot.
+     * @return FieldState of cell after shot.
      * @throws IllegalShotException when shot is out of board.
      */
     FieldState enemyShotResult(int position) throws IllegalShotException {
-        return shotVerifier.verifyShot(position, board);
-    }
-
-    /**
-     * Cell is being updated in the board.
-     * Position is passed to fleet which updates its internals.
-     * If ship is sinking then Map of fields to be set as missed shots around the ship is returned.
-     * Returned map always contains updated state of shot cell.
-     *
-     * @param position index of cell that is being shot.
-     * @param state    FieldState of cell that will be set after shot.
-     * @return Map of cells to be updated after shot.
-     */
-    Map<Integer, FieldState> takeShot(int position, FieldState state) {
-        var fields = new HashMap<Integer, FieldState>();
+        FieldState state = shotVerifier.verifyShot(position, board);
         updateFieldState(state, position);
-        fields.put(position, state);
-
-        ShotResult shotResult = fleet.makeShot(position);
-        if (shotResult == ShotResult.SHIP_SUNK) {
-            getFieldsAroundSinkingShip(position).forEach(i -> {
-                fields.put(i, FieldState.MISSED_SHOT);
-                board.setField(FieldState.MISSED_SHOT, i);
-            });
-        }
-        return fields;
-    }
-
-    List<Integer> getSunkShipPositions(int position) {
-        return fleet.getSinkingShipPosition(position);
-    }
-
-    private Set<Integer> getFieldsAroundSinkingShip(int position) {
-        return new SunkShipMarker().fieldsToMark(fleet.getSinkingShipPosition(position), board);
+        fleet.makeShot(position);
+        return state;
     }
 
     private void updateFieldState(FieldState newState, int position) {

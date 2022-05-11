@@ -3,7 +3,7 @@ package org.wildhamsters.battleships.fleet;
 /**
  * @author Kevin Nowak
  */
-public enum ShotResult {
+enum ShotResult {
     HIT,
     MISS,
     SHIP_SUNK,

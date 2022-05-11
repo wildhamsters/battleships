@@ -14,7 +14,7 @@
     <name>Battleships</name>
     <description>Awesome BattleShip Game Project</description>
     <properties>
-        <version.maven>3.6.2</version.maven>
+        <version.maven>3.8.5</version.maven>
         <project.version.java>17</project.version.java>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.build.targetEncoding>UTF-8</project.build.targetEncoding>
@@ -24,7 +24,6 @@
         <maven.failsafe.plugin>3.0.0-M5</maven.failsafe.plugin>
         <maven.surefire.plugin>3.0.0-M5</maven.surefire.plugin>
         <maven.enforcer.plugin>3.0.0</maven.enforcer.plugin>
-        <maven.dependency.plugin.version>3.3.0</maven.dependency.plugin.version>
         <maven.jacoco.plugin>0.8.7</maven.jacoco.plugin>
         <testng.version>7.5</testng.version>
 	<sockjs.client.version>1.0.2</sockjs.client.version>
@@ -33,7 +32,6 @@
 	<jquery.version>3.1.1-1</jquery.version>
         <spring.security.config.version>5.6.3</spring.security.config.version>
         <spring.security.web.version>5.6.3</spring.security.web.version>
-        <postgresql.version>42.3.4</postgresql.version>
     </properties>
     <dependencies>
         <dependency>
@@ -84,11 +82,6 @@
             <version>${spring.security.config.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jdbc</artifactId>
-        </dependency>
-
 	<dependency>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-tomcat</artifactId>
@@ -116,11 +109,6 @@
 		<artifactId>bootstrap</artifactId>
 		<version>${bootstrap.version}</version>
 	</dependency>
-    <dependency>
-        <groupId>org.postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>${postgresql.version}</version>
-    </dependency>
 	</dependencies>
 	
     <build>
@@ -137,14 +125,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven.failsafe.plugin}</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -173,20 +153,6 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>${maven.dependency.plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.jacoco</groupId>

@@ -1,7 +1,5 @@
 package org.wildhamsters.battleships.fleet;
 
-import org.wildhamsters.battleships.board.FieldState;
-
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -13,7 +11,7 @@ public class Fleet {
     ShipsMap ships;
     FieldList allTakenFields;
 
-    public Fleet() {
+   public  Fleet() {
         ships = new ShipsMap();
         allTakenFields = new FieldList(List.of(new ShipPosition(List.of())));
     }
@@ -90,10 +88,10 @@ public class Fleet {
     }
 
     public List<Integer> getFleetPositions() {
-        return ships.getKeySet()
-                .stream()
-                .flatMap(s -> s.sections.keySet().stream())
-                .toList();
+       return ships.getKeySet()
+               .stream()
+               .flatMap(s -> s.sections.keySet().stream())
+               .toList();
     }
 
     ShotResult makeShot(List<ShipPosition> fields) {
@@ -119,15 +117,7 @@ public class Fleet {
         return answer.get();
     }
 
-
-    public List<Integer> getSinkingShipPosition(int field) {
-       if (makeShot(field) == ShotResult.SHIP_SUNK) {
-           return ships.getShipPosition(field);
-       }
-       return List.of(field);
-    }
-
-    public boolean checkIfAllShipsUntouched() {
+    boolean checkIfAllShipsUntouched() {
         AtomicBoolean answer = new AtomicBoolean(true);
         for (Ship ship : ships.getKeySet()) {
             if (ship.getShipCondition() != ShipCondition.UNTOUCHED) {
@@ -135,9 +125,5 @@ public class Fleet {
             }
         }
         return answer.get();
-    }
-
-    public ShipCondition getShipConditionByIndex(int position) {
-        return ships.getShipByPosition(position).getShipCondition();
     }
 }

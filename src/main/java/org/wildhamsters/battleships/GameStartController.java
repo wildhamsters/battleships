@@ -11,6 +11,6 @@ class GameStartController {
 
     @GetMapping
     String hello() {
-        return "register.html";
+        return "index.html";
     }
 }

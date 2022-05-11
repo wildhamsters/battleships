@@ -1,7 +1,5 @@
 package org.wildhamsters.battleships.play;
 
-import java.util.List;
-
 import org.wildhamsters.battleships.Event;
 import org.wildhamsters.battleships.Result;
 import org.wildhamsters.battleships.board.FieldState;
@@ -24,10 +22,10 @@ class SingleShot {
 
     /**
      * Takes board cell index and checks what FieldState will be after shot.
-     * It may be ACCURATE_SHOT if current player hit enemy's ship, MISSED_SHOT.
+     * It may be ACCURATE_SHOT if current player hit enemy's ship, MISSED_OUT.
      *
      * @param position index of cell that is being shot.
-     * @return Result DTO with data needed to prepare front-end.
+     * @return FieldState of cell after shot.
      */
     Result makeShot(int position) {
         String error = "";
@@ -37,13 +35,9 @@ class SingleShot {
         } catch (IllegalShotException e) {
             error = e.getMessage();
         }
-        var fieldsToMark = enemy.takeShot(position, state);
-        
-        List<Integer> shipCells = (fieldsToMark.size() > 1) ? enemy.getSunkShipPositions(position) : null;
-
         switchPlayers(state);
 
-        return new Result(Event.GAMEPLAY, fieldsToMark, shipCells, isWinner(), error, current.getId(), current.getName(), enemy.getId());
+        return new Result(Event.GAMEPLAY, position, state, isWinner(), error, current.getId(), current.getName(), enemy.getId());
     }
 
     private void switchPlayers(FieldState state) {

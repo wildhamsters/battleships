@@ -22,7 +22,7 @@ class ConnectedPlayers {
     }
 
     Optional<ConnectedPlayer> secondOneConnected() {
-        return players.size() > 1 ? Optional.of(players.get(1)) : Optional.empty();
+        return players.size() > 1 ? Optional.of(players.get(0)) : Optional.empty();
     }
 
     List<String> names() {

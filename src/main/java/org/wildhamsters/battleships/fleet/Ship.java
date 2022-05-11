@@ -45,7 +45,7 @@ sealed class Ship permits OneMastShip, TwoMastShip, ThreeMastShip, FourMastShip 
         }
     }
 
-    public ShipCondition getShipCondition() {
+    ShipCondition getShipCondition() {
         return verifyCondition();
     }
 
