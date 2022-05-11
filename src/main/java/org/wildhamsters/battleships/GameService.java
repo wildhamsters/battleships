@@ -62,7 +62,7 @@ class GameService {
     private ConnectionStatus createPlayerWaitingForOpponentStatus() {
         return new ConnectionStatus("No opponents for now",
                 null,
-                null, null,
+                connectedPlayers.firstOneConnected().get().sessionId(), null,
                 null, null,
                 null, null,
                 null, Event.CONNECT);

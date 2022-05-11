@@ -106,10 +106,6 @@ function handleShipShink(cells, keys, player) {
     new Audio('audio/explosion.wav').play();
 }
 
-
-
-
-
 function extractCellNumber(cell) {
     if (cell.id.startsWith("ocell"))
         return cell.id.replace("ocell_", "");
@@ -166,7 +162,6 @@ function connectUsers() {
         sessionId = url;
 
         stompClient.subscribe('/user/' + sessionId + '/queue/specific-user', function (msgOut) {
-            console.log("RECEIVED FROM THE USER: " + sessionId + " " + msgOut);
             readSubscribed(msgOut);
         });
 
@@ -194,12 +189,10 @@ function sendName(id) {
 }
 
 function readSubscribed(message) {
-    console.log("received message body " + message.body);
-
     var response = JSON.parse(message.body);
 
     if (response.event == EVENT.CONNECT) {
-        if (response.playerOneSessionId != null)
+        if (response.playerTwoSessionId != null)
             processConnectMessage(response);
     } else if (response.event == EVENT.GAMEPLAY) {
         processGameplayMessage(response)
