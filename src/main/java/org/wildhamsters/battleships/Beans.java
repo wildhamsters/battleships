@@ -1,5 +1,7 @@
 package org.wildhamsters.battleships;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +30,8 @@ class Beans {
         return new UsersService(users);
     }
 
-    @Bean("externalDatabase")
+    @Bean
+    @Profile("externalDatabase")
     public DataSource datasource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
