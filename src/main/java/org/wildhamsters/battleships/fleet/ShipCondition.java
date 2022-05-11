@@ -3,7 +3,7 @@ package org.wildhamsters.battleships.fleet;
 /**
  * @author Kevin Nowak
  */
-enum ShipCondition {
+public enum ShipCondition {
     UNTOUCHED,
     HIT,
     SUNK

@@ -8,10 +8,13 @@ import java.util.List;
  * @author Dominik Żebracki
  */
 record ConnectionStatus(String message,
+                        String roomId,
                         String playerOneSessionId,
                         List<Integer> playerOneShipPositions,
                         String playerTwoSessionId,
                         List<Integer> playerTwoShipPositions,
                         String startingPlayerName,
+                        String playerOneName,
+                        String playerTwoName,
                         Event event) {
 }
