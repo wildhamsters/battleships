@@ -54,7 +54,7 @@ class DefaultBoard implements Board {
     }
 
     private void fillBoardWithShips(ShipsPositions shipsPositions) {
-        shipsPositions.getAllShipsPositions()
+        shipsPositions.getShipsPosition()
                 .stream()
                 .flatMap(p -> p.positions().stream())
                 .forEach(i -> board.set(i, FieldState.INTACT_SHIP));
