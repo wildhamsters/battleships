@@ -32,10 +32,11 @@ class WebSocketController {
         ConnectionStatus connectionStatus = gameService.processConnectingPlayers(new ConnectedPlayer(user.getName(), sessionId));
 
         String resultJSON = new ObjectMapper().writeValueAsString(connectionStatus);
-        simpMessagingTemplate.convertAndSendToUser(sessionId,
-                "/queue/specific-user", resultJSON);
         simpMessagingTemplate.convertAndSendToUser(connectionStatus.playerOneSessionId(),
                 "/queue/specific-user", resultJSON);
+        if (connectionStatus.playerTwoSessionId() != null)
+            simpMessagingTemplate.convertAndSendToUser(connectionStatus.playerTwoSessionId(),
+                    "/queue/specific-user", resultJSON);
     }
 
     @MessageMapping("/gameplay")

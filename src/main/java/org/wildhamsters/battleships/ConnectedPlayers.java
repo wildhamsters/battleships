@@ -1,8 +1,6 @@
 package org.wildhamsters.battleships;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Collection of connected players.
@@ -36,7 +34,12 @@ class ConnectedPlayers {
     ConnectedPlayers add(ConnectedPlayer player) {
         var afterAdding = new ArrayList<>(players);
         afterAdding.add(player);
+        shufflePlayers(afterAdding);
         return new ConnectedPlayers(afterAdding);
+    }
+
+    private void shufflePlayers(List<ConnectedPlayer> afterAdding) {
+        Collections.shuffle(afterAdding);
     }
 
     boolean areBothConnected() {
