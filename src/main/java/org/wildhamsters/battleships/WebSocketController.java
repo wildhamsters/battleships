@@ -60,4 +60,17 @@ class WebSocketController {
                 simpMessagingTemplate.convertAndSendToUser(result.opponent(),
                                 "/queue/specific-user", resultJSON);
         }
+
+        @MessageMapping("/gameplay/surrender")
+        public void giveUp(String json, Principal user,
+                                 @Header("simpSessionId") String sessionId) throws JsonProcessingException {
+                GameplayUserShotData data = new ObjectMapper().readValue(json, GameplayUserShotData.class);
+                SurrenderResult result = gameService.surrender(data.roomId(), sessionId);
+
+                String resultJSON = new ObjectMapper().writeValueAsString(result);
+                simpMessagingTemplate.convertAndSendToUser(result.surrenderPlayerSessionId(),
+                        "/queue/specific-user", resultJSON);
+                simpMessagingTemplate.convertAndSendToUser(result.winPlayerSessionId(),
+                        "/queue/specific-user", resultJSON);
+        }
 }

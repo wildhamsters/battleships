@@ -42,4 +42,8 @@ public class GameRoom {
     String obtainUUID() {
         return id;
     }
+
+    public String findSurrenderPlayerOpponent(String surrenderPlayerSessionId) {
+        return playerOne.getId().equals(surrenderPlayerSessionId) ? playerTwo.getId() : playerOne.getId();
+    }
 }
