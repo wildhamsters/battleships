@@ -15,10 +15,13 @@
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
 	enabled. Please enable Javascript and reload this page!</h2></noscript>
 
-<div id="boards">
+<div id="menu">
 	<button id="logout" onclick="location.href='/logout'">LOGOUT</button>
 	<button id="giveUp" onclick="giveUp()">Give up</button>
-	<p id="name"></p>
+	<span id="name"></span>
+</div>
+
+<div id="boards">
 	<div id="leftSide">
 		<p>Your board</p>
 		<div id="player" class="board">

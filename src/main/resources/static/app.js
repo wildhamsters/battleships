@@ -24,6 +24,13 @@ var EVENT = {
     SURRENDER: "SURRENDER"
 };
 
+function hideTableText() {
+    if(width > 15 || height > 15) {
+        document.getElementById("playerBoard").style.fontSize="0.8vh";
+        document.getElementById("opponentBoard").style.fontSize="0.8vh";
+    }
+}
+
 function createPlayerBoard() {
     var table = document.getElementById('playerBoard');
 
@@ -151,6 +158,7 @@ function changeDOMClassName(elementId, className) {
 function connectUsers() {
     var socket = new SockJS('/shots-websocket');
     stompClient = Stomp.over(socket);
+    stompClient.debug = null;
 
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
@@ -342,3 +350,4 @@ createPlayerBoard();
 createOpponentBoard();
 connectUsers();
 hideStatus();
+hideTableText();
