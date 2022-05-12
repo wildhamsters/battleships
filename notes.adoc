@@ -1,4 +1,0 @@
-Knowlege about technologies
-Unify tests naming convention
-Hide database credentials
-FieldState = EnumMap?
