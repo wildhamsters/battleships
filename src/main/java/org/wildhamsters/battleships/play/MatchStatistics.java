@@ -24,14 +24,19 @@ class MatchStatistics {
         startTime = LocalDateTime.now();
     }
 
-    void updateShots(FieldState fieldState) {
+    void update(FieldState fieldState) {
+        updateShots(fieldState);
+        updateRound(fieldState);
+    }
+
+    private void updateShots(FieldState fieldState) {
         switch (fieldState) {
             case ACCURATE_SHOT -> accurateShots++;
             case MISSED_SHOT -> missedShots++;
         }
     }
 
-    void updateRound(FieldState fieldState) {
+    private void updateRound(FieldState fieldState) {
         if (fieldState == FieldState.MISSED_SHOT) rounds++;
     }
 

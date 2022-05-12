@@ -16,20 +16,17 @@ public class GameRoom {
     private final Player playerOne;
     private final Player playerTwo;
     private final SingleShot singleShot;
-    private final MatchStatistics matchStatistics;
 
-    public GameRoom(Player playerOne, Player playerTwo) {
+    GameRoom(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        this.matchStatistics = new MatchStatistics(id);
-        singleShot = new SingleShot(playerOne, playerTwo, matchStatistics);
+        MatchStatistics matchStatistics = new MatchStatistics(id);
+        MatchResult matchResult = new MatchResult(id, playerOne, playerTwo);
+        singleShot = new SingleShot(playerOne, playerTwo, matchStatistics, matchResult);
     }
 
     public GameRoom(GameSettings gameSettings) {
-        playerOne = Player.of(gameSettings.playerSettings().get(0));
-        playerTwo = Player.of(gameSettings.playerSettings().get(1));
-        this.matchStatistics = new MatchStatistics(id);
-        singleShot = new SingleShot(playerOne, playerTwo, matchStatistics);
+        this(Player.of(gameSettings.playerSettings().get(0)), Player.of(gameSettings.playerSettings().get(1)));
     }
 
     /**
@@ -39,7 +36,8 @@ public class GameRoom {
      * @return proper FieldState as a result of made shot.
      */
     public Result makeShot(int position) {
-        return singleShot.makeShot(position);
+        Result result = singleShot.makeShot(position);
+        return result;
     }
 
     String obtainUUID() {

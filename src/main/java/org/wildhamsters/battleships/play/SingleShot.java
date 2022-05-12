@@ -17,16 +17,18 @@ class SingleShot {
     private Player current;
     private Player enemy;
     private final MatchStatistics matchStatistics;
+    private MatchResult matchResult;
 
     // Constructor for testing.
     SingleShot(Player current, Player enemy) {
-        this(current, enemy, new MatchStatistics("id"));
+        this(current, enemy, new MatchStatistics("id"), new MatchResult("id", current, enemy));
     }
 
-    SingleShot(Player current, Player enemy, MatchStatistics matchStatistics) {
+    SingleShot(Player current, Player enemy, MatchStatistics matchStatistics, MatchResult matchResult) {
         this.current = current;
         this.enemy = enemy;
         this.matchStatistics = matchStatistics;
+        this.matchResult = matchResult;
     }
 
     /**
@@ -45,9 +47,8 @@ class SingleShot {
             error = e.getMessage();
         }
         var fieldsToMark = enemy.takeShot(position, state);
-        matchStatistics.updateShots(state);
-        matchStatistics.updateRound(state);
-        
+        matchStatistics.update(state);
+
         List<Integer> shipCells = (fieldsToMark.size() > 1) ? enemy.getSunkShipPositions(position) : null;
 
         switchPlayers(state);
@@ -67,6 +68,7 @@ class SingleShot {
         boolean result = enemy.isLost();
         if (result) {
             matchStatistics.setFinishTime();
+            matchResult.setWinner(current);
         }
         return result;
     }
