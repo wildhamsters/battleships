@@ -46,7 +46,7 @@ public class ShotVerifierTest {
         };
     }
 
-    private class DummyBoard implements Board {
+    private static class DummyBoard implements Board {
         List<FieldState> board;
 
         DummyBoard(int size) {
@@ -66,6 +66,7 @@ public class ShotVerifierTest {
 
         @Override
         public void clearBoard() {
+            // left empty because never called
         }
 
         @Override
