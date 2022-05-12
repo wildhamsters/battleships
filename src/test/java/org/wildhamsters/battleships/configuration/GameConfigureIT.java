@@ -6,7 +6,7 @@ import org.testng.asserts.SoftAssert;
 import java.util.List;
 
 
-public class GameConfigurerTest {
+public class GameConfigureIT {
 
     @Test
     public void testCreateConfiguration() {
