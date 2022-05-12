@@ -158,6 +158,7 @@ function changeDOMClassName(elementId, className) {
 function connectUsers() {
     var socket = new SockJS('/shots-websocket');
     stompClient = Stomp.over(socket);
+    stompClient.debug = null;
 
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
