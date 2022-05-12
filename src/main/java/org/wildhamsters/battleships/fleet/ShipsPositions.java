@@ -10,6 +10,12 @@ public class ShipsPositions implements Serializable {
 
     private List<ShipPosition> shipsPosition;
 
+    public ShipsPositions() {
+    }
+
+    public ShipsPositions(List<ShipPosition> shipsPosition) {
+        this.shipsPosition = shipsPosition;
+    }
 
     public List<ShipPosition> getShipsPosition() {
         return shipsPosition;
