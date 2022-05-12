@@ -39,6 +39,10 @@ public class GameRoom {
         return singleShot.makeShot(position);
     }
 
+    public MatchStatistics getMatchStatistics() {
+        return singleShot.getMatchStatistics();
+    }
+
     String obtainUUID() {
         return id;
     }
