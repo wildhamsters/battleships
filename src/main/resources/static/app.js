@@ -24,6 +24,13 @@ var EVENT = {
     SURRENDER: "SURRENDER"
 };
 
+function hideTableText() {
+    if(width > 15 || height > 15) {
+        document.getElementById("playerBoard").style.fontSize="0.8vh";
+        document.getElementById("opponentBoard").style.fontSize="0.8vh";
+    }
+}
+
 function createPlayerBoard() {
     var table = document.getElementById('playerBoard');
 
@@ -342,3 +349,4 @@ createPlayerBoard();
 createOpponentBoard();
 connectUsers();
 hideStatus();
+hideTableText();
