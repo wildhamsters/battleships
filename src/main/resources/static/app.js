@@ -20,7 +20,8 @@ var FIELD_STATE = {
 
 var EVENT = {
     CONNECT: "CONNECT",
-    GAMEPLAY: "GAMEPLAY"
+    GAMEPLAY: "GAMEPLAY",
+    SURRENDER: "SURRENDER"
 };
 
 function createPlayerBoard() {
@@ -106,10 +107,6 @@ function handleShipShink(cells, keys, player) {
     new Audio('audio/explosion.wav').play();
 }
 
-
-
-
-
 function extractCellNumber(cell) {
     if (cell.id.startsWith("ocell"))
         return cell.id.replace("ocell_", "");
@@ -166,7 +163,6 @@ function connectUsers() {
         sessionId = url;
 
         stompClient.subscribe('/user/' + sessionId + '/queue/specific-user', function (msgOut) {
-            console.log("RECEIVED FROM THE USER: " + sessionId + " " + msgOut);
             readSubscribed(msgOut);
         });
 
@@ -194,15 +190,15 @@ function sendName(id) {
 }
 
 function readSubscribed(message) {
-    console.log("received message body " + message.body);
-
     var response = JSON.parse(message.body);
 
     if (response.event == EVENT.CONNECT) {
-        if (response.playerOneSessionId != null)
+        if (response.playerTwoSessionId != null)
             processConnectMessage(response);
     } else if (response.event == EVENT.GAMEPLAY) {
         processGameplayMessage(response)
+    } else if(response.event == EVENT.SURRENDER) {
+        processSurrenderMessage(response);
     }
 }
 
@@ -266,6 +262,17 @@ function processGameplayMessage(response) {
     }
 }
 
+function processSurrenderMessage(response) {
+    if (sessionId == response.surrenderPlayerSessionId) {
+        lose();
+        alert(response.surrenderMessage);
+    } else {
+        winner();
+        alert(response.winnerMessage);
+    }
+    //setTimeout(() => { window.location.href='/logout' }, 3000)
+}
+
 function highlightBoard(currentPlayerTurn) {
     if (currentPlayerTurn) {
         document.getElementById("rightSide").className = "playerTurn";
@@ -322,6 +329,13 @@ function getTime() {
     var m = (timeStamp.getMinutes() < 10 ? '0' : '') + timeStamp.getMinutes();
     var s = (timeStamp.getSeconds() < 10 ? '0' : '') + timeStamp.getSeconds();
     return h + ":" + m + ":" + s;
+}
+
+function giveUp() {
+    var confirmGiveUp = confirm("Are you sure? The opponent will win.");
+    if (confirmGiveUp) {
+        stompClient.send("/app/gameplay/surrender", {}, JSON.stringify({"cell":-1, "roomId":roomId}));
+    }
 }
 
 createPlayerBoard();

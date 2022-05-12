@@ -1,9 +1,11 @@
 package org.wildhamsters.battleships;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
-import org.wildhamsters.battleships.play.*;
+import org.wildhamsters.battleships.play.GameRoom;
+import org.wildhamsters.battleships.play.GameRooms;
+import org.wildhamsters.battleships.play.MatchStatisticsEntityMapper;
+import org.wildhamsters.battleships.play.MatchStatisticsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,7 +71,7 @@ class GameService {
     private ConnectionStatus createPlayerWaitingForOpponentStatus() {
         return new ConnectionStatus("No opponents for now",
                 null,
-                null, null,
+                connectedPlayers.firstOneConnected().get().sessionId(), null,
                 null, null,
                 null, null,
                 null, Event.CONNECT);
@@ -97,5 +99,18 @@ class GameService {
 
     private void clearConnectedPlayersAfterPairing() {
         connectedPlayers = new ConnectedPlayers(new ArrayList<>());
+    }
+
+    SurrenderResult surrender(String roomId, String surrenderPlayerSessionId) {
+        String surrenderMessage = "You gave up.";
+        String winnerMessage = "The opponent gave up. You won!";
+        try {
+            var winnerSessionId = gameRooms.findRoom(roomId).findSurrenderPlayerOpponent(surrenderPlayerSessionId);
+            return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, winnerSessionId,
+                    surrenderMessage, winnerMessage);
+        } catch (IllegalArgumentException e) {
+            return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, null,
+                    surrenderMessage, winnerMessage);
+        }
     }
 }

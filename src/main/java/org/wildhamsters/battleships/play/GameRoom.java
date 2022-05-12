@@ -13,16 +13,20 @@ import java.util.UUID;
 public class GameRoom {
 
     private final String id = UUID.randomUUID().toString();
+    private final Player playerOne;
+    private final Player playerTwo;
     private final SingleShot singleShot;
 
-    GameRoom(Player playerOne, Player playerTwo) {
-        MatchStatistics matchStatistics = new MatchStatistics(id);
-        MatchResult matchResult = new MatchResult(id, playerOne, playerTwo);
-        singleShot = new SingleShot(playerOne, playerTwo, matchStatistics, matchResult);
+    public GameRoom(Player playerOne, Player playerTwo) {
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
+        singleShot = new SingleShot(playerOne, playerTwo);
     }
 
     public GameRoom(GameSettings gameSettings) {
-        this(Player.of(gameSettings.playerSettings().get(0)), Player.of(gameSettings.playerSettings().get(1)));
+        playerOne = Player.of(gameSettings.playerSettings().get(0));
+        playerTwo = Player.of(gameSettings.playerSettings().get(1));
+        singleShot = new SingleShot(playerOne, playerTwo);
     }
 
     /**
@@ -41,5 +45,9 @@ public class GameRoom {
 
     String obtainUUID() {
         return id;
+    }
+
+    public String findSurrenderPlayerOpponent(String surrenderPlayerSessionId) {
+        return playerOne.getId().equals(surrenderPlayerSessionId) ? playerTwo.getId() : playerOne.getId();
     }
 }
