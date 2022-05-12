@@ -13,13 +13,9 @@ import java.util.UUID;
 public class GameRoom {
 
     private final String id = UUID.randomUUID().toString();
-    private final Player playerOne;
-    private final Player playerTwo;
     private final SingleShot singleShot;
 
     GameRoom(Player playerOne, Player playerTwo) {
-        this.playerOne = playerOne;
-        this.playerTwo = playerTwo;
         MatchStatistics matchStatistics = new MatchStatistics(id);
         MatchResult matchResult = new MatchResult(id, playerOne, playerTwo);
         singleShot = new SingleShot(playerOne, playerTwo, matchStatistics, matchResult);
@@ -36,8 +32,11 @@ public class GameRoom {
      * @return proper FieldState as a result of made shot.
      */
     public Result makeShot(int position) {
-        Result result = singleShot.makeShot(position);
-        return result;
+        return singleShot.makeShot(position);
+    }
+
+    public MatchStatistics getMatchStatistics() {
+        return singleShot.getMatchStatistics();
     }
 
     String obtainUUID() {

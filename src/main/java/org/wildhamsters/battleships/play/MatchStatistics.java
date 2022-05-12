@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  *
  * @author Piotr Chowaniec
  */
-class MatchStatistics {
+public class MatchStatistics {
 
     private final String matchId;
     private int accurateShots = 0;

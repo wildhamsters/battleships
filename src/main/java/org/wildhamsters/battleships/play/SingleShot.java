@@ -2,6 +2,8 @@ package org.wildhamsters.battleships.play;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.Event;
 import org.wildhamsters.battleships.Result;
 import org.wildhamsters.battleships.board.FieldState;
@@ -71,5 +73,9 @@ class SingleShot {
             matchResult.setWinner(current);
         }
         return result;
+    }
+
+    MatchStatistics getMatchStatistics() {
+        return matchStatistics;
     }
 }
