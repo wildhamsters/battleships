@@ -14,8 +14,8 @@ import org.wildhamsters.battleships.fleet.ShipsPositions;
  * @author Dominik Żebracki
  */
 public class GameConfigurer {
-        RestTemplate restTemplate = new RestTemplate();
-        String resourceUrl = "https://protected-stream-19238.herokuapp.com/placeShips";
+        private final RestTemplate restTemplate = new RestTemplate();
+        private final String resourceUrl = "https://protected-stream-19238.herokuapp.com/placeShips";
 
         ShipsPositions sp = restTemplate.getForObject(resourceUrl, ShipsPositions.class);
 
