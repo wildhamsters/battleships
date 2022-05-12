@@ -20,7 +20,8 @@ var FIELD_STATE = {
 
 var EVENT = {
     CONNECT: "CONNECT",
-    GAMEPLAY: "GAMEPLAY"
+    GAMEPLAY: "GAMEPLAY",
+    SURRENDER: "SURRENDER"
 };
 
 function createPlayerBoard() {
@@ -196,6 +197,8 @@ function readSubscribed(message) {
             processConnectMessage(response);
     } else if (response.event == EVENT.GAMEPLAY) {
         processGameplayMessage(response)
+    } else if(response.event == EVENT.SURRENDER) {
+        processSurrenderMessage(response);
     }
 }
 
@@ -259,6 +262,17 @@ function processGameplayMessage(response) {
     }
 }
 
+function processSurrenderMessage(response) {
+    if (sessionId == response.surrenderPlayerSessionId) {
+        lose();
+        alert(response.surrenderMessage);
+    } else {
+        winner();
+        alert(response.winnerMessage);
+    }
+    //setTimeout(() => { window.location.href='/logout' }, 3000)
+}
+
 function highlightBoard(currentPlayerTurn) {
     if (currentPlayerTurn) {
         document.getElementById("rightSide").className = "playerTurn";
@@ -315,6 +329,13 @@ function getTime() {
     var m = (timeStamp.getMinutes() < 10 ? '0' : '') + timeStamp.getMinutes();
     var s = (timeStamp.getSeconds() < 10 ? '0' : '') + timeStamp.getSeconds();
     return h + ":" + m + ":" + s;
+}
+
+function giveUp() {
+    var confirmGiveUp = confirm("Are you sure? The opponent will win.");
+    if (confirmGiveUp) {
+        stompClient.send("/app/gameplay/surrender", {}, JSON.stringify({"cell":-1, "roomId":roomId}));
+    }
 }
 
 createPlayerBoard();

@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
 import org.wildhamsters.battleships.play.GameRoom;
 import org.wildhamsters.battleships.play.GameRooms;
+import org.wildhamsters.battleships.play.MatchStatisticsEntityMapper;
+import org.wildhamsters.battleships.play.MatchStatisticsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,11 +29,13 @@ class GameService {
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
     private final GameConfigurer gameConfigurer;
+    private MatchStatisticsRepository matchStatisticsRepository;
 
-    GameService() {
+    GameService(MatchStatisticsRepository matchStatisticsRepository) {
         this.gameRoom = null;
         this.connectedPlayers = new ConnectedPlayers(new ArrayList<>());
         this.gameConfigurer = new GameConfigurer();
+        this.matchStatisticsRepository = matchStatisticsRepository;
     }
 
     /**
@@ -56,7 +60,12 @@ class GameService {
      * @return result of the shot.
      */
     Result shoot(String roomId, int position) {
-        return gameRooms.findRoom(roomId).makeShot(position);
+        Result result = gameRooms.findRoom(roomId).makeShot(position);
+        if (result.finished()) {
+            matchStatisticsRepository.save(
+                    new MatchStatisticsEntityMapper().map(gameRooms.findRoom(roomId).getMatchStatistics()));
+        }
+        return result;
     }
 
     private ConnectionStatus createPlayerWaitingForOpponentStatus() {
@@ -90,5 +99,18 @@ class GameService {
 
     private void clearConnectedPlayersAfterPairing() {
         connectedPlayers = new ConnectedPlayers(new ArrayList<>());
+    }
+
+    SurrenderResult surrender(String roomId, String surrenderPlayerSessionId) {
+        String surrenderMessage = "You gave up.";
+        String winnerMessage = "The opponent gave up. You won!";
+        try {
+            var winnerSessionId = gameRooms.findRoom(roomId).findSurrenderPlayerOpponent(surrenderPlayerSessionId);
+            return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, winnerSessionId,
+                    surrenderMessage, winnerMessage);
+        } catch (IllegalArgumentException e) {
+            return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, null,
+                    surrenderMessage, winnerMessage);
+        }
     }
 }
