@@ -91,4 +91,17 @@ class GameService {
     private void clearConnectedPlayersAfterPairing() {
         connectedPlayers = new ConnectedPlayers(new ArrayList<>());
     }
+
+    SurrenderResult surrender(String roomId, String surrenderPlayerSessionId) {
+        String surrenderMessage = "You gave up.";
+        String winnerMessage = "The opponent gave up. You won!";
+        try {
+            var winnerSessionId = gameRooms.findRoom(roomId).findSurrenderPlayerOpponent(surrenderPlayerSessionId);
+            return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, winnerSessionId,
+                    surrenderMessage, winnerMessage);
+        } catch (IllegalArgumentException e) {
+            return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, null,
+                    surrenderMessage, winnerMessage);
+        }
+    }
 }
