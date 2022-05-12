@@ -16,17 +16,20 @@ public class GameRoom {
     private final Player playerOne;
     private final Player playerTwo;
     private final SingleShot singleShot;
+    private final MatchStatistics matchStatistics;
 
     public GameRoom(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        singleShot = new SingleShot(playerOne, playerTwo);
+        this.matchStatistics = new MatchStatistics(id);
+        singleShot = new SingleShot(playerOne, playerTwo, matchStatistics);
     }
 
     public GameRoom(GameSettings gameSettings) {
         playerOne = Player.of(gameSettings.playerSettings().get(0));
         playerTwo = Player.of(gameSettings.playerSettings().get(1));
-        singleShot = new SingleShot(playerOne, playerTwo);
+        this.matchStatistics = new MatchStatistics(id);
+        singleShot = new SingleShot(playerOne, playerTwo, matchStatistics);
     }
 
     /**
