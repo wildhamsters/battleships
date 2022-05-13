@@ -1,5 +1,6 @@
 package org.wildhamsters.battleships.play;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.wildhamsters.battleships.Event;
@@ -17,7 +18,7 @@ class SingleShot {
     private Player current;
     private Player enemy;
     private final MatchStatistics matchStatistics;
-    private MatchResult matchResult;
+    private final MatchResult matchResult;
 
     // Constructor for testing.
     SingleShot(Player current, Player enemy) {
