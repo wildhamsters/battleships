@@ -3,7 +3,6 @@ package org.wildhamsters.battleships.play;
 import static org.testng.Assert.assertEquals;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -64,11 +63,11 @@ public class SingleShotTest {
                 { playerOne, playerTwo, 43, prepareResult(new HashMap<>(Map.of(43, FieldState.ACCURATE_SHOT,
                         32, FieldState.MISSED_SHOT, 33, FieldState.MISSED_SHOT, 42, FieldState.MISSED_SHOT,
                         52, FieldState.MISSED_SHOT, 53, FieldState.MISSED_SHOT)),
-                        "1", "Player One", "2",43) },
+                        "1", "Player One", "2", 43) },
                 { playerOne, playerTwo, 89, prepareResult(new HashMap<>(Map.of(89, FieldState.ACCURATE_SHOT,
                         58, FieldState.MISSED_SHOT, 68, FieldState.MISSED_SHOT, 88, FieldState.MISSED_SHOT,
                         98, FieldState.MISSED_SHOT, 99, FieldState.MISSED_SHOT)),
-                        "1", "Player One", "2",69,79,89) }
+                        "1", "Player One", "2", 69, 79, 89) }
         };
     }
 
@@ -148,12 +147,7 @@ public class SingleShotTest {
             String opponent,
             Integer... sunkShipPositions) {
 
-        // List<Integer> sunkenShipList = (player.getSunkShipPositions(position).size()
-        // > 1)
-        // ? player.getSunkShipPositions(position)
-        // : null;
         List<Integer> sunkenShipList = (sunkShipPositions.length == 0) ? null : List.of(sunkShipPositions);
-
         return new Result(
                 Event.GAMEPLAY, fieldMap, sunkenShipList, false, "", currentTurnPlayer, currentTurnPlayerName,
                 opponent);

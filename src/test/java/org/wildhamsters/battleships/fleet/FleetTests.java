@@ -11,7 +11,7 @@ import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 public class FleetTests {
-    @DataProvider(name = "fieldList-provider")
+    @DataProvider
     public static Object[][] fieldListProvider() {
         return new Object[][] {
             {
@@ -33,7 +33,7 @@ public class FleetTests {
         };
     }
 
-    @Test(dataProvider = "fieldList-provider")
+    @Test(dataProvider = "fieldListProvider")
     void testNewFleetNotAllShipsSunk(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(new ShipsPositions(data));
@@ -43,7 +43,7 @@ public class FleetTests {
         assertFalse(check);
     }
 
-    @Test(dataProvider = "fieldList-provider")
+    @Test(dataProvider = "fieldListProvider")
     void testMakeShotWithResultMiss(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(new ShipsPositions(data));
@@ -53,7 +53,7 @@ public class FleetTests {
         assertEquals(shotResult, ShotResult.MISS);
     }
 
-    @Test(dataProvider = "fieldList-provider")
+    @Test(dataProvider = "fieldListProvider")
     void testMakeShotWithResultHit(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(new ShipsPositions(data));
@@ -63,7 +63,7 @@ public class FleetTests {
         assertEquals(shotResult, ShotResult.HIT);
     }
 
-    @Test(dataProvider = "fieldList-provider")
+    @Test(dataProvider = "fieldListProvider")
     void testMakeShotWithResultShipSunk(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(new ShipsPositions(data));
@@ -73,7 +73,7 @@ public class FleetTests {
         assertEquals(shotResult, ShotResult.SHIP_SUNK);
     }
 
-    @Test(dataProvider = "fieldList-provider")
+    @Test(dataProvider = "fieldListProvider")
     void testMakeShotsWithResultFleetSunk(List<ShipPosition> data) {
         // Given
         Fleet fleet = new Fleet(new ShipsPositions(data));
@@ -83,7 +83,7 @@ public class FleetTests {
         assertEquals(shotResult, ShotResult.FLEET_SUNK);
     }
 
-    @Test(dataProvider = "fieldList-provider")
+    @Test(dataProvider = "fieldListProvider")
     void testFleetReset(List<ShipPosition> data) {
         // Given
         SoftAssert softAssert = new SoftAssert();

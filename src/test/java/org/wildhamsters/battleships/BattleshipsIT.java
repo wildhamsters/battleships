@@ -1,16 +1,6 @@
 package org.wildhamsters.battleships;
 
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-import org.wildhamsters.battleships.board.Board;
-import org.wildhamsters.battleships.board.FieldState;
-import org.wildhamsters.battleships.configuration.GameSettings;
-import org.wildhamsters.battleships.fleet.*;
-import org.wildhamsters.battleships.play.GameRoom;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class BattleshipsIT {
 

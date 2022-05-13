@@ -1,10 +1,9 @@
 package org.wildhamsters.battleships.configuration;
 
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
-
 import java.util.List;
 
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 public class GameConfigureIT {
 
@@ -26,6 +25,5 @@ public class GameConfigureIT {
 
         sa.assertAll();
     }
-
 
 }

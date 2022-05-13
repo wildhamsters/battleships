@@ -30,12 +30,12 @@ public class GameRoomTest {
     @DataProvider
     private Object[][] resultDtoForGameRoom() {
         return new Object[][] {
-            { prepareGameRoom(), prepareResult(0, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 0 },
-            { prepareGameRoom(), prepareResult(1, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 1 },
-            { prepareGameRoom(), prepareResult(43, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 43 },
-            { prepareGameRoom(), prepareResult(14, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 14 },
-            { prepareGameRoom(), prepareResult(23, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 23 },
-            { prepareGameRoom(), prepareResult(24, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 24 },
+                { prepareGameRoom(), prepareResult(0, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 0 },
+                { prepareGameRoom(), prepareResult(1, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 1 },
+                { prepareGameRoom(), prepareResult(43, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 43 },
+                { prepareGameRoom(), prepareResult(14, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 14 },
+                { prepareGameRoom(), prepareResult(23, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 23 },
+                { prepareGameRoom(), prepareResult(24, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 24 },
         };
     }
 
