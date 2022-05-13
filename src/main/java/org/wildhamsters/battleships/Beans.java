@@ -35,8 +35,8 @@ class Beans {
     public DataSource datasource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
-        dataSourceBuilder.url("jdbc:postgresql://localhost:5432/battleships_users");
-        dataSourceBuilder.username("dominik");
+        dataSourceBuilder.url("jdbc:postgresql://localhost:5432/battleships");
+        dataSourceBuilder.username("piotr");
         dataSourceBuilder.password("1234");
         return dataSourceBuilder.build();
     }
