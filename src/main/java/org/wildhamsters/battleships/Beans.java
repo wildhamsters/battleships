@@ -35,7 +35,7 @@ class Beans {
     public DataSource datasource() {
         DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
         dataSourceBuilder.driverClassName("org.postgresql.Driver");
-        dataSourceBuilder.url("postgres://cegxpxbdutrnza:61b8b0aa523c4c16a5b69f0a11aed649845b31190a53cd499405255727338a67@ec2-34-246-227-219.eu-west-1.compute.amazonaws.com:5432/d7gtr71j35ah6k");
+        dataSourceBuilder.url("jdbc:postgresql://@ec2-34-246-227-219.eu-west-1.compute.amazonaws.com:5432/d7gtr71j35ah6k?user=cegxpxbdutrnza&password=61b8b0aa523c4c16a5b69f0a11aed649845b31190a53cd499405255727338a67");
         dataSourceBuilder.username("cegxpxbdutrnza");
         dataSourceBuilder.password("61b8b0aa523c4c16a5b69f0a11aed649845b31190a53cd499405255727338a67");
         return dataSourceBuilder.build();
