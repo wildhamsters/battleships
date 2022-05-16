@@ -17,9 +17,9 @@ public class SunkShipMarkerTest {
 
     @Test(dataProvider = "sinkingShip")
     public void shouldReturnSetOfFieldsWithWaterAroundShip(Set<Integer> expected, int position, Board board, Fleet fleet) {
-        // Given : When
+        // // Given : When
         var actual = new SunkShipMarker().fieldsToMark(fleet.getSinkingShipPosition(position), board);
-        // Then
+        // // Then
         assertEquals(actual, expected);
     }
 

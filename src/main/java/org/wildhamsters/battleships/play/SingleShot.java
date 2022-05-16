@@ -1,5 +1,6 @@
 package org.wildhamsters.battleships.play;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.wildhamsters.battleships.Event;
@@ -16,10 +17,19 @@ class SingleShot {
 
     private Player current;
     private Player enemy;
+    private final MatchStatistics matchStatistics;
+    private final MatchResult matchResult;
 
+    // Constructor for testing.
     SingleShot(Player current, Player enemy) {
+        this(current, enemy, new MatchStatistics("id"), new MatchResult("id", current, enemy));
+    }
+
+    SingleShot(Player current, Player enemy, MatchStatistics matchStatistics, MatchResult matchResult) {
         this.current = current;
         this.enemy = enemy;
+        this.matchStatistics = matchStatistics;
+        this.matchResult = matchResult;
     }
 
     /**
@@ -38,7 +48,8 @@ class SingleShot {
             error = e.getMessage();
         }
         var fieldsToMark = enemy.takeShot(position, state);
-        
+        matchStatistics.update(state);
+
         List<Integer> shipCells = (fieldsToMark.size() > 1) ? enemy.getSunkShipPositions(position) : null;
 
         switchPlayers(state);
@@ -55,6 +66,15 @@ class SingleShot {
     }
 
     private boolean isWinner() {
-        return enemy.isLost();
+        boolean result = enemy.isLost();
+        if (result) {
+            matchStatistics.setFinishTime();
+            matchResult.setWinner(current);
+        }
+        return result;
+    }
+
+    MatchStatistics getMatchStatistics() {
+        return matchStatistics;
     }
 }

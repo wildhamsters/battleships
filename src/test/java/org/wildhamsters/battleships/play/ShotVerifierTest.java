@@ -1,17 +1,16 @@
 package org.wildhamsters.battleships.play;
 
+import static org.testng.Assert.assertEquals;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.board.BoardDimension;
 import org.wildhamsters.battleships.board.FieldState;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.IntStream;
-
-import static org.testng.Assert.assertEquals;
 
 public class ShotVerifierTest {
 
@@ -41,12 +40,12 @@ public class ShotVerifierTest {
 
     @DataProvider
     Object[][] data() {
-        return new Object[][]{
-                {new ShotVerifier(), new DummyBoard(25)}
+        return new Object[][] {
+                { new ShotVerifier(), new DummyBoard(25) }
         };
     }
 
-    private class DummyBoard implements Board {
+    private static class DummyBoard implements Board {
         List<FieldState> board;
 
         DummyBoard(int size) {
@@ -66,6 +65,7 @@ public class ShotVerifierTest {
 
         @Override
         public void clearBoard() {
+            // left empty because never called
         }
 
         @Override

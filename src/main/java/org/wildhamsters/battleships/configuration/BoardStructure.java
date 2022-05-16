@@ -11,15 +11,7 @@ import java.util.List;
  *
  * @author Dominik Żebracki
  */
-class BoardStructure {
-
-    private final int width;
-    private final int height;
-
-    BoardStructure(int width, int height) {
-        this.width = width;
-        this.height = height;
-    }
+record BoardStructure(int width, int height) {
 
     List<Integer> fieldSurrounding(int position) {
         var surrounding = new ArrayList<Integer>();
@@ -48,15 +40,7 @@ class BoardStructure {
     }
 
     int size() {
-        return width*height;
-    }
-
-    int width() {
-        return width;
-    }
-
-    int height() {
-        return height;
+        return width * height;
     }
 
     private int northWest(int position) {

@@ -20,13 +20,17 @@ public class GameRoom {
     public GameRoom(Player playerOne, Player playerTwo) {
         this.playerOne = playerOne;
         this.playerTwo = playerTwo;
-        singleShot = new SingleShot(playerOne, playerTwo);
+        MatchStatistics matchStatistics = new MatchStatistics(id);
+        MatchResult matchResult = new MatchResult(id, playerOne, playerTwo);
+        singleShot = new SingleShot(playerOne, playerTwo, matchStatistics, matchResult);
     }
 
     public GameRoom(GameSettings gameSettings) {
         playerOne = Player.of(gameSettings.playerSettings().get(0));
         playerTwo = Player.of(gameSettings.playerSettings().get(1));
-        singleShot = new SingleShot(playerOne, playerTwo);
+        MatchStatistics matchStatistics = new MatchStatistics(id);
+        MatchResult matchResult = new MatchResult(id, playerOne, playerTwo);
+        singleShot = new SingleShot(playerOne, playerTwo, matchStatistics, matchResult);
     }
 
     /**
@@ -39,7 +43,15 @@ public class GameRoom {
         return singleShot.makeShot(position);
     }
 
+    public MatchStatistics getMatchStatistics() {
+        return singleShot.getMatchStatistics();
+    }
+
     String obtainUUID() {
         return id;
+    }
+
+    public String findSurrenderPlayerOpponent(String surrenderPlayerSessionId) {
+        return playerOne.getId().equals(surrenderPlayerSessionId) ? playerTwo.getId() : playerOne.getId();
     }
 }

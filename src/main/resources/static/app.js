@@ -20,8 +20,16 @@ var FIELD_STATE = {
 
 var EVENT = {
     CONNECT: "CONNECT",
-    GAMEPLAY: "GAMEPLAY"
+    GAMEPLAY: "GAMEPLAY",
+    SURRENDER: "SURRENDER"
 };
+
+function hideTableText() {
+    if(width > 15 || height > 15) {
+        document.getElementById("playerBoard").style.fontSize="0.8vh";
+        document.getElementById("opponentBoard").style.fontSize="0.8vh";
+    }
+}
 
 function createPlayerBoard() {
     var table = document.getElementById('playerBoard');
@@ -106,10 +114,6 @@ function handleShipShink(cells, keys, player) {
     new Audio('audio/explosion.wav').play();
 }
 
-
-
-
-
 function extractCellNumber(cell) {
     if (cell.id.startsWith("ocell"))
         return cell.id.replace("ocell_", "");
@@ -154,6 +158,7 @@ function changeDOMClassName(elementId, className) {
 function connectUsers() {
     var socket = new SockJS('/shots-websocket');
     stompClient = Stomp.over(socket);
+    stompClient.debug = null;
 
     stompClient.connect({}, function (frame) {
         console.log('Connected: ' + frame);
@@ -166,7 +171,6 @@ function connectUsers() {
         sessionId = url;
 
         stompClient.subscribe('/user/' + sessionId + '/queue/specific-user', function (msgOut) {
-            console.log("RECEIVED FROM THE USER: " + sessionId + " " + msgOut);
             readSubscribed(msgOut);
         });
 
@@ -194,15 +198,15 @@ function sendName(id) {
 }
 
 function readSubscribed(message) {
-    console.log("received message body " + message.body);
-
     var response = JSON.parse(message.body);
 
     if (response.event == EVENT.CONNECT) {
-        if (response.playerOneSessionId != null)
+        if (response.playerTwoSessionId != null)
             processConnectMessage(response);
     } else if (response.event == EVENT.GAMEPLAY) {
         processGameplayMessage(response)
+    } else if(response.event == EVENT.SURRENDER) {
+        processSurrenderMessage(response);
     }
 }
 
@@ -266,6 +270,17 @@ function processGameplayMessage(response) {
     }
 }
 
+function processSurrenderMessage(response) {
+    if (sessionId == response.surrenderPlayerSessionId) {
+        lose();
+        alert(response.surrenderMessage);
+    } else {
+        winner();
+        alert(response.winnerMessage);
+    }
+    //setTimeout(() => { window.location.href='/logout' }, 3000)
+}
+
 function highlightBoard(currentPlayerTurn) {
     if (currentPlayerTurn) {
         document.getElementById("rightSide").className = "playerTurn";
@@ -324,7 +339,15 @@ function getTime() {
     return h + ":" + m + ":" + s;
 }
 
+function giveUp() {
+    var confirmGiveUp = confirm("Are you sure? The opponent will win.");
+    if (confirmGiveUp) {
+        stompClient.send("/app/gameplay/surrender", {}, JSON.stringify({"cell":-1, "roomId":roomId}));
+    }
+}
+
 createPlayerBoard();
 createOpponentBoard();
 connectUsers();
 hideStatus();
+hideTableText();
