@@ -24,4 +24,9 @@ public class ShipsPositions implements Serializable {
     public void setShipsPosition(List<ShipPosition> shipsPosition) {
         this.shipsPosition = shipsPosition;
     }
+
+    @Override
+    public String toString() {
+        return shipsPosition.toString();
+    }
 }

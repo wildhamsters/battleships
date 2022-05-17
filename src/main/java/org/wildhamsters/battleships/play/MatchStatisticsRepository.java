@@ -10,3 +10,4 @@ public interface MatchStatisticsRepository extends CrudRepository<MatchStatistic
 
     MatchStatisticsEntity save(MatchStatisticsEntity entity);
 }
+;
