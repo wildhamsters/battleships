@@ -1,6 +1,7 @@
 package org.wildhamsters.battleships;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 
@@ -32,76 +33,81 @@ public class UserEntity {
     @Column(name = "disabled")
     private Boolean disabled;
 
-    public Long getId() {
-        return id;
+    private UserEntity(String name,
+                       String email,
+                       String password,
+                       GrantedAuthority authority,
+                       Boolean accountExpired,
+                       Boolean accountLocked,
+                       Boolean credentialsExpired,
+                       Boolean disabled) {
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public Long getId() {
+        return id;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getEmail() {
         return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
     public GrantedAuthority getAuthority() {
         return authority;
     }
 
-    public void setAuthority(GrantedAuthority authority) {
-        this.authority = authority;
-    }
-
-    public Boolean getAccountExpired() {
+    public Boolean isAccountExpired() {
         return accountExpired;
     }
 
-    public void setAccountExpired(Boolean accountExpired) {
-        this.accountExpired = accountExpired;
-    }
-
-    public Boolean getAccountLocked() {
+    public Boolean isAccountLocked() {
         return accountLocked;
     }
 
-    public void setAccountLocked(Boolean accountLocked) {
-        this.accountLocked = accountLocked;
-    }
-
-    public Boolean getCredentialsExpired() {
+    public Boolean areCredentialsExpired() {
         return credentialsExpired;
     }
 
-    public void setCredentialsExpired(Boolean credentialsExpired) {
-        this.credentialsExpired = credentialsExpired;
-    }
-
-    public Boolean getDisabled() {
+    public Boolean isDisabled() {
         return disabled;
     }
 
-    public void setDisabled(Boolean disabled) {
-        this.disabled = disabled;
+    static UserEntityBuilder builder() {
+        return new UserEntityBuilder();
+    }
+
+    static class UserEntityBuilder {
+
+        private String name;
+        private String email;
+        private String password;
+
+        UserEntityBuilder setName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        UserEntityBuilder setEmail(String email) {
+            this.email = email;
+            return this;
+        }
+
+        UserEntityBuilder setPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
+        UserEntity build() {
+            return new UserEntity(name, email, password, new SimpleGrantedAuthority("USER"),
+                    false, false,false,false);
+        }
     }
 
     @Override
