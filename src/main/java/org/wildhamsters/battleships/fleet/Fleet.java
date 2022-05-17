@@ -138,6 +138,9 @@ public class Fleet {
     }
 
     public ShipCondition getShipConditionByIndex(int position) {
+        if (!allTakenFields.getAllFieldsInOneList().contains(position)) {
+            return ShipCondition.NO_SHIP_HERE;
+        }
         return ships.getShipByPosition(position).getShipCondition();
     }
 }

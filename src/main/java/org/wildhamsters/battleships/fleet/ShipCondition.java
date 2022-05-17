@@ -6,5 +6,6 @@ package org.wildhamsters.battleships.fleet;
 public enum ShipCondition {
     UNTOUCHED,
     HIT,
-    SUNK
+    SUNK,
+    NO_SHIP_HERE
 }
