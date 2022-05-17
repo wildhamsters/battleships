@@ -34,7 +34,7 @@ class GameService {
     GameService(MatchStatisticsRepository matchStatisticsRepository) {
         this.gameRoom = null;
         this.connectedPlayers = new ConnectedPlayers(new ArrayList<>());
-        this.gameConfigurer = new GameConfigurer();
+        this.gameConfigurer = new GameConfigurer("http://localhost:7000/placeShips");
         this.matchStatisticsRepository = matchStatisticsRepository;
     }
 

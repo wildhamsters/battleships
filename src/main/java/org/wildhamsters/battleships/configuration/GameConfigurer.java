@@ -15,9 +15,11 @@ import org.wildhamsters.battleships.fleet.ShipsPositions;
  */
 public class GameConfigurer {
         private final RestTemplate restTemplate = new RestTemplate();
-        private final String resourceUrl = "http://localhost:7000/placeShips";
+        private final String resourceUrl;
 
-        ShipsPositions sp = restTemplate.getForObject(resourceUrl, ShipsPositions.class);
+        public GameConfigurer(String shipPlacementUrl) {
+                resourceUrl= shipPlacementUrl;
+        }
 
         public GameSettings createConfiguration(List<Integer> shipSizesToBePlaced,
                         int boardHeight,
