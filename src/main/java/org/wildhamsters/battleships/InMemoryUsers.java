@@ -10,14 +10,14 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 class InMemoryUsers implements Users {
 
-    private final ConcurrentHashMap<String, UserEntity> users;
+    private final ConcurrentHashMap<String, User> users;
     private final PasswordEncoder passwordEncoder;
     private int usersCount;
 
-    InMemoryUsers(ConcurrentHashMap<String, UserEntity> users, PasswordEncoder passwordEncoder) {
+    InMemoryUsers(ConcurrentHashMap<String, User> users, PasswordEncoder passwordEncoder) {
         this.users = users;
         this.passwordEncoder = passwordEncoder;
-        users.put("dominik", new UserEntity(1, "dominik", "dom@dom.com", passwordEncoder.encode("1234"),
+        users.put("dominik", new User(1, "dominik", "dom@dom.com", passwordEncoder.encode("1234"),
                 new SimpleGrantedAuthority("USER"), false, false, false, false));
         usersCount = 1;
     }
@@ -28,13 +28,13 @@ class InMemoryUsers implements Users {
             throw new AccountExistException("An account for username %s already exist.".formatted(userDto.name()));
         }
         users.put(userDto.name(),
-            new UserEntity(++usersCount, userDto.name(), userDto.email(), passwordEncoder.encode(userDto.password()),
+            new User(++usersCount, userDto.name(), userDto.email(), passwordEncoder.encode(userDto.password()),
                     new SimpleGrantedAuthority("USER"), false, false, false, false));
         System.err.println(users);
     }
 
     @Override
-    public UserEntity findByUsername(String username) {
+    public User findByUsername(String username) {
         return users.get(username);
     }
 }

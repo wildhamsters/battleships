@@ -1,6 +1,5 @@
 package org.wildhamsters.battleships;
 
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -18,11 +17,11 @@ class UsersService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        final UserEntity loadedUser = users.findByUsername(username);
+        final User loadedUser = users.findByUsername(username);
         if(loadedUser == null) {
             throw new UsernameNotFoundException("User %s not found".formatted(username));
         }
-        return User.withUsername(loadedUser.name())
+        return org.springframework.security.core.userdetails.User.withUsername(loadedUser.name())
                 .password(loadedUser.password())
                 .authorities(loadedUser.authority())
                 .accountExpired(loadedUser.accountExpired())

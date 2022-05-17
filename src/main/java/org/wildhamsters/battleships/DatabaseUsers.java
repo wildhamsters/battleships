@@ -44,12 +44,12 @@ class DatabaseUsers implements Users {
     }
 
     @Override
-    public UserEntity findByUsername(String username) {
-        UserEntity userEntity = null;
+    public User findByUsername(String username) {
+        User user = null;
         try {
-            userEntity = jdbcTemplate.queryForObject(FIND_USER_BY_USERNAME_QUERY,
+            user = jdbcTemplate.queryForObject(FIND_USER_BY_USERNAME_QUERY,
                     Map.of("username", username),
-                    (rs, rowNum) -> new UserEntity(
+                    (rs, rowNum) -> new User(
                             rs.getInt("id"),
                             rs.getString("name"),
                             rs.getString("email"),
@@ -60,8 +60,8 @@ class DatabaseUsers implements Users {
                             rs.getBoolean("cred_expired"),
                             rs.getBoolean("disabled")));
         } catch (EmptyResultDataAccessException e) {
-            userEntity = null;
+            user = null;
         }
-        return userEntity;
+        return user;
     }
 }
