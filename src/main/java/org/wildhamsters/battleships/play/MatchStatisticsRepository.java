@@ -6,7 +6,6 @@ import org.springframework.stereotype.Repository;
 /**
  * @author Piotr Chowaniec
  */
-@Repository
 public interface MatchStatisticsRepository extends CrudRepository<MatchStatisticsEntity, Long> {
 
     MatchStatisticsEntity save(MatchStatisticsEntity entity);
