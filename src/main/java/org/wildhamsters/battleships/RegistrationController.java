@@ -27,7 +27,7 @@ class RegistrationController {
     ResponseEntity<String> register(@RequestParam Map<String, String> map) {
         try {
             users.save(new UserDto(map.get("username"), map.get("password"), map.get("email")));
-            return ResponseEntity.status(HttpStatus.CREATED).body("/index");
+            return ResponseEntity.status(HttpStatus.CREATED).body("/welcome");
         } catch (AccountExistException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User account could not be created");
         }
@@ -41,5 +41,10 @@ class RegistrationController {
     @GetMapping("/index")
     String showPage() {
         return "index.html";
+    }
+
+    @GetMapping("/welcome")
+    String showWelcomePage() {
+        return "welcome.html";
     }
 }
