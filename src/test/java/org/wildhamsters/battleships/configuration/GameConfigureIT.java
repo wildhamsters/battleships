@@ -9,7 +9,7 @@ public class GameConfigureIT {
 
     @Test
     public void testCreateConfiguration() {
-        GameSettings settings = new GameConfigurer().createConfiguration(List.of(1, 1, 1, 2, 2, 3),
+        GameSettings settings = new GameConfigurer(null).createConfiguration(List.of(1, 1, 1, 2, 2, 3),
                 10, 10, List.of("Player1", "Player2"), List.of("id1", "id2"));
 
         List<GameSettings.PlayerSettings> playersSettings = settings.playerSettings();

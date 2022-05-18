@@ -1,7 +1,9 @@
 package org.wildhamsters.battleships;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
+import org.wildhamsters.battleships.fleet.PositionsDTO;
 import org.wildhamsters.battleships.play.GameRoom;
 import org.wildhamsters.battleships.play.GameRooms;
 import org.wildhamsters.battleships.play.MatchStatisticsEntityMapper;
@@ -9,6 +11,7 @@ import org.wildhamsters.battleships.play.MatchStatisticsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 
 //TODO refactor this class
@@ -28,13 +31,16 @@ class GameService {
     private final GameRooms gameRooms = new GameRooms();
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
-    private final GameConfigurer gameConfigurer;
+    @Autowired
+    private GameConfigurer gameConfigurer;
     private MatchStatisticsRepository matchStatisticsRepository;
+    private AtomicBoolean flag = new AtomicBoolean(false);
+    private ConnectionStatus connectionStatus;
 
     GameService(MatchStatisticsRepository matchStatisticsRepository) {
         this.gameRoom = null;
         this.connectedPlayers = new ConnectedPlayers(new ArrayList<>());
-        this.gameConfigurer = new GameConfigurer();
+//        this.gameConfigurer = new GameConfigurer(null);
         this.matchStatisticsRepository = matchStatisticsRepository;
     }
 
@@ -54,6 +60,10 @@ class GameService {
         }
     }
 
+    boolean areTwoPlayersConnected() {
+        return connectedPlayers.areBothConnected();
+    }
+
     /**
      *
      * @param position of a shot on the board.
@@ -68,13 +78,17 @@ class GameService {
         return result;
     }
 
-    private ConnectionStatus createPlayerWaitingForOpponentStatus() {
+    ConnectionStatus createPlayerWaitingForOpponentStatus() {
         return new ConnectionStatus("No opponents for now",
                 null,
                 connectedPlayers.firstOneConnected().get().sessionId(), null,
                 null, null,
                 null, null,
                 null, Event.CONNECT);
+    }
+
+    void addPlayer(ConnectedPlayer connectedPlayer) {
+        connectedPlayers = connectedPlayers.add(connectedPlayer);
     }
 
     private ConnectionStatus createTwoPlayersConnectedStatus() {
@@ -95,6 +109,35 @@ class GameService {
                 Event.CONNECT);
         clearConnectedPlayersAfterPairing();
         return connectionStatus;
+    }
+
+    void createTwoPlayersConnectedStatus(List<PositionsDTO> shipsPositions) {
+        var gameSettings = gameConfigurer.createConfiguration(shipsPositions,
+                SHIP_SIZES_TO_BE_CREATED,
+                BOARD_HEIGHT, BOARD_WIDTH, connectedPlayers.names(), connectedPlayers.ids());
+        this.gameRoom = new GameRoom(gameSettings);
+        var roomId = gameRooms.addRoom(gameRoom);
+        //TODO refactor Optionals
+        var connectionStatus = new ConnectionStatus("Players paired.",
+                roomId,
+                connectedPlayers.firstOneConnected().get().sessionId(),
+                gameSettings.firstPlayersFleet().get().getFleetPositions(),
+                connectedPlayers.secondOneConnected().get().sessionId(),
+                gameSettings.secondPlayersFleet().get().getFleetPositions(),
+                connectedPlayers.firstOneConnected().get().name(),
+                connectedPlayers.firstOneConnected().get().name(),
+                connectedPlayers.secondOneConnected().get().name(),
+                Event.CONNECT);
+        clearConnectedPlayersAfterPairing();
+        this.connectionStatus = connectionStatus;
+        this.flag.set(true);
+    }
+
+    ConnectionStatus getConnectionStatus() {
+        while (flag.get() == false) {
+        }
+        flag.set(false);
+        return this.connectionStatus;
     }
 
     private void clearConnectedPlayersAfterPairing() {

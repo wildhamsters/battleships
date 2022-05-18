@@ -3,21 +3,16 @@ package org.wildhamsters.battleships;
 import java.security.Principal;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.handler.annotation.Header;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.client.RestTemplate;
-import org.wildhamsters.battleships.fleet.ShipPosition;
-import org.wildhamsters.battleships.fleet.ShipsPositions;
 
 /**
  * @author Mariusz Bal
@@ -25,9 +20,11 @@ import org.wildhamsters.battleships.fleet.ShipsPositions;
 @Controller
 class WebSocketController {
         private final GameService gameService;
+        private final RabbitTemplate rabbitTemplate;
 
-        WebSocketController(GameService gameService) {
+        WebSocketController(GameService gameService, RabbitTemplate rabbitTemplate) {
                 this.gameService = gameService;
+                this.rabbitTemplate = rabbitTemplate;
         }
 
         @Autowired
@@ -36,14 +33,22 @@ class WebSocketController {
         @MessageMapping("/room")
         public void sendSpecific(@Payload Message<String> msg, Principal user,
                         @Header("simpSessionId") String sessionId) throws JsonProcessingException {
-                ConnectionStatus connectionStatus = gameService
-                                .processConnectingPlayers(new ConnectedPlayer(user.getName(), sessionId));
-
-                String resultJSON = new ObjectMapper().writeValueAsString(connectionStatus);
-                simpMessagingTemplate.convertAndSendToUser(connectionStatus.playerOneSessionId(),
+//                ConnectionStatus connectionStatus = gameService
+//                                .processConnectingPlayers(new ConnectedPlayer(user.getName(), sessionId));
+                ConnectionStatus connectionStatus;
+                gameService.addPlayer(new ConnectedPlayer(user.getName(), sessionId));
+                if(gameService.areTwoPlayersConnected()) {
+                        rabbitTemplate.convertAndSend("message_exchange", "requestShips_key",
+                                new RequestForShips("message from WebSocketController"));
+                        connectionStatus = gameService.getConnectionStatus();
+                } else {
+                        connectionStatus = gameService.createPlayerWaitingForOpponentStatus();
+                }
+                        String resultJSON = new ObjectMapper().writeValueAsString(connectionStatus);
+                        simpMessagingTemplate.convertAndSendToUser(connectionStatus.playerOneSessionId(),
                                 "/queue/specific-user", resultJSON);
-                if (connectionStatus.playerTwoSessionId() != null)
-                        simpMessagingTemplate.convertAndSendToUser(connectionStatus.playerTwoSessionId(),
+                        if (connectionStatus.playerTwoSessionId() != null)
+                                simpMessagingTemplate.convertAndSendToUser(connectionStatus.playerTwoSessionId(),
                                         "/queue/specific-user", resultJSON);
 
         }

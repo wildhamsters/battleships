@@ -20,7 +20,7 @@ public class Fleet {
 
     public Fleet(ShipsPositions shipsPosition) {
         ships = new ShipsMap();
-        allTakenFields = new FieldList(shipsPosition.getShipsPosition());
+        allTakenFields = new FieldList(shipsPosition.getAllShipsPositions());
         putShipsIntoMap(allTakenFields.allFieldLists());
     }
 
