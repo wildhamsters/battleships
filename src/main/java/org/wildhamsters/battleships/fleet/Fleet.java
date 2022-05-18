@@ -1,9 +1,8 @@
 package org.wildhamsters.battleships.fleet;
 
-import org.wildhamsters.battleships.board.FieldState;
-
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
@@ -142,5 +141,26 @@ public class Fleet {
             return ShipCondition.NO_SHIP_HERE;
         }
         return ships.getShipByPosition(position).getShipCondition();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Fleet fleet = (Fleet) o;
+        return Objects.equals(ships, fleet.ships) && Objects.equals(allTakenFields, fleet.allTakenFields);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(ships, allTakenFields);
+    }
+
+    @Override
+    public String toString() {
+        return "Fleet{" +
+                "ships=" + ships +
+                ", allTakenFields=" + allTakenFields +
+                '}';
     }
 }

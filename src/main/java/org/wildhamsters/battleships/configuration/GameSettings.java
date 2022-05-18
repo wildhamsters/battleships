@@ -18,7 +18,7 @@ public record GameSettings(List<PlayerSettings> playerSettings) {
     }
 
     public Optional<Fleet> secondPlayersFleet() {
-        return playerSettings.size() > 1 ? Optional.of(playerSettings.get(1).fleet) : Optional.empty();
+        return !playerSettings.isEmpty() ? Optional.of(playerSettings.get(1).fleet) : Optional.empty();
     }
 
     /**
