@@ -29,7 +29,7 @@ class GameService {
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
     private final GameConfigurer gameConfigurer;
-    private MatchStatisticsRepository matchStatisticsRepository;
+    private final MatchStatisticsRepository matchStatisticsRepository;
 
     GameService(MatchStatisticsRepository matchStatisticsRepository) {
         this.gameRoom = null;
