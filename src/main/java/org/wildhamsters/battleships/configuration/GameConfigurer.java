@@ -15,9 +15,11 @@ import org.wildhamsters.battleships.fleet.ShipsPositions;
  */
 public class GameConfigurer {
         private final RestTemplate restTemplate = new RestTemplate();
-        private final String resourceUrl = "https://protected-stream-19238.herokuapp.com/placeShips";
+        private final String resourceUrl;
 
-        ShipsPositions sp = restTemplate.getForObject(resourceUrl, ShipsPositions.class);
+        public GameConfigurer(String shipPlacementUrl) {
+                resourceUrl= shipPlacementUrl;
+        }
 
         public GameSettings createConfiguration(List<Integer> shipSizesToBePlaced,
                         int boardHeight,
@@ -28,7 +30,7 @@ public class GameConfigurer {
                 return new GameSettings(IntStream.range(0, playersNames.size())
                                 .boxed()
                                 .map(i -> createPlayerSettings(
-                                                restTemplate.getForObject(resourceUrl, ShipsPositions.class),
+                                                new ShipsPositions(restTemplate.getForObject(resourceUrl, PositionsDTO.class).positions()),
                                                 playersIds.get(i),
                                                 playersNames.get(i), shipSizesToBePlaced))
                                 .toList());
