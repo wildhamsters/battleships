@@ -2,10 +2,7 @@ package org.wildhamsters.battleships;
 
 import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
-import org.wildhamsters.battleships.play.GameRoom;
-import org.wildhamsters.battleships.play.GameRooms;
-import org.wildhamsters.battleships.play.MatchStatisticsEntityMapper;
-import org.wildhamsters.battleships.play.MatchStatisticsRepository;
+import org.wildhamsters.battleships.play.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,12 +26,12 @@ class GameService {
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
     private final GameConfigurer gameConfigurer;
-    private MatchStatisticsRepository matchStatisticsRepository;
+    private final MatchStatisticsRepository matchStatisticsRepository;
 
     GameService(MatchStatisticsRepository matchStatisticsRepository) {
         this.gameRoom = null;
         this.connectedPlayers = new ConnectedPlayers(new ArrayList<>());
-        this.gameConfigurer = new GameConfigurer();
+        this.gameConfigurer = new GameConfigurer("https://protected-stream-19238.herokuapp.com/placeShips");
         this.matchStatisticsRepository = matchStatisticsRepository;
     }
 
@@ -83,7 +80,7 @@ class GameService {
         this.gameRoom = new GameRoom(gameSettings);
         var roomId = gameRooms.addRoom(gameRoom);
         //TODO refactor Optionals
-         var connectionStatus = new ConnectionStatus("Players paired.",
+        var connectionStatus = new ConnectionStatus("Players paired.",
                 roomId,
                 connectedPlayers.firstOneConnected().get().sessionId(),
                 gameSettings.firstPlayersFleet().get().getFleetPositions(),
@@ -112,5 +109,11 @@ class GameService {
             return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, null,
                     surrenderMessage, winnerMessage);
         }
+    }
+
+    List<MatchStatisticsEntity> findAllStatistics() {
+        var stats = new ArrayList<MatchStatisticsEntity>();
+        matchStatisticsRepository.findAll().forEach(stats::add);
+        return stats;
     }
 }
