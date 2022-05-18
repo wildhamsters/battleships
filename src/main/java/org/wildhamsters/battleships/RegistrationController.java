@@ -18,12 +18,10 @@ import java.util.Map;
 @Controller
 class RegistrationController {
 
-//    private final Users users;
     private final UserService userService;
     private final PasswordEncoder passwordEncoder;
 
     RegistrationController(UserService userService, PasswordEncoder passwordEncoder) {
-//        this.users = users;
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;
     }
@@ -31,7 +29,6 @@ class RegistrationController {
     @PostMapping("/registration")
     ResponseEntity<String> register(@RequestParam Map<String, String> map) {
         try {
-//            users.save(new UserDto(map.get("username"), map.get("password"), map.get("email")));
             userService.registerUser(new UserDto(map.get("username"), passwordEncoder.encode(map.get("password")), map.get("email")));
             return ResponseEntity.status(HttpStatus.CREATED).body("/index");
         } catch (AccountExistException e) {

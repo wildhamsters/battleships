@@ -1,7 +1,6 @@
 package org.wildhamsters.battleships;
 
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import javax.persistence.*;
 
