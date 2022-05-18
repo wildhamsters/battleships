@@ -1,13 +1,17 @@
 package org.wildhamsters.battleships;
 
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 /**
  * @author Piotr Chowaniec
  */
-public interface UserRepository extends CrudRepository<UserEntity, Long> {
+@Repository
+interface UserRepository extends CrudRepository<UserEntity, Integer> {
 
     UserEntity save(UserEntity user);
 
-    UserEntity findByName(String name);
+    Optional<UserEntity> findByName(String name);
 }

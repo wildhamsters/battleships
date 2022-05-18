@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
     @Column(name = "name")
@@ -23,6 +23,7 @@ public class UserEntity {
     @Column(name = "password")
     private String password;
     @Column(name = "authority")
+    @Convert(converter = GrantedAuthorityConverter.class)
     private GrantedAuthority authority;
     @Column(name = "acc_expired")
     private Boolean accountExpired;
@@ -33,81 +34,76 @@ public class UserEntity {
     @Column(name = "disabled")
     private Boolean disabled;
 
-    private UserEntity(String name,
-                       String email,
-                       String password,
-                       GrantedAuthority authority,
-                       Boolean accountExpired,
-                       Boolean accountLocked,
-                       Boolean credentialsExpired,
-                       Boolean disabled) {
-    }
-
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public String getEmail() {
         return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
         return password;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public GrantedAuthority getAuthority() {
         return authority;
+    }
+
+    public void setAuthority(GrantedAuthority authority) {
+        this.authority = authority;
     }
 
     public Boolean isAccountExpired() {
         return accountExpired;
     }
 
+    public void setAccountExpired(Boolean accountExpired) {
+        this.accountExpired = accountExpired;
+    }
+
     public Boolean isAccountLocked() {
         return accountLocked;
     }
 
-    public Boolean areCredentialsExpired() {
+    public void setAccountLocked(Boolean accountLocked) {
+        this.accountLocked = accountLocked;
+    }
+
+    public Boolean isCredentialsExpired() {
         return credentialsExpired;
+    }
+
+    public void setCredentialsExpired(Boolean credentialsExpired) {
+        this.credentialsExpired = credentialsExpired;
     }
 
     public Boolean isDisabled() {
         return disabled;
     }
 
-    static UserEntityBuilder builder() {
-        return new UserEntityBuilder();
-    }
-
-    static class UserEntityBuilder {
-
-        private String name;
-        private String email;
-        private String password;
-
-        UserEntityBuilder setName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        UserEntityBuilder setEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        UserEntityBuilder setPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        UserEntity build() {
-            return new UserEntity(name, email, password, new SimpleGrantedAuthority("USER"),
-                    false, false,false,false);
-        }
+    public void setDisabled(Boolean disabled) {
+        this.disabled = disabled;
     }
 
     @Override
