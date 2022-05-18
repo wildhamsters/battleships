@@ -25,7 +25,8 @@ th {
 
 th, td {
 	padding: 12px 15px;
-	width: 10vw;
+	width: 14vw;
+	max-width: 14vw;
 }
 
 tr:nth-of-type(even) {
