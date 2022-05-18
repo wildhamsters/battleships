@@ -2,10 +2,7 @@ package org.wildhamsters.battleships;
 
 import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
-import org.wildhamsters.battleships.play.GameRoom;
-import org.wildhamsters.battleships.play.GameRooms;
-import org.wildhamsters.battleships.play.MatchStatisticsEntityMapper;
-import org.wildhamsters.battleships.play.MatchStatisticsRepository;
+import org.wildhamsters.battleships.play.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,5 +109,11 @@ class GameService {
             return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, null,
                     surrenderMessage, winnerMessage);
         }
+    }
+
+    List<MatchStatisticsEntity> findAllStatistics() {
+        var stats = new ArrayList<MatchStatisticsEntity>();
+        matchStatisticsRepository.findAll().forEach(stats::add);
+        return stats;
     }
 }
