@@ -43,26 +43,26 @@ public class Stats implements MatchStatisticsRepository{
 
     @Override
     public void deleteById(Long aLong) {
-
+        // to be implemented
     }
 
     @Override
     public void delete(MatchStatisticsEntity entity) {
-
+        // to be implemented
     }
 
     @Override
     public void deleteAllById(Iterable<? extends Long> longs) {
-
+        // to be implemented
     }
 
     @Override
     public void deleteAll(Iterable<? extends MatchStatisticsEntity> entities) {
-
+        // to be implemented
     }
 
     @Override
     public void deleteAll() {
-
+        // to be implemented
     }
 }
