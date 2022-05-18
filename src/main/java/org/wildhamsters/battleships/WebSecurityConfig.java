@@ -29,6 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors().disable()
                 .formLogin()
+                .defaultSuccessUrl("/welcome")
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
