@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Map;
@@ -24,12 +26,15 @@ class RegistrationController {
     }
 
     @PostMapping("/registration")
-    ResponseEntity<String> register(@RequestParam Map<String, String> map) {
+    ResponseEntity<String> register(@RequestParam Map<String, String> map, HttpServletRequest request) {
         try {
             users.save(new UserDto(map.get("username"), map.get("password"), map.get("email")));
+            request.login(map.get("username"), map.get("password"));
             return ResponseEntity.status(HttpStatus.CREATED).body("/welcome");
         } catch (AccountExistException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User account could not be created");
+        } catch (ServletException e) {
+            return ResponseEntity.status(HttpStatus.CREATED).body("/login");
         }
     }
 
