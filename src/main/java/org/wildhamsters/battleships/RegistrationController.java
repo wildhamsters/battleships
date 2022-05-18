@@ -50,9 +50,14 @@ class RegistrationController {
     String showPage() {
         return "index.html";
     }
-
+  
     @GetMapping("/welcome")
     String showWelcomePage() {
         return "welcome.html";
+    }
+
+    @GetMapping("/stats")
+    String showStatisticsPage() {
+        return "stats.html";
     }
 }
