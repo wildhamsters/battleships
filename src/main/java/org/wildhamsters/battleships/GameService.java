@@ -29,12 +29,12 @@ class GameService {
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
     private final GameConfigurer gameConfigurer;
-    private MatchStatisticsRepository matchStatisticsRepository;
+    private final MatchStatisticsRepository matchStatisticsRepository;
 
     GameService(MatchStatisticsRepository matchStatisticsRepository) {
         this.gameRoom = null;
         this.connectedPlayers = new ConnectedPlayers(new ArrayList<>());
-        this.gameConfigurer = new GameConfigurer("http://localhost:7000/placeShips");
+        this.gameConfigurer = new GameConfigurer("https://protected-stream-19238.herokuapp.com/placeShips");
         this.matchStatisticsRepository = matchStatisticsRepository;
     }
 
@@ -83,7 +83,7 @@ class GameService {
         this.gameRoom = new GameRoom(gameSettings);
         var roomId = gameRooms.addRoom(gameRoom);
         //TODO refactor Optionals
-         var connectionStatus = new ConnectionStatus("Players paired.",
+        var connectionStatus = new ConnectionStatus("Players paired.",
                 roomId,
                 connectedPlayers.firstOneConnected().get().sessionId(),
                 gameSettings.firstPlayersFleet().get().getFleetPositions(),
