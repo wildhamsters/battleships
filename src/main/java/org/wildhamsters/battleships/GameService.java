@@ -59,8 +59,7 @@ class GameService {
     Result shoot(String roomId, int position) {
         Result result = gameRooms.findRoom(roomId).makeShot(position);
         if (result.finished()) {
-            matchStatisticsRepository.save(
-                    new MatchStatisticsEntityMapper().map(gameRooms.findRoom(roomId).getMatchStatistics()));
+            saveMatchStatistics(roomId);
         }
         return result;
     }
@@ -103,6 +102,7 @@ class GameService {
         String winnerMessage = "The opponent gave up. You won!";
         try {
             var winnerSessionId = gameRooms.findRoom(roomId).findSurrenderPlayerOpponent(surrenderPlayerSessionId);
+            saveMatchStatistics(roomId);
             return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, winnerSessionId,
                     surrenderMessage, winnerMessage);
         } catch (IllegalArgumentException e) {
@@ -115,5 +115,10 @@ class GameService {
         var stats = new ArrayList<MatchStatisticsEntity>();
         matchStatisticsRepository.findAll().forEach(stats::add);
         return stats;
+    }
+
+    private void saveMatchStatistics(String roomId) {
+        matchStatisticsRepository.save(
+                new MatchStatisticsEntityMapper().map(gameRooms.findRoom(roomId).getMatchStatistics()));
     }
 }
