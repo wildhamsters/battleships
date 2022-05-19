@@ -1,6 +1,5 @@
 package org.wildhamsters.battleships;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
 import org.wildhamsters.battleships.fleet.PositionsDTO;
@@ -15,7 +14,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-//TODO refactor this class
 /**
  * Main entry point to the game.
  * Manages connection of players and handles interactions between players and a game.
@@ -30,18 +28,18 @@ class GameService {
     private static final int BOARD_HEIGHT = 10;
 
     private final GameRooms gameRooms = new GameRooms();
+    private final GameConfigurer gameConfigurer;
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
-    @Autowired
-    private GameConfigurer gameConfigurer;
-    private MatchStatisticsRepository matchStatisticsRepository;
-    private AtomicBoolean flag = new AtomicBoolean(false);
+    private final MatchStatisticsRepository matchStatisticsRepository;
+    private final AtomicBoolean isResponseWithShipsReady;
     private ConnectionStatus connectionStatus;
 
-    GameService(MatchStatisticsRepository matchStatisticsRepository) {
+    GameService(GameConfigurer gameConfigurer, MatchStatisticsRepository matchStatisticsRepository) {
+        this.gameConfigurer = gameConfigurer;
         this.gameRoom = null;
+        this.isResponseWithShipsReady = new AtomicBoolean(false);
         this.connectedPlayers = new ConnectedPlayers(new ArrayList<>());
-//        this.gameConfigurer = new GameConfigurer(null);
         this.matchStatisticsRepository = matchStatisticsRepository;
     }
 
@@ -97,13 +95,13 @@ class GameService {
                 BOARD_HEIGHT, BOARD_WIDTH, connectedPlayers.names(), connectedPlayers.ids());
         this.gameRoom = new GameRoom(gameSettings);
         var roomId = gameRooms.addRoom(gameRoom);
-        //TODO refactor Optionals
+
          var connectionStatus = new ConnectionStatus("Players paired.",
                 roomId,
                 connectedPlayers.firstOneConnected().sessionId(),
-                gameSettings.firstPlayersFleet().get().getFleetPositions(),
+                gameSettings.firstPlayersFleet().getFleetPositions(),
                 connectedPlayers.secondOneConnected().sessionId(),
-                gameSettings.secondPlayersFleet().get().getFleetPositions(),
+                gameSettings.secondPlayersFleet().getFleetPositions(),
                 connectedPlayers.firstOneConnected().name(),
                 connectedPlayers.firstOneConnected().name(),
                 connectedPlayers.secondOneConnected().name(),
@@ -118,31 +116,31 @@ class GameService {
                 BOARD_HEIGHT, BOARD_WIDTH, connectedPlayers.names(), connectedPlayers.ids());
         this.gameRoom = new GameRoom(gameSettings);
         var roomId = gameRooms.addRoom(gameRoom);
-        //TODO refactor Optionals
+
         var connectionStatus = new ConnectionStatus("Players paired.",
                 roomId,
                 connectedPlayers.firstOneConnected().sessionId(),
-                gameSettings.firstPlayersFleet().get().getFleetPositions(),
+                gameSettings.firstPlayersFleet().getFleetPositions(),
                 connectedPlayers.secondOneConnected().sessionId(),
-                gameSettings.secondPlayersFleet().get().getFleetPositions(),
+                gameSettings.secondPlayersFleet().getFleetPositions(),
                 connectedPlayers.firstOneConnected().name(),
                 connectedPlayers.firstOneConnected().name(),
                 connectedPlayers.secondOneConnected().name(),
                 Event.CONNECT);
         clearConnectedPlayersAfterPairing();
         this.connectionStatus = connectionStatus;
-        this.flag.set(true);
+        this.isResponseWithShipsReady.set(true);
     }
 
     ConnectionStatus getConnectionStatus() {
-        while (flag.get() == false) {
+        while (!isResponseWithShipsReady.get()) {
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
         }
-        flag.set(false);
+        isResponseWithShipsReady.set(false);
         return this.connectionStatus;
     }
 

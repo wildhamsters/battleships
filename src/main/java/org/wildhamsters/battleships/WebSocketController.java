@@ -33,8 +33,7 @@ class WebSocketController {
         @MessageMapping("/room")
         public void sendSpecific(@Payload Message<String> msg, Principal user,
                         @Header("simpSessionId") String sessionId) throws JsonProcessingException {
-//                ConnectionStatus connectionStatus = gameService
-//                                .processConnectingPlayers(new ConnectedPlayer(user.getName(), sessionId));
+
                 ConnectionStatus connectionStatus;
                 gameService.addPlayer(new ConnectedPlayer(user.getName(), sessionId));
                 if(gameService.areTwoPlayersConnected()) {
