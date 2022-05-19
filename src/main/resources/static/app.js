@@ -141,14 +141,24 @@ function unhoverMany(startId, cellsCount, direction) {//todo make direction
 
 function winner() {
 	new Audio('audio/win.wav').play();
-	document.body.innerHTML = "<img src='https://c.tenor.com/D-pLzJqzkKcAAAAC/winner-wrestling.gif' alt='YOU WON!' />";
-    document.body.className = "centered";
+	let page = document.getElementById("page");
+	page.innerHTML = "<img src='https://c.tenor.com/D-pLzJqzkKcAAAAC/winner-wrestling.gif' alt='YOU WON!' />";
+    page.className = "centered";
+    changeGiveUpButtonToMenu();
 }
 
 function lose() {
     new Audio('audio/lose.wav').play();
-    document.body.innerHTML = "<img src='https://media.giphy.com/media/l2Je3n9VXC8z3baTe/giphy.gif' alt='YOU LOST!' />";
-    document.body.className = "centered";
+    let page = document.getElementById("page");
+    page.innerHTML = "<img src='https://media.giphy.com/media/l2Je3n9VXC8z3baTe/giphy.gif' alt='YOU LOST!' />";
+    page.className = "centered";
+    changeGiveUpButtonToMenu();
+}
+
+function changeGiveUpButtonToMenu() {
+    let giveUpButton =  document.getElementById("giveUp")
+    giveUpButton.innerText="MENU";
+    giveUpButton.onclick=function() {window.location.replace("/welcome")};
 }
 
 function changeDOMClassName(elementId, className) {
