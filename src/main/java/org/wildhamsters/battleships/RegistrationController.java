@@ -40,24 +40,4 @@ class RegistrationController {
             return ResponseEntity.status(HttpStatus.CREATED).body("/login");
         }
     }
-
-    @GetMapping("/register")
-    String showRegistrationPage() {
-        return "register.html";
-    }
-
-    @GetMapping("/index")
-    String showPage() {
-        return "index.html";
-    }
-  
-    @GetMapping("/welcome")
-    String showWelcomePage() {
-        return "welcome.html";
-    }
-
-    @GetMapping("/stats")
-    String showStatisticsPage() {
-        return "stats.html";
-    }
 }
