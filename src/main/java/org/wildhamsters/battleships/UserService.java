@@ -26,6 +26,7 @@ class UserService implements UserDetailsService {
                     "Trying to create new account for existing user: %s".formatted(userDto.name()));
             throw new AccountExistException("An account for username %s already exist.".formatted(userDto.name()));
         }
+        Logger.log(Log.Level.INFO, this.getClass(), "User %s registered in the database.".formatted(userDto.name()));
         userRepository.save(new UserEntityMapper().map(userDto));
     }
 
@@ -37,7 +38,7 @@ class UserService implements UserDetailsService {
             Logger.log(Log.Level.ERROR, this.getClass(), "User not found: %s".formatted(username));
             throw new UsernameNotFoundException("Not found: " + username);
         }
-
+        Logger.log(Log.Level.INFO, this.getClass(), "User %s logged into the game.".formatted(username));
         return User.withUsername(userEntity.get().getName())
                 .password(userEntity.get().getPassword())
                 .authorities(userEntity.get().getAuthority())

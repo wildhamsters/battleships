@@ -1,17 +1,21 @@
 package org.wildhamsters.battleships;
 
-import org.springframework.stereotype.Service;
-import org.wildhamsters.battleships.configuration.GameConfigurer;
-import org.wildhamsters.battleships.play.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+import org.wildhamsters.battleships.configuration.GameConfigurer;
+import org.wildhamsters.battleships.play.GameRoom;
+import org.wildhamsters.battleships.play.GameRooms;
+import org.wildhamsters.battleships.play.MatchStatisticsEntity;
+import org.wildhamsters.battleships.play.MatchStatisticsEntityMapper;
+import org.wildhamsters.battleships.play.MatchStatisticsRepository;
 
 //TODO refactor this class
 /**
  * Main entry point to the game.
- * Manages connection of players and handles interactions between players and a game.
+ * Manages connection of players and handles interactions between players and a
+ * game.
  *
  * @author Dominik Żebracki
  */
@@ -44,7 +48,7 @@ class GameService {
      */
     ConnectionStatus processConnectingPlayers(ConnectedPlayer connectedPlayer) {
         connectedPlayers = connectedPlayers.add(connectedPlayer);
-        if(!connectedPlayers.areBothConnected()) {
+        if (!connectedPlayers.areBothConnected()) {
             return createPlayerWaitingForOpponentStatus();
         } else {
             return createTwoPlayersConnectedStatus();
@@ -79,7 +83,7 @@ class GameService {
                 BOARD_HEIGHT, BOARD_WIDTH, connectedPlayers.names(), connectedPlayers.ids());
         this.gameRoom = new GameRoom(gameSettings);
         var roomId = gameRooms.addRoom(gameRoom);
-        //TODO refactor Optionals
+        // TODO refactor Optionals
         var connectionStatus = new ConnectionStatus("Players paired.",
                 roomId,
                 connectedPlayers.firstOneConnected().get().sessionId(),
@@ -90,6 +94,11 @@ class GameService {
                 connectedPlayers.firstOneConnected().get().name(),
                 connectedPlayers.secondOneConnected().get().name(),
                 Event.CONNECT);
+                
+        Logger.log(Log.Level.INFO, this.getClass(), "Players  %s | %s  started new game in room %s.".formatted(
+                connectedPlayers.firstOneConnected().get().name(), connectedPlayers.secondOneConnected().get().name(),
+                roomId));
+
         clearConnectedPlayersAfterPairing();
         return connectionStatus;
     }
