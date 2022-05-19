@@ -11,6 +11,7 @@ import org.wildhamsters.battleships.play.MatchStatisticsRepository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
@@ -81,7 +82,7 @@ class GameService {
     ConnectionStatus createPlayerWaitingForOpponentStatus() {
         return new ConnectionStatus("No opponents for now",
                 null,
-                connectedPlayers.firstOneConnected().get().sessionId(), null,
+                connectedPlayers.firstOneConnected().sessionId(), null,
                 null, null,
                 null, null,
                 null, Event.CONNECT);
@@ -99,13 +100,13 @@ class GameService {
         //TODO refactor Optionals
          var connectionStatus = new ConnectionStatus("Players paired.",
                 roomId,
-                connectedPlayers.firstOneConnected().get().sessionId(),
+                connectedPlayers.firstOneConnected().sessionId(),
                 gameSettings.firstPlayersFleet().get().getFleetPositions(),
-                connectedPlayers.secondOneConnected().get().sessionId(),
+                connectedPlayers.secondOneConnected().sessionId(),
                 gameSettings.secondPlayersFleet().get().getFleetPositions(),
-                connectedPlayers.firstOneConnected().get().name(),
-                connectedPlayers.firstOneConnected().get().name(),
-                connectedPlayers.secondOneConnected().get().name(),
+                connectedPlayers.firstOneConnected().name(),
+                connectedPlayers.firstOneConnected().name(),
+                connectedPlayers.secondOneConnected().name(),
                 Event.CONNECT);
         clearConnectedPlayersAfterPairing();
         return connectionStatus;
@@ -120,13 +121,13 @@ class GameService {
         //TODO refactor Optionals
         var connectionStatus = new ConnectionStatus("Players paired.",
                 roomId,
-                connectedPlayers.firstOneConnected().get().sessionId(),
+                connectedPlayers.firstOneConnected().sessionId(),
                 gameSettings.firstPlayersFleet().get().getFleetPositions(),
-                connectedPlayers.secondOneConnected().get().sessionId(),
+                connectedPlayers.secondOneConnected().sessionId(),
                 gameSettings.secondPlayersFleet().get().getFleetPositions(),
-                connectedPlayers.firstOneConnected().get().name(),
-                connectedPlayers.firstOneConnected().get().name(),
-                connectedPlayers.secondOneConnected().get().name(),
+                connectedPlayers.firstOneConnected().name(),
+                connectedPlayers.firstOneConnected().name(),
+                connectedPlayers.secondOneConnected().name(),
                 Event.CONNECT);
         clearConnectedPlayersAfterPairing();
         this.connectionStatus = connectionStatus;
@@ -135,6 +136,11 @@ class GameService {
 
     ConnectionStatus getConnectionStatus() {
         while (flag.get() == false) {
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
         flag.set(false);
         return this.connectionStatus;
