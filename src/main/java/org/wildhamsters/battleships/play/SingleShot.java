@@ -68,13 +68,13 @@ class SingleShot {
     private boolean isWinner() {
         boolean result = enemy.isLost();
         if (result) {
-            matchStatistics.setFinishTime();
             matchResult.setWinner(current);
         }
         return result;
     }
 
     MatchStatistics getMatchStatistics() {
+        matchStatistics.setFinishTime();
         return matchStatistics;
     }
 }
