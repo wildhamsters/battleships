@@ -18,7 +18,7 @@ public class GameConfigurer {
         private final String resourceUrl;
 
         public GameConfigurer(String shipPlacementUrl) {
-                resourceUrl= shipPlacementUrl;
+                resourceUrl = shipPlacementUrl;
         }
 
         public GameSettings createConfiguration(List<Integer> shipSizesToBePlaced,
