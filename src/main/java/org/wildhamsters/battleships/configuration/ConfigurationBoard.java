@@ -93,7 +93,7 @@ class ConfigurationBoard {
         return sb.toString();
     }
 
-    private enum FieldState {
+    enum FieldState {
         WATER("."), WALL("*"), SHIP("#");
 
         private final String representation;
@@ -105,5 +105,13 @@ class ConfigurationBoard {
         public String toString() {
             return representation;
         }
+    }
+
+    int getBoardSize() {
+        return board.size();
+    }
+
+    FieldState getFieldStateAtPosition(int position) {
+        return board.get(position);
     }
 }
