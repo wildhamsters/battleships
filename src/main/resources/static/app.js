@@ -225,7 +225,8 @@ var currentTurnPlayer;
 
 function processConnectMessage(response) {
     roomId=response.roomId;
-    document.getElementById("playerSpan").innerText=(response.startingPlayerName + " starts");
+    //document.getElementById("playerSpan").innerText=(response.startingPlayerName + " starts");
+    splitPlayerSpan(response.startingPlayerName + " starts");
     var myTurn = (sessionId==response.playerOneSessionId);
 
     lastShootingPlayer = response.playerOneSessionId;
@@ -244,6 +245,13 @@ function processConnectMessage(response) {
     highlightBoard(myTurn);
 }
 
+function splitPlayerSpan(text) {
+    var split = "";
+    for (var i = 0; i < text.length; i++) {
+        split += "<span style='--i:" + i + "'>" + text.charAt(i) + "</span>";
+    }
+    document.getElementById("playerSpan").innerHTML=split;
+}
 
 function processGameplayMessage(response) {
     if (response.error != "") {
@@ -267,7 +275,8 @@ function processGameplayMessage(response) {
 
     lastShootingPlayer = response.currentTurnPlayer;
     currentTurnPlayer = response.currentTurnPlayer;
-    document.getElementById("playerSpan").innerHTML = "Now plays: " + response.currentTurnPlayerName;
+    //document.getElementById("playerSpan").innerHTML = "Now plays: " + response.currentTurnPlayerName;
+    splitPlayerSpan("Now plays: " + response.currentTurnPlayerName);
 
 
     var myTurn = (sessionId == response.currentTurnPlayer);
