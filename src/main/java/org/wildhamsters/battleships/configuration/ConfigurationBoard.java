@@ -106,12 +106,4 @@ class ConfigurationBoard {
             return representation;
         }
     }
-
-    int getBoardSize() {
-        return board.size();
-    }
-
-    FieldState getFieldStateAtPosition(int position) {
-        return board.get(position);
-    }
 }
