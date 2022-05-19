@@ -93,7 +93,7 @@ class ConfigurationBoard {
         return sb.toString();
     }
 
-    enum FieldState {
+    private enum FieldState {
         WATER("."), WALL("*"), SHIP("#");
 
         private final String representation;
