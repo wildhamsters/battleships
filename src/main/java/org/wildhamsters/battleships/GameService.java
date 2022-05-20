@@ -71,7 +71,7 @@ class GameService {
     private ConnectionStatus createPlayerWaitingForOpponentStatus() {
         return new ConnectionStatus("No opponents for now",
                 null,
-                connectedPlayers.firstOneConnected().get().sessionId(), null,
+                connectedPlayers.firstOneConnected().sessionId(), null,
                 null, null,
                 null, null,
                 null, Event.CONNECT);
@@ -85,17 +85,17 @@ class GameService {
         // TODO refactor Optionals
         var connectionStatus = new ConnectionStatus("Players paired.",
                 roomId,
-                connectedPlayers.firstOneConnected().get().sessionId(),
-                gameSettings.firstPlayersFleet().get().getFleetPositions(),
-                connectedPlayers.secondOneConnected().get().sessionId(),
-                gameSettings.secondPlayersFleet().get().getFleetPositions(),
-                connectedPlayers.firstOneConnected().get().name(),
-                connectedPlayers.firstOneConnected().get().name(),
-                connectedPlayers.secondOneConnected().get().name(),
+                connectedPlayers.firstOneConnected().sessionId(),
+                gameSettings.firstPlayersFleet().getFleetPositions(),
+                connectedPlayers.secondOneConnected().sessionId(),
+                gameSettings.secondPlayersFleet().getFleetPositions(),
+                connectedPlayers.firstOneConnected().name(),
+                connectedPlayers.firstOneConnected().name(),
+                connectedPlayers.secondOneConnected().name(),
                 Event.CONNECT);
                 
         Logger.log(Log.Level.INFO, this.getClass(), "Players  %s | %s  started new game in room %s.".formatted(
-                connectedPlayers.firstOneConnected().get().name(), connectedPlayers.secondOneConnected().get().name(),
+                connectedPlayers.firstOneConnected().name(), connectedPlayers.secondOneConnected().name(),
                 roomId));
 
         clearConnectedPlayersAfterPairing();

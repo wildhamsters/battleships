@@ -13,12 +13,12 @@ import java.util.Optional;
  */
 public record GameSettings(List<PlayerSettings> playerSettings) {
 
-    public Optional<Fleet> firstPlayersFleet() {
-        return !playerSettings.isEmpty() ? Optional.of(playerSettings.get(0).fleet()) : Optional.empty();
+    public Fleet firstPlayersFleet() {
+        return playerSettings.get(0).fleet();
     }
 
-    public Optional<Fleet> secondPlayersFleet() {
-        return !playerSettings.isEmpty() ? Optional.of(playerSettings.get(1).fleet) : Optional.empty();
+    public Fleet secondPlayersFleet() {
+        return playerSettings.get(1).fleet();
     }
 
     /**

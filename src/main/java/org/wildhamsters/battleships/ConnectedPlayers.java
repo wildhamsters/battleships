@@ -15,12 +15,12 @@ class ConnectedPlayers {
         this.players = players;
     }
 
-    Optional<ConnectedPlayer> firstOneConnected() {
-        return players.size() > 0 ? Optional.of(players.get(0)) : Optional.empty();
+    ConnectedPlayer firstOneConnected() {
+        return players.get(0);
     }
 
-    Optional<ConnectedPlayer> secondOneConnected() {
-        return players.size() > 1 ? Optional.of(players.get(1)) : Optional.empty();
+    ConnectedPlayer secondOneConnected() {
+        return players.get(1);
     }
 
     List<String> names() {
