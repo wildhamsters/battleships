@@ -141,14 +141,24 @@ function unhoverMany(startId, cellsCount, direction) {//todo make direction
 
 function winner() {
 	new Audio('audio/win.wav').play();
-	document.body.innerHTML = "<img src='https://c.tenor.com/D-pLzJqzkKcAAAAC/winner-wrestling.gif' alt='YOU WON!' />";
-    document.body.className = "centered";
+	let page = document.getElementById("page");
+	page.innerHTML = "<img src='https://c.tenor.com/D-pLzJqzkKcAAAAC/winner-wrestling.gif' alt='YOU WON!' />";
+    page.className = "centered";
+    changeGiveUpButtonToMenu();
 }
 
 function lose() {
     new Audio('audio/lose.wav').play();
-    document.body.innerHTML = "<img src='https://media.giphy.com/media/l2Je3n9VXC8z3baTe/giphy.gif' alt='YOU LOST!' />";
-    document.body.className = "centered";
+    let page = document.getElementById("page");
+    page.innerHTML = "<img src='https://media.giphy.com/media/l2Je3n9VXC8z3baTe/giphy.gif' alt='YOU LOST!' />";
+    page.className = "centered";
+    changeGiveUpButtonToMenu();
+}
+
+function changeGiveUpButtonToMenu() {
+    let giveUpButton =  document.getElementById("giveUp")
+    giveUpButton.innerText="MENU";
+    giveUpButton.onclick=function() {window.location.replace("/welcome")};
 }
 
 function changeDOMClassName(elementId, className) {
@@ -215,7 +225,8 @@ var currentTurnPlayer;
 
 function processConnectMessage(response) {
     roomId=response.roomId;
-    document.getElementById("playerSpan").innerText=(response.startingPlayerName + " starts");
+    //document.getElementById("playerSpan").innerText=(response.startingPlayerName + " starts");
+    splitPlayerSpan(response.startingPlayerName + " starts");
     var myTurn = (sessionId==response.playerOneSessionId);
 
     lastShootingPlayer = response.playerOneSessionId;
@@ -234,6 +245,13 @@ function processConnectMessage(response) {
     highlightBoard(myTurn);
 }
 
+function splitPlayerSpan(text) {
+    var split = "";
+    for (var i = 0; i < text.length; i++) {
+        split += "<span style='--i:" + i + "'>" + text.charAt(i) + "</span>";
+    }
+    document.getElementById("playerSpan").innerHTML=split;
+}
 
 function processGameplayMessage(response) {
     if (response.error != "") {
@@ -257,7 +275,8 @@ function processGameplayMessage(response) {
 
     lastShootingPlayer = response.currentTurnPlayer;
     currentTurnPlayer = response.currentTurnPlayer;
-    document.getElementById("playerSpan").innerHTML = "Now plays: " + response.currentTurnPlayerName;
+    //document.getElementById("playerSpan").innerHTML = "Now plays: " + response.currentTurnPlayerName;
+    splitPlayerSpan("Now plays: " + response.currentTurnPlayerName);
 
 
     var myTurn = (sessionId == response.currentTurnPlayer);

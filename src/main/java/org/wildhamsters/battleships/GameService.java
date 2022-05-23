@@ -1,20 +1,21 @@
 package org.wildhamsters.battleships;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
 import org.wildhamsters.battleships.play.GameRoom;
 import org.wildhamsters.battleships.play.GameRooms;
+import org.wildhamsters.battleships.play.MatchStatisticsEntity;
 import org.wildhamsters.battleships.play.MatchStatisticsEntityMapper;
 import org.wildhamsters.battleships.play.MatchStatisticsRepository;
-
-import java.util.ArrayList;
-import java.util.List;
-
 
 //TODO refactor this class
 /**
  * Main entry point to the game.
- * Manages connection of players and handles interactions between players and a game.
+ * Manages connection of players and handles interactions between players and a
+ * game.
  *
  * @author Dominik Żebracki
  */
@@ -29,12 +30,12 @@ class GameService {
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
     private final GameConfigurer gameConfigurer;
-    private MatchStatisticsRepository matchStatisticsRepository;
+    private final MatchStatisticsRepository matchStatisticsRepository;
 
     GameService(MatchStatisticsRepository matchStatisticsRepository) {
         this.gameRoom = null;
         this.connectedPlayers = new ConnectedPlayers(new ArrayList<>());
-        this.gameConfigurer = new GameConfigurer();
+        this.gameConfigurer = new GameConfigurer("https://protected-stream-19238.herokuapp.com/placeShips");
         this.matchStatisticsRepository = matchStatisticsRepository;
     }
 
@@ -47,7 +48,7 @@ class GameService {
      */
     ConnectionStatus processConnectingPlayers(ConnectedPlayer connectedPlayer) {
         connectedPlayers = connectedPlayers.add(connectedPlayer);
-        if(!connectedPlayers.areBothConnected()) {
+        if (!connectedPlayers.areBothConnected()) {
             return createPlayerWaitingForOpponentStatus();
         } else {
             return createTwoPlayersConnectedStatus();
@@ -62,8 +63,7 @@ class GameService {
     Result shoot(String roomId, int position) {
         Result result = gameRooms.findRoom(roomId).makeShot(position);
         if (result.finished()) {
-            matchStatisticsRepository.save(
-                    new MatchStatisticsEntityMapper().map(gameRooms.findRoom(roomId).getMatchStatistics()));
+            saveMatchStatistics(roomId);
         }
         return result;
     }
@@ -71,7 +71,7 @@ class GameService {
     private ConnectionStatus createPlayerWaitingForOpponentStatus() {
         return new ConnectionStatus("No opponents for now",
                 null,
-                connectedPlayers.firstOneConnected().get().sessionId(), null,
+                connectedPlayers.firstOneConnected().sessionId(), null,
                 null, null,
                 null, null,
                 null, Event.CONNECT);
@@ -82,17 +82,22 @@ class GameService {
                 BOARD_HEIGHT, BOARD_WIDTH, connectedPlayers.names(), connectedPlayers.ids());
         this.gameRoom = new GameRoom(gameSettings);
         var roomId = gameRooms.addRoom(gameRoom);
-        //TODO refactor Optionals
-         var connectionStatus = new ConnectionStatus("Players paired.",
+        // TODO refactor Optionals
+        var connectionStatus = new ConnectionStatus("Players paired.",
                 roomId,
-                connectedPlayers.firstOneConnected().get().sessionId(),
-                gameSettings.firstPlayersFleet().get().getFleetPositions(),
-                connectedPlayers.secondOneConnected().get().sessionId(),
-                gameSettings.secondPlayersFleet().get().getFleetPositions(),
-                connectedPlayers.firstOneConnected().get().name(),
-                connectedPlayers.firstOneConnected().get().name(),
-                connectedPlayers.secondOneConnected().get().name(),
+                connectedPlayers.firstOneConnected().sessionId(),
+                gameSettings.firstPlayersFleet().getFleetPositions(),
+                connectedPlayers.secondOneConnected().sessionId(),
+                gameSettings.secondPlayersFleet().getFleetPositions(),
+                connectedPlayers.firstOneConnected().name(),
+                connectedPlayers.firstOneConnected().name(),
+                connectedPlayers.secondOneConnected().name(),
                 Event.CONNECT);
+                
+        Logger.log(Log.Level.INFO, this.getClass(), "Players  %s | %s  started new game in room %s.".formatted(
+                connectedPlayers.firstOneConnected().name(), connectedPlayers.secondOneConnected().name(),
+                roomId));
+
         clearConnectedPlayersAfterPairing();
         return connectionStatus;
     }
@@ -106,11 +111,23 @@ class GameService {
         String winnerMessage = "The opponent gave up. You won!";
         try {
             var winnerSessionId = gameRooms.findRoom(roomId).findSurrenderPlayerOpponent(surrenderPlayerSessionId);
+            saveMatchStatistics(roomId);
             return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, winnerSessionId,
                     surrenderMessage, winnerMessage);
         } catch (IllegalArgumentException e) {
             return new SurrenderResult(Event.SURRENDER, surrenderPlayerSessionId, null,
                     surrenderMessage, winnerMessage);
         }
+    }
+
+    List<MatchStatisticsEntity> findAllStatistics() {
+        var stats = new ArrayList<MatchStatisticsEntity>();
+        matchStatisticsRepository.findAll().forEach(stats::add);
+        return stats;
+    }
+
+    private void saveMatchStatistics(String roomId) {
+        matchStatisticsRepository.save(
+                new MatchStatisticsEntityMapper().map(gameRooms.findRoom(roomId).getMatchStatistics()));
     }
 }

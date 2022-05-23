@@ -4,12 +4,12 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="shortcut icon" href="https://img.icons8.com/external-justicon-flat-justicon/344/external-ship-pirates-justicon-flat-justicon.png">
-	<link href="stylesheet.css" rel="stylesheet">
+	<link href="css/index.css" rel="stylesheet">
 	<title>BATTLESHIPS GAME</title>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
 	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
-	<script src="app.js" defer></script>
+	<script src="js/index.js" defer></script>
 </head>
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
@@ -21,28 +21,30 @@
 	<span id="name"></span>
 </div>
 
-<div id="boards">
-	<div id="leftSide">
-		<p>Your board</p>
-		<div id="player" class="board">
-			<table id="playerBoard"></table>
-			<span id="playerSpan">WAIT NOW</span>
+<div id="page">
+	<div id="boards">
+		<div id="leftSide">
+			<p>Your board</p>
+			<div id="player" class="board">
+				<table id="playerBoard"></table>
+				<span id="playerSpan">WAIT NOW</span>
+			</div>
 		</div>
-	</div>
-	
-	<div id="rightSide">
-		<p>The opponent's board</p>
-		<div id="opponent" class="board">
-			<table id="opponentBoard"></table>
-			<span> </span>
-		</div>
-	</div>
-	<div id="status"></div>
-</div>
 
-<button type="button" class="collapsible">Moves list</button>
-<div class="content">
-	<ol id="loglist"></ol>
+		<div id="rightSide">
+			<p>The opponent's board</p>
+			<div id="opponent" class="board">
+				<table id="opponentBoard"></table>
+				<span> </span>
+			</div>
+		</div>
+		<div id="status"></div>
+	</div>
+
+	<button type="button" class="collapsible">Moves list</button>
+	<div class="content">
+		<ol id="loglist"></ol>
+	</div>
 </div>
 
 <p class="tooltip">&#9432;

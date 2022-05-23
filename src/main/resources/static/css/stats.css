@@ -1,0 +1,72 @@
+div {
+	margin: 4px;
+}
+
+#statsDiv {
+	display: flex;
+  justify-content: center;
+}
+
+caption {
+	color: #009879;
+}
+
+table {
+	border-collapse: collapse;
+	font-size: 0.8vw;
+	font-family: sans-serif;
+	box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+}
+
+th {
+	background-color: #009879;
+	color: #ffffff;
+}
+
+th, td {
+	padding: 12px 15px;
+	width: 14vw;
+	max-width: 14vw;
+}
+
+tr:nth-of-type(even) {
+    background-color: #f3f3f3;
+}
+
+tr:last-of-type {
+    border-bottom: 2px solid #009879;
+}
+
+tr {
+	transition: 1.5s;
+	transition-property: background-color;
+}
+
+tr:hover {
+	font-weight: bold;
+	color: #009879;
+	background-color: #c9f5ed;
+}
+
+button {
+  border-color: blue;
+  color: #fff;
+  box-shadow: 0 0 40px 40px #3498db inset, 0 0 0 0 #3498db;
+  transition: all 150ms ease-in-out;
+  border-radius: 10px;
+  width: 10vw;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: 2px solid;
+  border-radius: 0.6em;
+  cursor: pointer;
+  align-self: center;
+  padding: 1.2vw 2.8vh;
+  font-family: sans-serif;
+  font-weight: 700;
+}
+
+button:hover {
+  box-shadow: 0 0 10px 0 #009879 inset, 0 0 10px 4px #009879;
+  color: #009879;
+}
