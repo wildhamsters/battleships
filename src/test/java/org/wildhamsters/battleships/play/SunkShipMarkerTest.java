@@ -8,7 +8,10 @@ import org.wildhamsters.battleships.fleet.Fleet;
 import org.wildhamsters.battleships.fleet.ShipPosition;
 import org.wildhamsters.battleships.fleet.ShipsPositions;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static org.testng.Assert.assertEquals;
 

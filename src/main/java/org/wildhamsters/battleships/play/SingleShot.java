@@ -1,11 +1,10 @@
 package org.wildhamsters.battleships.play;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import org.wildhamsters.battleships.Event;
 import org.wildhamsters.battleships.Result;
 import org.wildhamsters.battleships.board.FieldState;
+
+import java.util.List;
 
 /**
  * Contains both players. Indicate which is current (making shot) and which is enemy (fire upon).
@@ -15,10 +14,10 @@ import org.wildhamsters.battleships.board.FieldState;
  */
 class SingleShot {
 
-    private Player current;
-    private Player enemy;
     private final MatchStatistics matchStatistics;
     private final MatchResult matchResult;
+    private Player current;
+    private Player enemy;
 
     // Constructor for testing.
     SingleShot(Player current, Player enemy) {

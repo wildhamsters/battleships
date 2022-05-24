@@ -1,12 +1,12 @@
 package org.wildhamsters.battleships;
 
-import static org.testng.Assert.assertTrue;
+import org.testng.annotations.Test;
+import org.testng.asserts.SoftAssert;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
+import static org.testng.Assert.assertTrue;
 
 public class ConnectedPlayersTests {
     @Test
@@ -29,7 +29,7 @@ public class ConnectedPlayersTests {
         List<String> playersNames = connectedPlayers.names();
         sa.assertTrue(playersNames.contains("playerOne"));
         sa.assertTrue(playersNames.contains("playerTwo"));
-        sa.assertEquals(connectedPlayers.ids(), List.of("idRoom","idRoom"));
+        sa.assertEquals(connectedPlayers.ids(), List.of("idRoom", "idRoom"));
         sa.assertAll();
 
     }

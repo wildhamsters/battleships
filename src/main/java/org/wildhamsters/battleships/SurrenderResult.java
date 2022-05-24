@@ -7,4 +7,5 @@ record SurrenderResult(Event event,
                        String surrenderPlayerSessionId,
                        String winPlayerSessionId,
                        String surrenderMessage,
-                       String winnerMessage) {}
+                       String winnerMessage) {
+}

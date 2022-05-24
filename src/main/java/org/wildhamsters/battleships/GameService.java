@@ -1,17 +1,14 @@
 package org.wildhamsters.battleships;
 
+import org.springframework.stereotype.Service;
+import org.wildhamsters.battleships.configuration.GameConfigurer;
+import org.wildhamsters.battleships.play.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-import org.wildhamsters.battleships.configuration.GameConfigurer;
-import org.wildhamsters.battleships.play.GameRoom;
-import org.wildhamsters.battleships.play.GameRooms;
-import org.wildhamsters.battleships.play.MatchStatisticsEntity;
-import org.wildhamsters.battleships.play.MatchStatisticsEntityMapper;
-import org.wildhamsters.battleships.play.MatchStatisticsRepository;
-
 //TODO refactor this class
+
 /**
  * Main entry point to the game.
  * Manages connection of players and handles interactions between players and a
@@ -27,10 +24,10 @@ class GameService {
     private static final int BOARD_HEIGHT = 10;
 
     private final GameRooms gameRooms = new GameRooms();
-    private GameRoom gameRoom;
-    private ConnectedPlayers connectedPlayers;
     private final GameConfigurer gameConfigurer;
     private final MatchStatisticsRepository matchStatisticsRepository;
+    private GameRoom gameRoom;
+    private ConnectedPlayers connectedPlayers;
 
     GameService(MatchStatisticsRepository matchStatisticsRepository) {
         this.gameRoom = null;
@@ -56,7 +53,6 @@ class GameService {
     }
 
     /**
-     *
      * @param position of a shot on the board.
      * @return result of the shot.
      */
@@ -93,7 +89,7 @@ class GameService {
                 connectedPlayers.firstOneConnected().name(),
                 connectedPlayers.secondOneConnected().name(),
                 Event.CONNECT);
-                
+
         Logger.log(Log.Level.INFO, this.getClass(), "Players  %s | %s  started new game in room %s.".formatted(
                 connectedPlayers.firstOneConnected().name(), connectedPlayers.secondOneConnected().name(),
                 roomId));

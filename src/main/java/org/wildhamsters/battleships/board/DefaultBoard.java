@@ -8,6 +8,7 @@ import java.util.stream.IntStream;
 
 //TODO board is hardcoded to be of size 100. Change it whole application supports it.
 // Change representation to map.
+
 /**
  * @author Dominik Żebracki
  */
@@ -63,10 +64,10 @@ class DefaultBoard implements Board {
     @Override
     public String toString() {
         var sb = new StringBuilder();
-        IntStream.range(1, board.size()+1)
+        IntStream.range(1, board.size() + 1)
                 .forEach(i -> {
                     sb.append(board.get(i - 1).toString()).append(" ");
-                    if(i % 10 == 0) {
+                    if (i % 10 == 0) {
                         sb.append(System.lineSeparator());
                     }
                 });

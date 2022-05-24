@@ -1,9 +1,9 @@
 package org.wildhamsters.battleships.configuration;
 
-import java.util.List;
-
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import java.util.List;
 
 public class ConfigurationIT {
 

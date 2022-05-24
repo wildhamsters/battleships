@@ -1,9 +1,9 @@
 package org.wildhamsters.battleships.fleet;
 
-import static org.testng.Assert.assertEquals;
-
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import static org.testng.Assert.assertEquals;
 
 public class ShipTests {
 
