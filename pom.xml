@@ -27,13 +27,16 @@
         <maven.dependency.plugin.version>3.3.0</maven.dependency.plugin.version>
         <maven.jacoco.plugin>0.8.7</maven.jacoco.plugin>
         <testng.version>7.5</testng.version>
-	<sockjs.client.version>1.0.2</sockjs.client.version>
-	<stomp.websocket.version>2.3.3</stomp.websocket.version>
-	<bootstrap.version>3.3.7</bootstrap.version>
-	<jquery.version>3.1.1-1</jquery.version>
+        <sockjs.client.version>1.0.2</sockjs.client.version>
+        <stomp.websocket.version>2.3.3</stomp.websocket.version>
+        <bootstrap.version>3.3.7</bootstrap.version>
+        <jquery.version>3.1.1-1</jquery.version>
         <spring.security.config.version>5.6.3</spring.security.config.version>
         <spring.security.web.version>5.6.3</spring.security.web.version>
         <postgresql.version>42.3.4</postgresql.version>
+        <spotbugs.version>4.7.0</spotbugs.version>
+        <maven-pmd-plugin.version>3.16.0</maven-pmd-plugin.version>
+        <spotbugs-maven-plugin.version>4.7.0.0</spotbugs-maven-plugin.version>
     </properties>
     <dependencies>
         <dependency>
@@ -89,42 +92,85 @@
             <artifactId>spring-boot-starter-data-jpa</artifactId>
         </dependency>
 
-	<dependency>
-		<groupId>org.springframework.boot</groupId>
-		<artifactId>spring-boot-starter-tomcat</artifactId>
-	</dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-tomcat</artifactId>
+        </dependency>
 
-	<dependency>
-		<groupId>org.webjars</groupId>
-		<artifactId>webjars-locator-core</artifactId>
-	</dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>webjars-locator-core</artifactId>
+        </dependency>
 
-	<dependency>
-		<groupId>org.webjars</groupId>
-		<artifactId>sockjs-client</artifactId>
-		<version>${sockjs.client.version}</version>
-	</dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>sockjs-client</artifactId>
+            <version>${sockjs.client.version}</version>
+        </dependency>
 
-	<dependency>
-		<groupId>org.webjars</groupId>
-		<artifactId>stomp-websocket</artifactId>
-		<version>${stomp.websocket.version}</version>
-	</dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>stomp-websocket</artifactId>
+            <version>${stomp.websocket.version}</version>
+        </dependency>
 
-	<dependency>
-		<groupId>org.webjars</groupId>
-		<artifactId>bootstrap</artifactId>
-		<version>${bootstrap.version}</version>
-	</dependency>
-    <dependency>
-        <groupId>org.postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <version>${postgresql.version}</version>
-    </dependency>
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>bootstrap</artifactId>
+            <version>${bootstrap.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>${postgresql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.jcip</groupId>
+            <artifactId>jcip-annotations</artifactId>
+            <version>1.0</version>
+            <optional>true</optional>
+        </dependency>
+
+        <dependency>
+            <groupId>com.github.spotbugs</groupId>
+            <artifactId>spotbugs</artifactId>
+            <version>${spotbugs.version}</version>
+        </dependency>
 	</dependencies>
 	
     <build>
         <plugins>
+            <plugin>
+                <groupId>com.github.spotbugs</groupId>
+                <artifactId>spotbugs-maven-plugin</artifactId>
+                <version>${spotbugs-maven-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>spotbugs</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>check</goal>
+                            <goal>spotbugs</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-pmd-plugin</artifactId>-->
+<!--                <version>${maven-pmd-plugin.version}</version>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <id>pmd</id>-->
+<!--                        <phase>verify</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>check</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin}</version>

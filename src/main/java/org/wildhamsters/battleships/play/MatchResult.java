@@ -1,11 +1,17 @@
 package org.wildhamsters.battleships.play;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 /**
  * @author Piotr Chowaniec
  */
+@SuppressFBWarnings(
+        value = "URF_UNREAD_FIELD",
+        justification = "Can't fix that for now"
+)
 class MatchResult {
 
-    //TODO  winner's left fleet
+    // TODO  winner's left fleet
     private final String gameId;
     private final Player playerOne;
     private final Player playerTwo;

@@ -1,5 +1,8 @@
 package org.wildhamsters.battleships.play;
 
+import java.time.LocalDateTime;
+import java.util.List;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.wildhamsters.battleships.Event;
 import org.wildhamsters.battleships.Result;
 import org.wildhamsters.battleships.board.FieldState;
@@ -12,6 +15,10 @@ import java.util.List;
  *
  * @author Piotr Chowaniec
  */
+@SuppressFBWarnings(
+        value = "NP_NULL_PARAM_DEREF",
+        justification = "Can't fix that for now"
+)
 class SingleShot {
 
     private final MatchStatistics matchStatistics;
