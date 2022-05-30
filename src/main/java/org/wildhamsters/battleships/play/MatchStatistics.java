@@ -1,11 +1,12 @@
 package org.wildhamsters.battleships.play;
 
-import org.wildhamsters.battleships.board.FieldState;
-
 import java.time.LocalDateTime;
 
+import org.wildhamsters.battleships.board.FieldState;
+
 /**
- * Gathers data about single match like match id, total number of accurate shots, total number of missed shots,
+ * Gathers data about single match like match id, total number of accurate
+ * shots, total number of missed shots,
  * number of rounds played, time of start and end of the match.
  *
  * @author Piotr Chowaniec
@@ -13,10 +14,10 @@ import java.time.LocalDateTime;
 public class MatchStatistics {
 
     private final String matchId;
+    private final LocalDateTime startTime;
     private int accurateShots = 0;
     private int missedShots = 0;
     private int rounds = 1;
-    private final LocalDateTime startTime;
     private LocalDateTime finishTime;
 
     MatchStatistics(String matchId) {
@@ -37,7 +38,8 @@ public class MatchStatistics {
     }
 
     private void updateRound(FieldState fieldState) {
-        if (fieldState == FieldState.MISSED_SHOT) rounds++;
+        if (fieldState == FieldState.MISSED_SHOT)
+            rounds++;
     }
 
     void setFinishTime() {

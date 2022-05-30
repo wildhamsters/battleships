@@ -1,7 +1,5 @@
 package org.wildhamsters.battleships.fleet;
 
-import org.wildhamsters.battleships.fleet.ShipPosition;
-
 import java.util.ArrayList;
 import java.util.List;
 

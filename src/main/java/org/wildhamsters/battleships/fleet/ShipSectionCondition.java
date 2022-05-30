@@ -5,5 +5,5 @@ package org.wildhamsters.battleships.fleet;
  */
 enum ShipSectionCondition {
     UNTOUCHED,
-    DAMAGED;
+    DAMAGED
 }

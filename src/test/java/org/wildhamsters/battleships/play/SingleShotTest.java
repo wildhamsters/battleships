@@ -1,12 +1,5 @@
 package org.wildhamsters.battleships.play;
 
-import static org.testng.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.wildhamsters.battleships.Event;
@@ -17,12 +10,19 @@ import org.wildhamsters.battleships.fleet.Fleet;
 import org.wildhamsters.battleships.fleet.ShipPosition;
 import org.wildhamsters.battleships.fleet.ShipsPositions;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import static org.testng.Assert.assertEquals;
+
 @Test
 public class SingleShotTest {
 
     @Test(dataProvider = "notSinkingShip")
     public void shouldReturnOneFieldResult_whenShipIsNotSinking(Player playerOne, Player playerTwo, int position,
-            Result expected) {
+                                                                Result expected) {
         // // Given
         SingleShot singleShot = new SingleShot(playerOne, playerTwo);
         // // When
@@ -35,17 +35,17 @@ public class SingleShotTest {
     private Object[][] notSinkingShip() {
         Player playerOne = Player.of("1", "Player One", Board.create(), new Fleet());
         Player playerTwo = Player.of("2", "Player Two", prepareBoard(), prepareFleet());
-        return new Object[][] {
-                { playerOne, playerTwo, 1, prepareResult(new HashMap<>(Map.of(1, FieldState.ACCURATE_SHOT)),
-                        "1", "Player One", "2") },
-                { playerOne, playerTwo, 62, prepareResult(new HashMap<>(Map.of(62, FieldState.ACCURATE_SHOT)),
-                        "1", "Player One", "2") }
+        return new Object[][]{
+                {playerOne, playerTwo, 1, prepareResult(new HashMap<>(Map.of(1, FieldState.ACCURATE_SHOT)),
+                        "1", "Player One", "2")},
+                {playerOne, playerTwo, 62, prepareResult(new HashMap<>(Map.of(62, FieldState.ACCURATE_SHOT)),
+                        "1", "Player One", "2")}
         };
     }
 
     @Test(dataProvider = "sinkingShip")
     public void shouldReturnMultiFieldResult_whenShipIsSinking(Player playerOne, Player playerTwo, int position,
-            Result expected) {
+                                                               Result expected) {
         // Given
         SingleShot singleShot = new SingleShot(playerOne, playerTwo);
         // When
@@ -59,21 +59,21 @@ public class SingleShotTest {
     private Object[][] sinkingShip() {
         Player playerOne = Player.of("1", "Player One", Board.create(), new Fleet());
         Player playerTwo = Player.of("2", "Player Two", prepareBoard(), prepareFleet());
-        return new Object[][] {
-                { playerOne, playerTwo, 43, prepareResult(new HashMap<>(Map.of(43, FieldState.ACCURATE_SHOT,
-                        32, FieldState.MISSED_SHOT, 33, FieldState.MISSED_SHOT, 42, FieldState.MISSED_SHOT,
-                        52, FieldState.MISSED_SHOT, 53, FieldState.MISSED_SHOT)),
-                        "1", "Player One", "2", 43) },
-                { playerOne, playerTwo, 89, prepareResult(new HashMap<>(Map.of(89, FieldState.ACCURATE_SHOT,
-                        58, FieldState.MISSED_SHOT, 68, FieldState.MISSED_SHOT, 88, FieldState.MISSED_SHOT,
-                        98, FieldState.MISSED_SHOT, 99, FieldState.MISSED_SHOT)),
-                        "1", "Player One", "2", 69, 79, 89) }
+        return new Object[][]{
+                {playerOne, playerTwo, 43, prepareResult(new HashMap<>(Map.of(43, FieldState.ACCURATE_SHOT,
+                                32, FieldState.MISSED_SHOT, 33, FieldState.MISSED_SHOT, 42, FieldState.MISSED_SHOT,
+                                52, FieldState.MISSED_SHOT, 53, FieldState.MISSED_SHOT)),
+                        "1", "Player One", "2", 43)},
+                {playerOne, playerTwo, 89, prepareResult(new HashMap<>(Map.of(89, FieldState.ACCURATE_SHOT,
+                                58, FieldState.MISSED_SHOT, 68, FieldState.MISSED_SHOT, 88, FieldState.MISSED_SHOT,
+                                98, FieldState.MISSED_SHOT, 99, FieldState.MISSED_SHOT)),
+                        "1", "Player One", "2", 69, 79, 89)}
         };
     }
 
     @Test(dataProvider = "missedShot")
     public void shouldReturnSingleFieldResult_whenMissedShot(Player playerOne, Player playerTwo, int position,
-            Result expected) {
+                                                             Result expected) {
         // Given
         SingleShot singleShot = new SingleShot(playerOne, playerTwo);
         // When
@@ -86,15 +86,15 @@ public class SingleShotTest {
     private Object[][] missedShot() {
         Player playerOne = Player.of("1", "Player One", prepareBoard(), prepareFleet());
         Player playerTwo = Player.of("2", "Player Two", prepareBoard(), prepareFleet());
-        return new Object[][] {
-                { playerOne, playerTwo, 0, prepareResult(new HashMap<>(Map.of(0, FieldState.MISSED_SHOT)),
-                        "2", "Player Two", "1") },
-                { playerOne, playerTwo, 9, prepareResult(new HashMap<>(Map.of(9, FieldState.MISSED_SHOT)),
-                        "2", "Player Two", "1") },
-                { playerOne, playerTwo, 90, prepareResult(new HashMap<>(Map.of(90, FieldState.MISSED_SHOT)),
-                        "2", "Player Two", "1") },
-                { playerOne, playerTwo, 99, prepareResult(new HashMap<>(Map.of(99, FieldState.MISSED_SHOT)),
-                        "2", "Player Two", "1") }
+        return new Object[][]{
+                {playerOne, playerTwo, 0, prepareResult(new HashMap<>(Map.of(0, FieldState.MISSED_SHOT)),
+                        "2", "Player Two", "1")},
+                {playerOne, playerTwo, 9, prepareResult(new HashMap<>(Map.of(9, FieldState.MISSED_SHOT)),
+                        "2", "Player Two", "1")},
+                {playerOne, playerTwo, 90, prepareResult(new HashMap<>(Map.of(90, FieldState.MISSED_SHOT)),
+                        "2", "Player Two", "1")},
+                {playerOne, playerTwo, 99, prepareResult(new HashMap<>(Map.of(99, FieldState.MISSED_SHOT)),
+                        "2", "Player Two", "1")}
         };
     }
 
@@ -142,10 +142,10 @@ public class SingleShotTest {
     }
 
     private Result prepareResult(Map<Integer, FieldState> fieldMap,
-            String currentTurnPlayer,
-            String currentTurnPlayerName,
-            String opponent,
-            Integer... sunkShipPositions) {
+                                 String currentTurnPlayer,
+                                 String currentTurnPlayerName,
+                                 String opponent,
+                                 Integer... sunkShipPositions) {
 
         List<Integer> sunkenShipList = (sunkShipPositions.length == 0) ? null : List.of(sunkShipPositions);
         return new Result(

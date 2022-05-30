@@ -12,7 +12,27 @@ import org.wildhamsters.battleships.play.GameRoom;
 import java.util.List;
 
 public class BattleshipsIT {
-    
+
+    static GameRoom createDummyGameRoom(Fleet fleet, Board board) {
+        GameSettings.PlayerSettings ps1 = new GameSettings.PlayerSettings(
+                "001",
+                "Player1",
+                board,
+                fleet
+        );
+
+        GameSettings.PlayerSettings ps2 = new GameSettings.PlayerSettings(
+                "002",
+                "Player2",
+                board,
+                fleet
+        );
+
+        GameSettings settings = new GameSettings(List.of(ps1, ps2));
+
+        return new GameRoom(settings);
+    }
+
     @Test(dataProvider = "fieldListProvider", dataProviderClass = FleetTests.class)
     public void testMakingShotsAndVerifyThatBoardAndFleetProcessShotCorrectly(List<ShipPosition> data) {
         // Given
@@ -39,26 +59,6 @@ public class BattleshipsIT {
         softAssert.assertEquals(testBoard.getField(95), FieldState.MISSED_SHOT);
 
         softAssert.assertAll();
-    }
-
-    static GameRoom createDummyGameRoom(Fleet fleet, Board board) {
-        GameSettings.PlayerSettings ps1 = new GameSettings.PlayerSettings(
-                "001",
-                "Player1",
-                board,
-                fleet
-        );
-
-        GameSettings.PlayerSettings ps2 = new GameSettings.PlayerSettings(
-                "002",
-                "Player2",
-                board,
-                fleet
-        );
-
-        GameSettings settings = new GameSettings(List.of(ps1, ps2));
-
-        return new GameRoom(settings);
     }
 
 }

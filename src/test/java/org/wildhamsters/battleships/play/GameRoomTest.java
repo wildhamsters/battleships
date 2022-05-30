@@ -1,11 +1,5 @@
 package org.wildhamsters.battleships.play;
 
-import static org.testng.Assert.assertEquals;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.wildhamsters.battleships.Event;
@@ -15,6 +9,12 @@ import org.wildhamsters.battleships.board.FieldState;
 import org.wildhamsters.battleships.fleet.Fleet;
 import org.wildhamsters.battleships.fleet.ShipPosition;
 import org.wildhamsters.battleships.fleet.ShipsPositions;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static org.testng.Assert.assertEquals;
 
 @Test
 public class GameRoomTest {
@@ -29,13 +29,13 @@ public class GameRoomTest {
 
     @DataProvider
     private Object[][] resultDtoForGameRoom() {
-        return new Object[][] {
-                { prepareGameRoom(), prepareResult(0, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 0 },
-                { prepareGameRoom(), prepareResult(1, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 1 },
-                { prepareGameRoom(), prepareResult(43, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 43 },
-                { prepareGameRoom(), prepareResult(14, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 14 },
-                { prepareGameRoom(), prepareResult(23, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 23 },
-                { prepareGameRoom(), prepareResult(24, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 24 },
+        return new Object[][]{
+                {prepareGameRoom(), prepareResult(0, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 0},
+                {prepareGameRoom(), prepareResult(1, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 1},
+                {prepareGameRoom(), prepareResult(43, FieldState.ACCURATE_SHOT, "1", "Player One", "2"), 43},
+                {prepareGameRoom(), prepareResult(14, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 14},
+                {prepareGameRoom(), prepareResult(23, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 23},
+                {prepareGameRoom(), prepareResult(24, FieldState.MISSED_SHOT, "2", "Player Two", "1"), 24},
         };
     }
 
