@@ -1,5 +1,7 @@
 package org.wildhamsters.battleships.fleet;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -8,6 +10,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 /**
  * @author Kevin Nowak
  */
+@SuppressFBWarnings(
+        value = "SF_SWITCH_NO_DEFAULT",
+        justification = "Can't fix that for now"
+)
 public class Fleet {
     ShipsMap ships;
     FieldList allTakenFields;

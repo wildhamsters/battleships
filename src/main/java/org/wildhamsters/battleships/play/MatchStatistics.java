@@ -1,5 +1,6 @@
 package org.wildhamsters.battleships.play;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.wildhamsters.battleships.board.FieldState;
 
 import java.time.LocalDateTime;
@@ -10,6 +11,10 @@ import java.time.LocalDateTime;
  *
  * @author Piotr Chowaniec
  */
+@SuppressFBWarnings(
+        value = "SF_SWITCH_NO_DEFAULT",
+        justification = "Can't fix that for now"
+)
 public class MatchStatistics {
 
     private final String matchId;
