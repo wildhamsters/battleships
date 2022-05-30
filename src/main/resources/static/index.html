@@ -1,55 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="shortcut icon" href="https://img.icons8.com/external-justicon-flat-justicon/344/external-ship-pirates-justicon-flat-justicon.png">
-	<link href="css/index.css" rel="stylesheet">
-	<title>BATTLESHIPS GAME</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script src="/webjars/sockjs-client/sockjs.min.js"></script>
-	<script src="/webjars/stomp-websocket/stomp.min.js"></script>
-	<script src="js/index.js" defer></script>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link href="https://img.icons8.com/external-justicon-flat-justicon/344/external-ship-pirates-justicon-flat-justicon.png"
+          rel="shortcut icon">
+    <link href="css/index.css" rel="stylesheet">
+    <title>BATTLESHIPS GAME</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/webjars/sockjs-client/sockjs.min.js"></script>
+    <script src="/webjars/stomp-websocket/stomp.min.js"></script>
+    <script defer src="js/index.js"></script>
 </head>
 <body>
 <noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being
-	enabled. Please enable Javascript and reload this page!</h2></noscript>
+    enabled. Please enable Javascript and reload this page!</h2></noscript>
 
 <div id="menu">
-	<button id="logout" onclick="location.href='/logout'">LOGOUT</button>
-	<button id="giveUp" onclick="giveUp()">Give up</button>
-	<span id="name"></span>
+    <button id="logout" onclick="location.href='/logout'">LOGOUT</button>
+    <button id="giveUp" onclick="giveUp()">Give up</button>
+    <span id="name"></span>
 </div>
 
 <div id="page">
-	<div id="boards">
-		<div id="leftSide">
-			<p>Your board</p>
-			<div id="player" class="board">
-				<table id="playerBoard"></table>
-				<span id="playerSpan">WAIT NOW</span>
-			</div>
-		</div>
+    <div id="boards">
+        <div id="leftSide">
+            <p>Your board</p>
+            <div class="board" id="player">
+                <table id="playerBoard"></table>
+                <span id="playerSpan">WAIT NOW</span>
+            </div>
+        </div>
 
-		<div id="rightSide">
-			<p>The opponent's board</p>
-			<div id="opponent" class="board">
-				<table id="opponentBoard"></table>
-				<span> </span>
-			</div>
-		</div>
-		<div id="status"></div>
-	</div>
+        <div id="rightSide">
+            <p>The opponent's board</p>
+            <div class="board" id="opponent">
+                <table id="opponentBoard"></table>
+                <span> </span>
+            </div>
+        </div>
+        <div id="status"></div>
+    </div>
 
-	<button type="button" class="collapsible">Moves list</button>
-	<div class="content">
-		<ol id="loglist"></ol>
-	</div>
+    <button class="collapsible" type="button">Moves list</button>
+    <div class="content">
+        <ol id="loglist"></ol>
+    </div>
 </div>
 
 <p class="tooltip">&#9432;
-	<span class="tooltiptext">All the resources on this page have been shared under free licenses for commercial
-		and non-commercial use on free-to-use websites. <br />
+    <span class="tooltiptext">All the resources on this page have been shared under free licenses for commercial
+		and non-commercial use on free-to-use websites. <br/>
 		<a href="https://mixkit.co/license/#sfxFree">Sound license</a>
 	</span>
 </p>

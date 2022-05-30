@@ -1,10 +1,10 @@
 package org.wildhamsters.battleships.board;
 
-import static org.testng.Assert.assertEquals;
-
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
+
+import static org.testng.Assert.assertEquals;
 
 @Test
 public class DefaultBoardTest {
@@ -30,12 +30,12 @@ public class DefaultBoardTest {
 
     @DataProvider
     Object[][] boardProvider() {
-        return new Object[][] {
-                { createTestBoardWithSpecificStateAtPosition(FieldState.INTACT_SHIP, 0), 0, FieldState.INTACT_SHIP },
-                { createTestBoardWithSpecificStateAtPosition(FieldState.ACCURATE_SHOT, 5), 5,
-                        FieldState.ACCURATE_SHOT },
-                { createTestBoardWithSpecificStateAtPosition(FieldState.MISSED_SHOT, 10), 10, FieldState.MISSED_SHOT },
-                { createTestBoardWithSpecificStateAtPosition(FieldState.WATER, 15), 15, FieldState.WATER }
+        return new Object[][]{
+                {createTestBoardWithSpecificStateAtPosition(FieldState.INTACT_SHIP, 0), 0, FieldState.INTACT_SHIP},
+                {createTestBoardWithSpecificStateAtPosition(FieldState.ACCURATE_SHOT, 5), 5,
+                        FieldState.ACCURATE_SHOT},
+                {createTestBoardWithSpecificStateAtPosition(FieldState.MISSED_SHOT, 10), 10, FieldState.MISSED_SHOT},
+                {createTestBoardWithSpecificStateAtPosition(FieldState.WATER, 15), 15, FieldState.WATER}
         };
     }
 

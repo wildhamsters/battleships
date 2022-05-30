@@ -126,10 +126,10 @@ public class Fleet {
 
 
     public List<Integer> getSinkingShipPosition(int field) {
-       if (makeShot(field) == ShotResult.SHIP_SUNK) {
-           return ships.getShipPosition(field);
-       }
-       return List.of(field);
+        if (makeShot(field) == ShotResult.SHIP_SUNK) {
+            return ships.getShipPosition(field);
+        }
+        return List.of(field);
     }
 
     public boolean checkIfAllShipsUntouched() {

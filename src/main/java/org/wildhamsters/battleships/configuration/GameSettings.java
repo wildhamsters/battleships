@@ -5,10 +5,10 @@ import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.fleet.Fleet;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- * Game settings needed to start a game and creating {@link org.wildhamsters.battleships.play.GameRoom}.
+ * Game settings needed to start a game and creating
+ * {@link org.wildhamsters.battleships.play.GameRoom}.
  *
  * @author Dominik Żebracki
  */
@@ -30,7 +30,8 @@ public record GameSettings(List<PlayerSettings> playerSettings) {
      * Individual player data.
      */
     public record PlayerSettings(String id,
-            String name,
-            Board board,
-            Fleet fleet){}
+                                 String name,
+                                 Board board,
+                                 Fleet fleet) {
+    }
 }

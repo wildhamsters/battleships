@@ -1,8 +1,8 @@
 package org.wildhamsters.battleships;
 
-import java.time.LocalDateTime;
-
 import org.springframework.web.client.RestTemplate;
+
+import java.time.LocalDateTime;
 
 class Logger {
     static void log(Log.Level level, Class<?> className, String msg) {
