@@ -10,6 +10,7 @@ import java.util.Map;
  *
  * @author Mariusz Bal
  */
+@ExcludeFromJacocoGeneratedReport
 public record Result(Event event,
                      Map<Integer, FieldState> cells,
                      List<Integer> shipCells,

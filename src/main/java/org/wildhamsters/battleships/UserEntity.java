@@ -7,6 +7,7 @@ import javax.persistence.*;
 /**
  * @author Piotr Chowaniec
  */
+@ExcludeFromJacocoGeneratedReport
 @Entity
 @Table(name = "users")
 public class UserEntity {

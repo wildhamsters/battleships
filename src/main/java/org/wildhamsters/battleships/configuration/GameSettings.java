@@ -1,5 +1,6 @@
 package org.wildhamsters.battleships.configuration;
 
+import org.wildhamsters.battleships.ExcludeFromJacocoGeneratedReport;
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.fleet.Fleet;
 
@@ -24,6 +25,7 @@ public record GameSettings(List<PlayerSettings> playerSettings) {
     /**
      * Individual player data.
      */
+    @ExcludeFromJacocoGeneratedReport
     public record PlayerSettings(String id,
                                  String name,
                                  Board board,

@@ -2,7 +2,7 @@ package org.wildhamsters.battleships;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-
+@ExcludeFromJacocoGeneratedReport
 @SpringBootApplication
 public class BattleshipsApplication {
 

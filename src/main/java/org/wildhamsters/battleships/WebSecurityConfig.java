@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * @author Mariusz Bal
  */
+@ExcludeFromJacocoGeneratedReport
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
