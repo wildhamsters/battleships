@@ -7,7 +7,7 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @SuppressFBWarnings(
         value = "URF_UNREAD_FIELD",
-        justification = "Can't fix that for now"
+        justification = "Fields are used by the front-end"
 )
 class MatchResult {
 
