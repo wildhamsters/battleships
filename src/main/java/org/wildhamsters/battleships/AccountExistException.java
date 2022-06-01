@@ -5,7 +5,6 @@ package org.wildhamsters.battleships;
  */
 @ExcludeFromJacocoGeneratedReport
 class AccountExistException extends Exception {
-
     public AccountExistException(String message) {
         super(message);
     }

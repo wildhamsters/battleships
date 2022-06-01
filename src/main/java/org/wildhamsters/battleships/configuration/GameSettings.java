@@ -1,6 +1,7 @@
 package org.wildhamsters.battleships.configuration;
 
 import org.wildhamsters.battleships.ExcludeFromJacocoGeneratedReport;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.fleet.Fleet;
 
@@ -12,6 +13,10 @@ import java.util.List;
  *
  * @author Dominik Żebracki
  */
+@SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Can't fix that for now"
+)
 public record GameSettings(List<PlayerSettings> playerSettings) {
 
     public Fleet firstPlayersFleet() {

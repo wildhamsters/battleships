@@ -1,5 +1,6 @@
 package org.wildhamsters.battleships;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @ExcludeFromJacocoGeneratedReport
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
+@SuppressFBWarnings(
+        value = "THROWS_METHOD_THROWS_CLAUSE_BASIC_EXCEPTION",
+        justification = "Can't fix that for now"
+)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     final private UserDetailsService userDetailsService;

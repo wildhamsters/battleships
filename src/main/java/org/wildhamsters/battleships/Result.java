@@ -4,6 +4,8 @@ import org.wildhamsters.battleships.board.FieldState;
 
 import java.util.List;
 import java.util.Map;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+
 
 /**
  * DataTransferObject between GameRoom and GameService.
@@ -11,6 +13,10 @@ import java.util.Map;
  * @author Mariusz Bal
  */
 @ExcludeFromJacocoGeneratedReport
+@SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Can't fix that for now"
+)
 public record Result(Event event,
                      Map<Integer, FieldState> cells,
                      List<Integer> shipCells,
