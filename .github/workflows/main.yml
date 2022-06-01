@@ -1,14 +1,16 @@
-name: Close Pull Request
+name: PR Closer
 
 on:
-  pull_request_target:
-    types: [opened]
+  pull_request:
+    types: [opened, reopened]
+
 
 jobs:
-  run:
+  close-pull-request:
     runs-on: ubuntu-latest
+    name: Close Pull Request
     steps:
-    - uses: superbrothers/close-pull-request@v3
-      with:
-        # Optional. Post a issue comment just before closing a pull request.
-        comment: "We do not accept PRs. If you have any questions, please feel free to contact us."
+      - uses: codelytv/no-pull-requests@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          message: 🙅 We don't accept Pull Requests!
