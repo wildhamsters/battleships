@@ -8,7 +8,7 @@ on:
 jobs:
   close-pull-request:
     permissions: 
-      contents: read|write
+      contents: write
     runs-on: ubuntu-latest
     name: Close Pull Request
     steps:
