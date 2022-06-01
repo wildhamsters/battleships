@@ -7,7 +7,8 @@ on:
 
 jobs:
   close-pull-request:
-    permissions: write-all
+    permissions: 
+      pull-requests: write
     runs-on: ubuntu-latest
     name: Close Pull Request
     steps:
