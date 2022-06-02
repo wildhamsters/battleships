@@ -1,5 +1,12 @@
 package org.wildhamsters.battleships;
 
+import org.wildhamsters.battleships.board.FieldState;
+import java.util.List;
+import java.util.Map;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.wildhamsters.battleships.board.FieldState;
+
+
 /**
  * DataTransferObject between GameRoom and GameService.
  *
