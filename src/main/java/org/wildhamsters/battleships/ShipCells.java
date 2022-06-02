@@ -1,11 +1,8 @@
 package org.wildhamsters.battleships;
 
-import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 /**
  * @author Kevin Nowak
@@ -13,12 +10,12 @@ import java.util.stream.IntStream;
 public class ShipCells {
     private final List<Integer> shipCells;
 
-    @SuppressFBWarnings(
-            value = "EI_EXPOSE_REP2",
-            justification = "No expose of internal representation in this case"
-    )
     public ShipCells(List<Integer> shipCells) {
-        this.shipCells = shipCells;
+        if (shipCells == null) {
+            this.shipCells = new ArrayList<>();
+        } else {
+            this.shipCells = new ArrayList<>(shipCells);
+        }
     }
 
     @Override

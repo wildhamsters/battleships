@@ -5,10 +5,6 @@ package org.wildhamsters.battleships;
  *
  * @author Mariusz Bal
  */
-//@SuppressFBWarnings(
-//        value = "EI_EXPOSE_REP",
-//        justification = "Can't fix that for now"
-//)
 public record Result(Event event,
                      Cells cells,
                      ShipCells shipCells,
