@@ -26,8 +26,8 @@ public class GameRoom {
     }
 
     public GameRoom(GameSettings gameSettings) {
-        playerOne = Player.of(gameSettings.playerSettings().get(0));
-        playerTwo = Player.of(gameSettings.playerSettings().get(1));
+        playerOne = Player.of(gameSettings.getFirstPlayerSettings());
+        playerTwo = Player.of(gameSettings.getSecondPlayerSettings());
         MatchStatistics matchStatistics = new MatchStatistics(id);
         MatchResult matchResult = new MatchResult(id, playerOne, playerTwo);
         singleShot = new SingleShot(playerOne, playerTwo, matchStatistics, matchResult);

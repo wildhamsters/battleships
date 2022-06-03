@@ -7,11 +7,9 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  */
 @SuppressFBWarnings(
         value = "URF_UNREAD_FIELD",
-        justification = "Can't fix that for now"
+        justification = "Fields are used by the front-end"
 )
 class MatchResult {
-
-    // TODO  winner's left fleet
     private final String gameId;
     private final Player playerOne;
     private final Player playerTwo;

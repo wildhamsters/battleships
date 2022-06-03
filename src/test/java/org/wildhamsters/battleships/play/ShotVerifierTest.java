@@ -72,5 +72,10 @@ public class ShotVerifierTest {
         public BoardDimension size() {
             return new BoardDimension(0, board.size());
         }
+
+        @Override
+        public ArrayList<FieldState> getList() {
+            return null;
+        }
     }
 }

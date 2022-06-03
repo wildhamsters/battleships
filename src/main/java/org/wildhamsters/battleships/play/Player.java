@@ -40,10 +40,10 @@ class Player {
     }
 
     static Player of(GameSettings.PlayerSettings playerSettings) {
-        return new Player(playerSettings.id(),
-                playerSettings.name(),
-                playerSettings.board(),
-                playerSettings.fleet(),
+        return new Player(playerSettings.getId(),
+                playerSettings.getName(),
+                playerSettings.getBoard(),
+                playerSettings.getFleet(),
                 new ShotVerifier());
     }
 

@@ -2,8 +2,10 @@ package org.wildhamsters.battleships.play;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.wildhamsters.battleships.Cells;
 import org.wildhamsters.battleships.Event;
 import org.wildhamsters.battleships.Result;
+import org.wildhamsters.battleships.ShipCells;
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.board.FieldState;
 import org.wildhamsters.battleships.fleet.Fleet;
@@ -55,7 +57,7 @@ public class GameRoomTest {
     }
 
     private Result prepareResult(int cell, FieldState newState, String id, String name, String opponent) {
-        return new Result(Event.GAMEPLAY, Map.of(cell, newState), null, false, "", id, name, opponent);
+        return new Result(Event.GAMEPLAY, new Cells(Map.of(cell, newState)), new ShipCells(null), false, "", id, name, opponent);
     }
 
     private Fleet prepareFleet() {

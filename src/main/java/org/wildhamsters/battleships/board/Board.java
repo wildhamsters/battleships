@@ -2,6 +2,8 @@ package org.wildhamsters.battleships.board;
 
 import org.wildhamsters.battleships.fleet.ShipsPositions;
 
+import java.util.ArrayList;
+
 //TODO whole content of the package should be probably moved to play and refactored
 
 /**
@@ -16,6 +18,10 @@ public interface Board {
         return new DefaultBoard(shipsPositions);
     }
 
+    static Board create(Board board) {
+        return new DefaultBoard(board);
+    }
+
     FieldState getField(int position);
 
     void setField(FieldState fieldState, int position);
@@ -23,4 +29,6 @@ public interface Board {
     void clearBoard();
 
     BoardDimension size();
+
+    ArrayList<FieldState> getList();
 }
