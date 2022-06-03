@@ -1,13 +1,12 @@
 package org.wildhamsters.battleships.play;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
+import org.wildhamsters.battleships.Cells;
 import org.wildhamsters.battleships.Event;
 import org.wildhamsters.battleships.Result;
+import org.wildhamsters.battleships.ShipCells;
 import org.wildhamsters.battleships.board.FieldState;
-
-import java.util.List;
 
 /**
  * Contains both players. Indicate which is current (making shot) and which is enemy (fire upon).
@@ -54,13 +53,14 @@ class SingleShot {
             error = e.getMessage();
         }
         var fieldsToMark = enemy.takeShot(position, state);
+
         matchStatistics.update(state);
 
         List<Integer> shipCells = (fieldsToMark.size() > 1) ? enemy.getSunkShipPositions(position) : null;
 
         switchPlayers(state);
 
-        return new Result(Event.GAMEPLAY, fieldsToMark, shipCells, isWinner(), error, current.getId(), current.getName(), enemy.getId());
+        return new Result(Event.GAMEPLAY, new Cells(fieldsToMark), new ShipCells(shipCells), isWinner(), error, current.getId(), current.getName(), enemy.getId());
     }
 
     private void switchPlayers(FieldState state) {
