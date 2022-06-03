@@ -235,11 +235,9 @@ function processConnectMessage(response) {
     if (sessionId == response.playerOneSessionId) {
         response.playerOneShipPositions.forEach(el => document.getElementById("cell_" + el).innerHTML = "&#128755;");
         document.getElementById("name").innerHTML = response.playerOneName;
-        console.log(response.playerOneName);
     } else {
         response.playerTwoShipPositions.forEach(el => document.getElementById("cell_" + el).innerHTML = "&#128755;");
         document.getElementById("name").innerHTML = response.playerTwoName;
-        console.log(response.playerTwoName);
     }
 
     highlightBoard(myTurn);
@@ -262,12 +260,11 @@ function processGameplayMessage(response) {
         return;
     }
 
-    var cellArray = response.cells;
+    var cellArray = response.cells.cells;
     var keys = Object.keys(cellArray);
-
     if (keys.length > 1) {
         handleShipShink(cellArray, keys, lastShootingPlayer == sessionId);
-        logSunkedShip(response.shipCells, response.currentTurnPlayerName);
+        logSunkedShip(response.shipCells.shipCells, response.currentTurnPlayerName);
     } else {
         handleReturnedFieldType(cellArray[keys[0]], keys[0], lastShootingPlayer == sessionId);
         logMove(cellArray[keys[0]], response.currentTurnPlayerName, keys[0]);

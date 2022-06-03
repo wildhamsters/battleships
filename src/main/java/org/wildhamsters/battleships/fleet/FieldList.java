@@ -1,12 +1,27 @@
 package org.wildhamsters.battleships.fleet;
 
+import org.wildhamsters.battleships.board.FieldState;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Kevin Nowak
  */
-record FieldList(List<ShipPosition> allFieldLists) {
+class FieldList {
+    List<ShipPosition> allFieldLists;
+
+    public FieldList(List<ShipPosition> allFieldLists) {
+        this.allFieldLists = allFieldLists;
+    }
+
+    public FieldList(FieldList fieldList) {
+        this.allFieldLists = new ArrayList<>(fieldList.getList());
+    }
+
+    public List<ShipPosition> getList() {
+        return this.allFieldLists;
+    }
 
     boolean contains(int field) {
         return allFieldLists.stream().allMatch(shipPosition -> shipPosition

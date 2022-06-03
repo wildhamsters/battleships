@@ -26,7 +26,20 @@ public class Fleet {
     public Fleet(ShipsPositions shipsPosition) {
         ships = new ShipsMap();
         allTakenFields = new FieldList(shipsPosition.getShipsPosition());
-        putShipsIntoMap(allTakenFields.allFieldLists());
+        putShipsIntoMap(allTakenFields.getList());
+    }
+
+    public Fleet(Fleet fleet) {
+        this.ships = fleet.getShipsMap();
+        this.allTakenFields = fleet.getAllTakenFields();
+    }
+
+    private FieldList getAllTakenFields() {
+        return new FieldList(allTakenFields);
+    }
+
+    private ShipsMap getShipsMap() {
+        return new ShipsMap(ships);
     }
 
     private void putShipsIntoMap(List<ShipPosition> allFieldLists) {
@@ -70,7 +83,7 @@ public class Fleet {
     public ShotResult makeShot(int field) {
         AtomicBoolean tmp = new AtomicBoolean(false);
 
-        allTakenFields.allFieldLists().forEach(shipPosition -> {
+        allTakenFields.getList().forEach(shipPosition -> {
             if (shipPosition.positions().contains(field)) {
                 tmp.set(true);
             }
