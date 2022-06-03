@@ -48,6 +48,7 @@ public class GameSettings {
     /**
      * Individual player data.
      */
+    @ExcludeFromJacocoGeneratedReport
     public static class PlayerSettings {
         String id;
         String name;

@@ -12,6 +12,11 @@ import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
  *
  * @author Mariusz Bal
  */
+@ExcludeFromJacocoGeneratedReport
+@SuppressFBWarnings(
+        value = "EI_EXPOSE_REP",
+        justification = "Can't fix that for now"
+)
 public record Result(Event event,
                      Cells cells,
                      ShipCells shipCells,
