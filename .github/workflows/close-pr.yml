@@ -1,14 +1,20 @@
 name: PR Closer
 
 on:
-  pull_request:
-    types: [opened, reopened]
+  check_suite:
+    types: [completed]
+    branches: 
+      - 'iteration*'
+      
 
 
 jobs:
   close-pull-request:
+    permissions: 
+      pull-requests: write
     runs-on: ubuntu-latest
     name: Close Pull Request
+    if: github.event.check_suite.conclusion != success
     steps:
       - uses: codelytv/no-pull-requests@v1
         with:
