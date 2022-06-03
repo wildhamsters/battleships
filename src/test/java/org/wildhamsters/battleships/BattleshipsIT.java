@@ -14,7 +14,7 @@ import java.util.List;
 public class BattleshipsIT {
 
     static GameRoom createDummyGameRoom(Fleet fleet, Board board) {
-        GameSettings.PlayerSettings ps1 = new GameSettings.PlayerSettings(
+        GameSettings.PlayerSettings ps1 =  new GameSettings.PlayerSettings(
                 "001",
                 "Player1",
                 board,
@@ -51,13 +51,7 @@ public class BattleshipsIT {
         softAssert.assertEquals(testFleet.getShipConditionByIndex(4), ShipCondition.HIT);
         softAssert.assertEquals(testFleet.getShipConditionByIndex(99), ShipCondition.UNTOUCHED);
         softAssert.assertEquals(testFleet.getShipConditionByIndex(95), ShipCondition.NO_SHIP_HERE);
-
-        softAssert.assertEquals(testBoard.getField(1), FieldState.ACCURATE_SHOT);
-        softAssert.assertEquals(testBoard.getField(3), FieldState.ACCURATE_SHOT);
-        softAssert.assertEquals(testBoard.getField(4), FieldState.INTACT_SHIP);
-        softAssert.assertEquals(testBoard.getField(99), FieldState.INTACT_SHIP);
-        softAssert.assertEquals(testBoard.getField(95), FieldState.MISSED_SHOT);
-
+        
         softAssert.assertAll();
     }
 
