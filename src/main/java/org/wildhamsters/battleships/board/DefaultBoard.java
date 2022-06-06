@@ -34,6 +34,10 @@ class DefaultBoard implements Board {
         this.board = list;
     }
 
+    DefaultBoard(Board board) {
+        this.board = new ArrayList<>(board.getList());
+    }
+
     @Override
     public FieldState getField(int position) {
         return board.get(position);
@@ -52,6 +56,11 @@ class DefaultBoard implements Board {
     @Override
     public BoardDimension size() {
         return new BoardDimension(0, board.size() - 1);
+    }
+
+    @Override
+    public ArrayList<FieldState> getList() {
+        return new ArrayList<>(this.board);
     }
 
     private void fillBoardWithShips(ShipsPositions shipsPositions) {

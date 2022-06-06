@@ -27,6 +27,7 @@
         <maven.dependency.plugin.version>3.3.0</maven.dependency.plugin.version>
         <maven.jacoco.plugin>0.8.7</maven.jacoco.plugin>
         <testng.version>7.5</testng.version>
+        <selenium.version>3.141.59</selenium.version>
         <sockjs.client.version>1.0.2</sockjs.client.version>
         <stomp.websocket.version>2.3.3</stomp.websocket.version>
         <bootstrap.version>3.3.7</bootstrap.version>
@@ -37,6 +38,7 @@
         <spotbugs.version>4.7.0</spotbugs.version>
         <maven-pmd-plugin.version>3.16.0</maven-pmd-plugin.version>
         <spotbugs-maven-plugin.version>4.7.0.0</spotbugs-maven-plugin.version>
+        <spotbugs.annotation.version>1.0</spotbugs.annotation.version>
     </properties>
     <dependencies>
         <dependency>
@@ -73,6 +75,12 @@
             <artifactId>testng</artifactId>
             <version>${testng.version}</version>
             <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
         </dependency>
 
         <dependency>
@@ -129,7 +137,7 @@
         <dependency>
             <groupId>net.jcip</groupId>
             <artifactId>jcip-annotations</artifactId>
-            <version>1.0</version>
+            <version>${spotbugs.annotation.version}</version>
             <optional>true</optional>
         </dependency>
 
@@ -138,8 +146,8 @@
             <artifactId>spotbugs</artifactId>
             <version>${spotbugs.version}</version>
         </dependency>
-	</dependencies>
-	
+    </dependencies>
+
     <build>
         <plugins>
             <plugin>
@@ -157,20 +165,20 @@
                     </execution>
                 </executions>
             </plugin>
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-pmd-plugin</artifactId>-->
-<!--                <version>${maven-pmd-plugin.version}</version>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <id>pmd</id>-->
-<!--                        <phase>verify</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>check</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
+            <!--            <plugin>-->
+            <!--                <groupId>org.apache.maven.plugins</groupId>-->
+            <!--                <artifactId>maven-pmd-plugin</artifactId>-->
+            <!--                <version>${maven-pmd-plugin.version}</version>-->
+            <!--                <executions>-->
+            <!--                    <execution>-->
+            <!--                        <id>pmd</id>-->
+            <!--                        <phase>verify</phase>-->
+            <!--                        <goals>-->
+            <!--                            <goal>check</goal>-->
+            <!--                        </goals>-->
+            <!--                    </execution>-->
+            <!--                </executions>-->
+            <!--            </plugin>-->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin}</version>
