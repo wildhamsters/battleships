@@ -7,6 +7,7 @@ import java.util.List;
  *
  * @author Dominik Żebracki
  */
+@ExcludeFromJacocoGeneratedReport
 record ConnectionStatus(String message,
                         String roomId,
                         String playerOneSessionId,

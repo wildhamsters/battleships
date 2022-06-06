@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 /**
  * @author Dominik Żebracki
  */
+@ExcludeFromJacocoGeneratedReport
 @Configuration
 class Beans {
 

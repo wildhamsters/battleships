@@ -1,5 +1,6 @@
 package org.wildhamsters.battleships.configuration;
 
+import org.wildhamsters.battleships.ExcludeFromJacocoGeneratedReport;
 import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.fleet.Fleet;
@@ -47,6 +48,8 @@ public class GameSettings {
     /**
      * Individual player data.
      */
+
+    @ExcludeFromJacocoGeneratedReport
     public static class PlayerSettings {
         String id;
         String name;

@@ -12,6 +12,7 @@ import java.util.List;
 /**
  * @author Mariusz Bal
  */
+@ExcludeFromJacocoGeneratedReport
 @RestController
 @RequestMapping("/statistics")
 class StatisticsController {
