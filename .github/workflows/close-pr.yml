@@ -3,10 +3,6 @@ name: PR Closer
 on:
   check_suite:
     types: [completed]
-    branches: 
-      - 'iteration*'
-      
-
 
 jobs:
   close-pull-request:
