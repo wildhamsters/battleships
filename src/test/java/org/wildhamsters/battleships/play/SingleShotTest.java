@@ -2,8 +2,10 @@ package org.wildhamsters.battleships.play;
 
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.wildhamsters.battleships.Cells;
 import org.wildhamsters.battleships.Event;
 import org.wildhamsters.battleships.Result;
+import org.wildhamsters.battleships.ShipCells;
 import org.wildhamsters.battleships.board.Board;
 import org.wildhamsters.battleships.board.FieldState;
 import org.wildhamsters.battleships.fleet.Fleet;
@@ -149,7 +151,7 @@ public class SingleShotTest {
 
         List<Integer> sunkenShipList = (sunkShipPositions.length == 0) ? null : List.of(sunkShipPositions);
         return new Result(
-                Event.GAMEPLAY, fieldMap, sunkenShipList, false, "", currentTurnPlayer, currentTurnPlayerName,
+                Event.GAMEPLAY, new Cells(fieldMap), new ShipCells(sunkenShipList), false, "", currentTurnPlayer, currentTurnPlayerName,
                 opponent);
     }
 }

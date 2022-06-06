@@ -12,6 +12,14 @@ class ShipsMap {
         ships = new HashMap<>();
     }
 
+    ShipsMap(ShipsMap shipsMap) {
+        this.ships = new HashMap<>(shipsMap.getMap());
+    }
+
+    private Map<Ship, ShipPosition> getMap() {
+        return this.ships;
+    }
+
     void put(Ship ship, ShipPosition shipPosition) {
         ships.put(ship, shipPosition);
     }

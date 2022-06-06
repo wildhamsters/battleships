@@ -12,16 +12,15 @@ public class ConfigurationIT {
         GameSettings settings = new GameConfigurer("https://protected-stream-19238.herokuapp.com/placeShips").createConfiguration(List.of(1, 1, 1, 2, 2, 3),
                 10, 10, List.of("Player1", "Player2"), List.of("id1", "id2"));
 
-        List<GameSettings.PlayerSettings> playersSettings = settings.playerSettings();
-        GameSettings.PlayerSettings firstPlayerSettings = playersSettings.get(0);
-        GameSettings.PlayerSettings secondPlayerSettings = playersSettings.get(1);
+        GameSettings.PlayerSettings firstPlayerSettings = settings.getFirstPlayerSettings();
+        GameSettings.PlayerSettings secondPlayerSettings = settings.getSecondPlayerSettings();
 
         SoftAssert sa = new SoftAssert();
-        sa.assertEquals(firstPlayerSettings.name(), "Player1");
-        sa.assertEquals(secondPlayerSettings.name(), "Player2");
+        sa.assertEquals(firstPlayerSettings.getName(), "Player1");
+        sa.assertEquals(secondPlayerSettings.getName(), "Player2");
 
-        sa.assertEquals(firstPlayerSettings.id(), "id1");
-        sa.assertEquals(secondPlayerSettings.id(), "id2");
+        sa.assertEquals(firstPlayerSettings.getId(), "id1");
+        sa.assertEquals(secondPlayerSettings.getId(), "id2");
 
         sa.assertAll();
     }
