@@ -1,6 +1,7 @@
 package org.wildhamsters.battleships;
 
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
 import org.wildhamsters.battleships.play.*;
 
@@ -116,10 +117,10 @@ class GameService {
         }
     }
 
-    List<MatchStatisticsEntity> findAllStatistics() {
-        var stats = new ArrayList<MatchStatisticsEntity>();
-        matchStatisticsRepository.findAll().forEach(stats::add);
-        return stats;
+    List<SingleMatchStatistics> findAllStatistics() {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:5500/";
+        return new ArrayList<>(restTemplate.getForObject(url, StatisticsDTO.class).singleMatchStatisticsList());
     }
 
     private void saveMatchStatistics(String roomId) {
