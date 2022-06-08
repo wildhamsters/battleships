@@ -124,7 +124,9 @@ class GameService {
     }
 
     private void saveMatchStatistics(String roomId) {
-        matchStatisticsRepository.save(
-                new MatchStatisticsEntityMapper().map(gameRooms.findRoom(roomId).getMatchStatistics()));
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:5500/";
+        CurrentMatchStatistics current = new CurrentMatchStatisticsMapper().map(gameRooms.findRoom(roomId).getMatchStatistics());
+        restTemplate.postForObject(url, current, CurrentMatchStatistics.class);
     }
 }
