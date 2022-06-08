@@ -21,7 +21,7 @@ class StatisticsController {
     private GameService gameService;
 
     @GetMapping
-    ResponseEntity<List<MatchStatisticsEntity>> readAllStatistics() {
+    ResponseEntity<List<SingleMatchStatistics>> readAllStatistics() {
         return ResponseEntity.ok(gameService.findAllStatistics());
     }
 }
