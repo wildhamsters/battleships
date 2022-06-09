@@ -1,5 +1,6 @@
 package org.wildhamsters.battleships;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
@@ -117,6 +118,10 @@ class GameService {
         }
     }
 
+    @SuppressFBWarnings(
+            value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "SpotBugs indicates NPE which is handled with Optional"
+    )
     List<SingleMatchStatistics> findAllStatistics() {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:5500/";
