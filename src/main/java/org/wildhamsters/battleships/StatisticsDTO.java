@@ -5,9 +5,4 @@ import java.util.List;
 /**
  * @author Piotr Chowaniec
  */
-public record StatisticsDTO(List<SingleMatchStatistics> singleMatchStatisticsList) {
-
-    public StatisticsDTO(List<SingleMatchStatistics> singleMatchStatisticsList) {
-        this.singleMatchStatisticsList = singleMatchStatisticsList;
-    }
-}
+record StatisticsDTO(List<SingleMatchStatistics> singleMatchStatisticsList) {}

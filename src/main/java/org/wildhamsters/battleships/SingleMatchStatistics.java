@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 /**
  * @author Piotr Chowaniec
  */
-public record SingleMatchStatistics(Integer id,
+record SingleMatchStatistics(Integer id,
                                     String matchId,
                                     int accurateShots,
                                     int missedShots,
