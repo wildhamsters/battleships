@@ -8,6 +8,7 @@ import org.wildhamsters.battleships.play.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 //TODO refactor this class
 
@@ -119,10 +120,9 @@ class GameService {
     List<SingleMatchStatistics> findAllStatistics() {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:5500/";
-        var statistics = restTemplate.getForObject(url, StatisticsDTO.class).singleMatchStatisticsList();
-        return statistics != null
-                ? statistics
-                : new ArrayList<>();
+        Optional<List<SingleMatchStatistics>> statistics =
+                Optional.of(restTemplate.getForObject(url, StatisticsDTO.class).singleMatchStatisticsList());
+        return statistics.orElseGet(ArrayList::new);
     }
 
     private void saveMatchStatistics(String roomId) {
