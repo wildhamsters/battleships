@@ -26,15 +26,13 @@ class GameService {
 
     private final GameRooms gameRooms = new GameRooms();
     private final GameConfigurer gameConfigurer;
-    private final MatchStatisticsRepository matchStatisticsRepository;
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
 
-    GameService(MatchStatisticsRepository matchStatisticsRepository) {
+    GameService() {
         this.gameRoom = null;
         this.connectedPlayers = new ConnectedPlayers(new ArrayList<>());
         this.gameConfigurer = new GameConfigurer("https://protected-stream-19238.herokuapp.com/placeShips");
-        this.matchStatisticsRepository = matchStatisticsRepository;
     }
 
     /**

@@ -1,21 +1,16 @@
 package org.wildhamsters.battleships;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.Test;
-import org.wildhamsters.battleships.play.MatchStatisticsRepository;
 
 import static org.testng.Assert.assertEquals;
 
 @Test
 public class GameServiceTest {
 
-    @Autowired
-    private MatchStatisticsRepository matchStatisticsRepository;
-
     @Test
     void shouldReturnProperConnectionStatus_whenFirstPlayerConnects() {
         //given
-        var gameService = new GameService(matchStatisticsRepository);
+        var gameService = new GameService();
         var expected = new ConnectionStatus("No opponents for now",
                 null,
                 "ZbychSessionId", null,
