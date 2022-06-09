@@ -119,8 +119,10 @@ class GameService {
     List<SingleMatchStatistics> findAllStatistics() {
         RestTemplate restTemplate = new RestTemplate();
         String url = "http://localhost:5500/";
-        return new ArrayList<>(Objects.requireNonNull(
-                restTemplate.getForObject(url, StatisticsDTO.class)).singleMatchStatisticsList());
+        var statistics = restTemplate.getForObject(url, StatisticsDTO.class).singleMatchStatisticsList();
+        return statistics != null
+                ? statistics
+                : new ArrayList<>();
     }
 
     private void saveMatchStatistics(String roomId) {
