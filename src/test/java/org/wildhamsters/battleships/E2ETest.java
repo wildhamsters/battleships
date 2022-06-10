@@ -5,13 +5,9 @@
 //import org.openqa.selenium.chrome.ChromeDriver;
 //import org.openqa.selenium.firefox.FirefoxDriver;
 //import org.openqa.selenium.remote.RemoteWebDriver;
-//import org.openqa.selenium.support.ui.WebDriverWait;
-//import org.springframework.web.bind.support.WebBindingInitializer;
 //import org.testng.annotations.Test;
 //
 //import java.util.List;
-//import java.util.NoSuchElementException;
-//import java.util.Optional;
 //import java.util.Random;
 //import java.util.concurrent.TimeUnit;
 //
@@ -45,24 +41,25 @@
 //            e.getMessage();
 //        }
 //        testLoop(firefoxPlayer, chromePlayer);
-//        System.out.println("Game finished");
+//
+//        boolean isGameFinished = firefoxDriver.findElements(By.tagName("img")).size() > 0 &&
+//                chromeDriver.findElements(By.tagName("img")).size() > 0;
+//        assertTrue(isGameFinished);
 //    }
 //
 //    private void testLoop(BrowserPlayer firefoxPlayer, BrowserPlayer chromePlayer) {
 //        WebElement page = firefoxDriver.findElementById("page");
-//        boolean loop = true;
 //
-//        while (loop) {
+//        boolean loop;
+//        do {
 //            if (firefoxPlayer.isInTurn()) {
 //                firefoxPlayer.makeShot();
 //            } else if (chromePlayer.isInTurn()) {
 //                chromePlayer.makeShot();
-//            } else {
-//                break;
 //            }
 //            firefoxDriver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
 //            loop = !page.getAttribute("class").contains("centered");
-//        }
+//        } while (loop);
 //    }
 //}
 //

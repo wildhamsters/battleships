@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.wildhamsters.battleships.play.MatchStatisticsEntity;
 
 import java.util.List;
 
@@ -21,7 +20,7 @@ class StatisticsController {
     private GameService gameService;
 
     @GetMapping
-    ResponseEntity<List<MatchStatisticsEntity>> readAllStatistics() {
+    ResponseEntity<List<SingleMatchStatistics>> readAllStatistics() {
         return ResponseEntity.ok(gameService.findAllStatistics());
     }
 }

@@ -1,11 +1,15 @@
 package org.wildhamsters.battleships;
 
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 import org.wildhamsters.battleships.configuration.GameConfigurer;
 import org.wildhamsters.battleships.play.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 //TODO refactor this class
 
@@ -25,15 +29,13 @@ class GameService {
 
     private final GameRooms gameRooms = new GameRooms();
     private final GameConfigurer gameConfigurer;
-    private final MatchStatisticsRepository matchStatisticsRepository;
     private GameRoom gameRoom;
     private ConnectedPlayers connectedPlayers;
 
-    GameService(MatchStatisticsRepository matchStatisticsRepository) {
+    GameService() {
         this.gameRoom = null;
         this.connectedPlayers = new ConnectedPlayers(new ArrayList<>());
         this.gameConfigurer = new GameConfigurer("https://protected-stream-19238.herokuapp.com/placeShips");
-        this.matchStatisticsRepository = matchStatisticsRepository;
     }
 
     /**
@@ -116,14 +118,22 @@ class GameService {
         }
     }
 
-    List<MatchStatisticsEntity> findAllStatistics() {
-        var stats = new ArrayList<MatchStatisticsEntity>();
-        matchStatisticsRepository.findAll().forEach(stats::add);
-        return stats;
+    @SuppressFBWarnings(
+            value = "NP_NULL_ON_SOME_PATH_FROM_RETURN_VALUE",
+            justification = "SpotBugs indicates NPE which is handled with Optional"
+    )
+    List<SingleMatchStatistics> findAllStatistics() {
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:5500/";
+        Optional<List<SingleMatchStatistics>> statistics =
+                Optional.of(restTemplate.getForObject(url, StatisticsDTO.class).singleMatchStatisticsList());
+        return statistics.orElseGet(ArrayList::new);
     }
 
     private void saveMatchStatistics(String roomId) {
-        matchStatisticsRepository.save(
-                new MatchStatisticsEntityMapper().map(gameRooms.findRoom(roomId).getMatchStatistics()));
+        RestTemplate restTemplate = new RestTemplate();
+        String url = "http://localhost:5500/";
+        CurrentMatchStatistics current = new CurrentMatchStatisticsMapper().map(gameRooms.findRoom(roomId).getMatchStatistics());
+        restTemplate.postForObject(url, current, CurrentMatchStatistics.class);
     }
 }
